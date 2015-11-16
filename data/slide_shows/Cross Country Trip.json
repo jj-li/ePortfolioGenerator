@@ -1,0 +1,21 @@
+
+{
+    "title":"Cross Country Trip",
+    "slides":[
+        {
+            "image_file_name":"OregonTrailNebraska.jpg",
+            "image_path":"C:\\Users\\McKillaGorilla\\Documents\\RTM\\StonyBrook\\Courses\\CSE219\\219_2015_Fall\\projects\\hw3\\SlideShowMaker\\images\\slide_show_images\\",
+            "caption":"The Oregon Trail in Nebraska"
+        },
+        {
+            "image_file_name":"BadlandsSouthDakota.jpg",
+            "image_path":"C:\\Users\\McKillaGorilla\\Documents\\RTM\\StonyBrook\\Courses\\CSE219\\219_2015_Fall\\projects\\hw3\\SlideShowMaker\\images\\slide_show_images\\",
+            "caption":"The South Dakota Badlands"
+        },
+        {
+            "image_file_name":"YosemiteCalifornia.jpg",
+            "image_path":"C:\\Users\\McKillaGorilla\\Documents\\RTM\\StonyBrook\\Courses\\CSE219\\219_2015_Fall\\projects\\hw3\\SlideShowMaker\\images\\slide_show_images\\",
+            "caption":"Half Dome in Yosemite National Park, California"
+        }
+    ]
+}

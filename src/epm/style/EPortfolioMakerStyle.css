@@ -1,0 +1,81 @@
+/** 
+ *  This CSS provides all the style settings for
+ *  our JavaFX controls.
+ *
+ *  @author McKilla Gorilla & _____________
+ */
+
+.slide_language {
+    -fx-padding: 15px 10px 10px 15px;
+}
+
+.error_box {
+    -fx-alignment: center;
+}
+
+.workspace_spacing {
+    -fx-padding: 8px 0px 0px 0px;
+}
+
+.slide_show_edit_vbox {
+    -fx-background-radius: 5.0;
+    -fx-background-color: rgb(255, 255, 90);
+    -fx-padding: 0px 10px 0px 10px;
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+.slide_edit_view {
+    -fx-background-radius: 10.0;
+    -fx-background-color: rgb(255, 255, 75);
+    -fx-border-color: rgb(0, 0, 0);
+    -fx-border-thickness: 10px;
+    -fx-spacing: 60px;
+}
+
+.slide_edit_view_selected {
+    -fx-background-radius: 10.0;
+    -fx-background-color: rgb(255, 255, 0);
+    -fx-border-color: rgb(0, 0, 0);
+    -fx-border-thickness: 10px;
+    -fx-spacing: 60px;
+}
+
+.vertical_toolbar_button {
+    -fx-background-color: rgb(255, 255, 35);
+    -fx-border-color: rgb(0, 0, 0);
+    -fx-padding: 13px 13px 13px 13px;
+}
+
+.horizontal_toolbar_button {
+    -fx-padding: 9px 9px 9px 9px;
+    -fx-background-color: rgb(255, 240, 0);
+    //-fx-border-color: rgb(255, 255, 10);
+    -fx-border-color: rgb(0, 0, 0);
+}
+
+.horizontal_toolbar {
+    -fx-hgap: 1px;
+}
+
+.view_slide_show_buttons {
+    -fx-padding-top: 250px;
+    -fx-padding-bottom: 250px;
+}
+
+.slide_panes {
+    -fx-background: rgb(255,255,55);
+    -fx-border-color: rgb(0, 0, 0);
+}
+
+.slide_spacing {
+    -fx-spacing: 5px;
+}
+
+.root{
+    -fx-background-color: rgb(255, 255, 90);
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 14px;
+}
+
+

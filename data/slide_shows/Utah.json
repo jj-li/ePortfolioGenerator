@@ -1,0 +1,21 @@
+
+{
+    "title":"Utah",
+    "slides":[
+        {
+            "image_file_name":"ArchesUtah.jpg",
+            "image_path":"C:\\Users\\McKillaGorilla\\Documents\\RTM\\StonyBrook\\Courses\\CSE219\\219_2015_Fall\\projects\\hw3\\SlideShowMaker\\images\\slide_show_images\\",
+            "caption":"Arches"
+        },
+        {
+            "image_file_name":"BryceCanyonUtah.jpg",
+            "image_path":"C:\\Users\\McKillaGorilla\\Documents\\RTM\\StonyBrook\\Courses\\CSE219\\219_2015_Fall\\projects\\hw3\\SlideShowMaker\\images\\slide_show_images\\",
+            "caption":"Bryce Canyon"
+        },
+        {
+            "image_file_name":"SaltUtah.jpg",
+            "image_path":"C:\\Users\\McKillaGorilla\\Documents\\RTM\\StonyBrook\\Courses\\CSE219\\219_2015_Fall\\projects\\hw3\\SlideShowMaker\\images\\slide_show_images\\",
+            "caption":"Salt Flats"
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This XML file allows us to easily customize the look and language used
+    in our program's user interface. Note that this is for customizing settings
+    for the Slide Show Maker interface.  
+-->
+<properties>
+    <property_list>    
+        <property name="TITLE_WINDOW"		value="Slide Show Maker"></property>  
+        
+        <!-- PROGRAM ICON FILES -->
+	
+        <!-- TOOLTIPS FOR BUTTONS -->
+        <property name="TOOLTIP_NEW_SLIDE_SHOW"	    value="Create a New Slide Show"></property>
+        <property name="TOOLTIP_LOAD_SLIDE_SHOW"    value="Load an Existing Slide Show"></property>
+        <property name="TOOLTIP_SAVE_SLIDE_SHOW"    value="Save this Slide Show"></property>
+        <property name="TOOLTIP_VIEW_SLIDE_SHOW"    value="View this Slide Show"></property>
+        <property name="TOOLTIP_EXIT"		    value="Exit the Application"></property>
+	<property name="TOOLTIP_ADD_SLIDE"	    value="Add Slide"></property>
+	<property name="TOOLTIP_REMOVE_SLIDE"	    value="Remove Slide"></property>
+	<property name="TOOLTIP_MOVE_UP"	    value="Move Slide Up"></property>
+	<property name="TOOLTIP_MOVE_DOWN"	    value="Move Slide Down"></property>
+	<property name="TOOLTIP_PREVIOUS_SLIDE"	    value="Previous Slide"></property>
+	<property name="TOOLTIP_NEXT_SLIDE"	    value="Next Slide"></property>
+	
+	<!-- DEFAULT VALUES -->
+	<property name="DEFAULT_IMAGE_CAPTION"	    value="&lt;ENTER CAPTION&gt;"></property>
+	
+	<!-- UI LABELS -->
+	<property name="LABEL_CAPTION"		    value="Caption:"></property>
+	<property name="LABEL_SLIDESHOW_TITLE"	    value="Slideshow Title:"></property>
+	<property name="LABEL_SAVE_UNSAVED_WORK"    value="Save unsaved work?"></property>
+        
+	<!-- ERROR FEEDBACK MESSAGES -->
+	<property name="ERROR_SLIDESHOW_LOADING"    value="Slideshow File Format Error"></property>
+	<property name="ERROR_NO_SLIDESHOW_IMAGES"  value="No Images in Slideshow To VIew"></property>
+	<property name="ERROR_UNEXPECTED"	    value="An Unexpected Error has Occured"></property>
+    </property_list>
+    <property_options_list>
+    </property_options_list>
+</properties>

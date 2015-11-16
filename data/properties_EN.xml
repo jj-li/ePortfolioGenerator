@@ -2,7 +2,9 @@
 <!--
     This XML file allows us to easily customize the look and language used
     in our program's user interface. Note that this is for customizing settings
-    for the Slide Show Maker interface.  
+    for the Course Schedule Builder interface, NOT the Web page that we're building. 
+    
+    @coAuthor Jia Li
 -->
 <properties>
     <property_list>    
@@ -11,10 +13,11 @@
         <!-- PROGRAM ICON FILES -->
 	
         <!-- TOOLTIPS FOR BUTTONS -->
-        <property name="TOOLTIP_NEW_SLIDE_SHOW"	    value="Create a New Slide Show"></property>
-        <property name="TOOLTIP_LOAD_SLIDE_SHOW"    value="Load an Existing Slide Show"></property>
-        <property name="TOOLTIP_SAVE_SLIDE_SHOW"    value="Save this Slide Show"></property>
-        <property name="TOOLTIP_VIEW_SLIDE_SHOW"    value="View this Slide Show"></property>
+        <property name="TOOLTIP_NEW_SLIDE_SHOW"	    value="Create a New ePortfolio"></property>
+        <property name="TOOLTIP_LOAD_SLIDE_SHOW"    value="Load an Existing ePortfolio"></property>
+        <property name="TOOLTIP_SAVE_SLIDE_SHOW"    value="Save this ePortfolio"></property>
+        <property name="TOOLTIP_SAVE_AS_SLIDE_SHOW"    value="Save this ePortfolio as"></property>
+        <property name="TOOLTIP_EXPORT_EPORTFOLIO"    value="Export this ePortfolio"></property>
         <property name="TOOLTIP_EXIT"		    value="Exit the Application"></property>
 	<property name="TOOLTIP_ADD_SLIDE"	    value="Add Slide"></property>
 	<property name="TOOLTIP_REMOVE_SLIDE"	    value="Remove Slide"></property>
@@ -24,17 +27,42 @@
 	<property name="TOOLTIP_NEXT_SLIDE"	    value="Next Slide"></property>
 	
 	<!-- DEFAULT VALUES -->
-	<property name="DEFAULT_IMAGE_CAPTION"	    value="&lt;ENTER CAPTION&gt;"></property>
+	<property name="DEFAULT_IMAGE_CAPTION"	    value="ENTER CAPTION: "></property>
+	<property name="DEFAULT_SLIDE_SHOW_TITLE"   value="ENTER TITLE"></property>
+        <property name="BUTTON_OKAY"                value="Yes"></property>
+        <property name="SAVE_TEXT"                  value="Would you like to save your file?"></property>
 	
 	<!-- UI LABELS -->
 	<property name="LABEL_CAPTION"		    value="Caption:"></property>
-	<property name="LABEL_SLIDESHOW_TITLE"	    value="Slideshow Title:"></property>
-	<property name="LABEL_SAVE_UNSAVED_WORK"    value="Save unsaved work?"></property>
         
-	<!-- ERROR FEEDBACK MESSAGES -->
-	<property name="ERROR_SLIDESHOW_LOADING"    value="Slideshow File Format Error"></property>
-	<property name="ERROR_NO_SLIDESHOW_IMAGES"  value="No Images in Slideshow To VIew"></property>
-	<property name="ERROR_UNEXPECTED"	    value="An Unexpected Error has Occured"></property>
+        <!-- GUI LABELS -->
+        <property name="SLIDE_SHOW_TITLE_LABEL"    value="Slide Show Title: "></property>
+
+        <!-- ERROR DIALOGUES -->
+        <property name="REMOVE_SLIDE"                   value="Please select a slide to remove."></property>
+        <property name="REMOVE_SLIDE_ERROR_TITLE"       value="Remove Error"></property>
+        <property name="MOVE_UP_SLIDE1"                 value="Please select a slide to move up."></property>
+        <property name="MOVE_UP_SLIDE2"                 value="Unable to move slide up."></property>
+        <property name="MOVE_UP_SLIDE3"                 value="Move up error"></property>
+        <property name="MOVE_DOWN_SLIDE1"               value="Please select a slide to move down."></property>
+        <property name="MOVE_DOWN_SLIDE2"               value="Unable to move slide down."></property>
+        <property name="MOVE_DOWN_SLIDE3"               value="Move down error"></property>
+        <property name="NO_SLIDESHOW"                   value="No slides to display."></property>
+        <property name="NO_SLIDESHOW_TITLE"             value="Invalid slideshow."></property>
+        <property name="MISSING_IMAGE"                  value=" not found. The slide containing that image is removed."></property>
+        <property name="MISSING_IMAGE_TITLE"            value="No image"></property>
+        <property name="FAILED_SLIDE_SHOW_CREATED"      value="Error creating slide show."></property>
+        <property name="FAILED_SLIDE_SHOW_CREATED_TITLE"      value="Failed"></property>
+        <property name="FAILED_SLIDE_SHOW_LOAD"               value="Error loading slide show."></property>
+        <property name="FAILED_SLIDE_SHOW_LOAD_TITLE"         value="Failed"></property>
+        <property name="FAILED_SLIDE_SHOW_SAVE"               value="Please enter a title for your slide show."></property>
+        <property name="FAILED_SLIDE_SHOW_SAVE_TITLE"         value="Failed"></property>
+        <property name="FAILED_SLIDE_SHOW_EXIT"               value="Error exiting slide show."></property>
+        <property name="FAILED_SLIDE_SHOW_EXIT_TITLE"         value="Failed"></property>
+        
+        <!-- SUCESS DIALOGUES -->
+        <property name="SLIDE_SHOW_CREATED"             value="Slide Show has been created successfully."></property>
+        <property name="SLIDE_SHOW_CREATED_TITLE"       value="Success"></property>
     </property_list>
     <property_options_list>
     </property_options_list>

@@ -49,13 +49,13 @@
 
 .horizontal_toolbar_button {
     -fx-padding: 9px 9px 9px 9px;
-    -fx-background-color: rgb(255, 240, 0);
-    //-fx-border-color: rgb(255, 255, 10);
+    -fx-background-color: #8aacb8;
     -fx-border-color: rgb(0, 0, 0);
 }
 
 .horizontal_toolbar {
-    -fx-hgap: 1px;
+    -fx-hgap: 5px;
+    -fx-padding: 5px 5px 5px 5px;
 }
 
 .view_slide_show_buttons {
@@ -73,7 +73,7 @@
 }
 
 .root{
-    -fx-background-color: rgb(255, 255, 90);
+    -fx-background-color: #add8e6;
     -fx-font-family: "Comic Sans MS";
     -fx-font-size: 14px;
 }

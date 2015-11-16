@@ -24,7 +24,7 @@ public class StartupConstants {
     public static String PATH_IMAGES = "images/";
     public static String PATH_ICONS = PATH_IMAGES + "icons/";
     public static String PATH_SLIDE_SHOW_IMAGES = PATH_IMAGES + "slide_show_images/";
-    public static String PATH_CSS = "ssm/style/";
+    public static String PATH_CSS = "epm/style/";
     public static String STYLE_SHEET_UI = PATH_CSS + "EPortfolioMakerStyle.css";
    // public static String SLIDESHOW_TITLE_LABEL = " Enter Slide Show Title: ";
 
@@ -32,7 +32,8 @@ public class StartupConstants {
     public static String ICON_NEW_SLIDE_SHOW = "New.png";
     public static String ICON_LOAD_SLIDE_SHOW = "Load.png";
     public static String ICON_SAVE_SLIDE_SHOW = "Save.png";
-    public static String ICON_VIEW_SLIDE_SHOW = "View.png";
+    public static String ICON_SAVE_AS_SLIDE_SHOW = "SaveAs.png";
+    public static String ICON_EXPORT_SLIDE_SHOW = "Export.png";
     public static String ICON_EXIT = "Exit.png";
     public static String ICON_ADD_SLIDE = "Add.png";
     public static String ICON_REMOVE_SLIDE = "Remove.png";

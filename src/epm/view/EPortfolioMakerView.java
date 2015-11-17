@@ -47,11 +47,14 @@ import static epm.LanguagePropertyType.TOOLTIP_REMOVE_SLIDE;
 import static epm.LanguagePropertyType.TOOLTIP_SAVE_SLIDE_SHOW;
 import static epm.LanguagePropertyType.TOOLTIP_SAVE_AS_SLIDE_SHOW;
 import static epm.EPortfolioMaker.CORRUPTED_SLIDE;
+import static epm.LanguagePropertyType.TOOLTIP_EDIT_EPORTFOLIO;
 import static epm.LanguagePropertyType.TOOLTIP_EXPORT_EPORTFOLIO;
+import static epm.LanguagePropertyType.TOOLTIP_VIEW_EPORTFOLIO;
 import static epm.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static epm.StartupConstants.CSS_CLASS_SLIDE_SHOW_EDIT_VBOX;
 import static epm.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static epm.StartupConstants.ICON_ADD_SLIDE;
+import static epm.StartupConstants.ICON_EDIT_SLIDE_SHOW;
 import static epm.StartupConstants.ICON_EXIT;
 import static epm.StartupConstants.ICON_EXPORT_SLIDE_SHOW;
 import static epm.StartupConstants.ICON_LOAD_SLIDE_SHOW;
@@ -63,6 +66,7 @@ import static epm.StartupConstants.ICON_PREVIOUS;
 import static epm.StartupConstants.ICON_REMOVE_SLIDE;
 import static epm.StartupConstants.ICON_SAVE_SLIDE_SHOW;
 import static epm.StartupConstants.ICON_SAVE_AS_SLIDE_SHOW;
+import static epm.StartupConstants.ICON_VIEW_SLIDE_SHOW;
 import static epm.StartupConstants.PATH_ICONS;
 import static epm.StartupConstants.STYLE_SHEET_UI;
 import static epm.StartupConstants.WINDOWS_ICON;
@@ -72,6 +76,7 @@ import epm.model.Page;
 import epm.model.EPortfolioModel;
 import epm.error.ErrorHandler;
 import epm.file.EPortfolioFileManager;
+import javafx.scene.layout.Priority;
 
 /**
  * This class provides the User Interface for this application,
@@ -92,11 +97,15 @@ public class EPortfolioMakerView {
 
     // THIS IS THE TOP TOOLBAR AND ITS CONTROLS
     FlowPane fileToolbarPane;
+    FlowPane fileToolbarPaneLeft;
+    FlowPane fileToolbarPaneRight;
     Button newEPortfolioButton;
     Button loadEPortfolioButton;
     Button saveEPortfolioButton;
     Button saveAsEPortfolioButton;
     Button exportEPortfolioButton;
+    Button editEPortfolioButton;
+    Button viewEPortfolioButton;
     Button exitButton;
     TextField ePortfolioTitle;
     
@@ -253,25 +262,40 @@ public class EPortfolioMakerView {
      */
     private void initFileToolbar() {
 	fileToolbarPane = new FlowPane();
+        fileToolbarPaneLeft = new FlowPane();
+        fileToolbarPaneRight = new FlowPane();
         fileToolbarPane.getStyleClass().add("horizontal_toolbar");
+        fileToolbarPaneLeft.getStyleClass().add("horizontal_toolbar");
+        fileToolbarPaneRight.getStyleClass().add("horizontal_toolbar");
+        fileToolbarPaneRight.setPrefWrapLength(85);
+        
+        Screen screen = Screen.getPrimary();
+	Rectangle2D bounds = screen.getVisualBounds();
+        double total = bounds.getWidth();
+        double one = fileToolbarPaneLeft.getPrefWrapLength();
+        double two = fileToolbarPaneRight.getPrefWrapLength();
+        double three = total - (one + two) - 60;
+        
+        fileToolbarPane.setStyle("-fx-hgap:" +  three + "px;");
+        
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
 	// START AS ENABLED (false), WHILE OTHERS DISABLED (true)
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
-	newEPortfolioButton = initChildButton(fileToolbarPane, ICON_NEW_SLIDE_SHOW,	TOOLTIP_NEW_SLIDE_SHOW,	    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-	loadEPortfolioButton = initChildButton(fileToolbarPane, ICON_LOAD_SLIDE_SHOW,	TOOLTIP_LOAD_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-	saveEPortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_SLIDE_SHOW,	TOOLTIP_SAVE_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        saveAsEPortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_AS_SLIDE_SHOW,	TOOLTIP_SAVE_AS_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-	exportEPortfolioButton = initChildButton(fileToolbarPane, ICON_EXPORT_SLIDE_SHOW,	TOOLTIP_EXPORT_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        ePortfolioTitle = new TextField(ePortfolio.getTitle());
-        ePortfolioTitle.setText(props.getProperty(DEFAULT_SLIDE_SHOW_TITLE.toString()));
-        ePortfolio.setTitle(ePortfolioTitle.getText());
-        ePortfolioTitle.setOnKeyReleased(e -> {
-            saveEPortfolioButton.setDisable(false);
-            ePortfolio.setTitle(ePortfolioTitle.getText());
-        });
-        Label label1 = new Label(props.getProperty(DEFAULT_SLIDE_SHOW_TITLE.toString()) + ": ");
-        fileToolbarPane.getChildren().addAll(label1, ePortfolioTitle);
+	newEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_NEW_SLIDE_SHOW,	TOOLTIP_NEW_SLIDE_SHOW,	    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+	loadEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_LOAD_SLIDE_SHOW,	TOOLTIP_LOAD_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+	saveEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_SAVE_SLIDE_SHOW,	TOOLTIP_SAVE_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        saveAsEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_SAVE_AS_SLIDE_SHOW,	TOOLTIP_SAVE_AS_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+	exportEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_EXPORT_SLIDE_SHOW,	TOOLTIP_EXPORT_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        exitButton = initChildButton(fileToolbarPaneLeft, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        
+
+        
+        editEPortfolioButton = initChildButton(fileToolbarPaneRight, ICON_EDIT_SLIDE_SHOW,	TOOLTIP_EDIT_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        viewEPortfolioButton = initChildButton(fileToolbarPaneRight, ICON_VIEW_SLIDE_SHOW,	TOOLTIP_VIEW_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        editEPortfolioButton.getStyleClass().add("rightToolbar");
+        viewEPortfolioButton.getStyleClass().add("rightToolbar");
+        
+        fileToolbarPane.getChildren().addAll(fileToolbarPaneLeft, fileToolbarPaneRight);
     }
 
     private void initWindow(String windowTitle) {

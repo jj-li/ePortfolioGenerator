@@ -18,6 +18,8 @@
         <property name="TOOLTIP_SAVE_SLIDE_SHOW"    value="Save this ePortfolio"></property>
         <property name="TOOLTIP_SAVE_AS_SLIDE_SHOW"    value="Save this ePortfolio as"></property>
         <property name="TOOLTIP_EXPORT_EPORTFOLIO"    value="Export this ePortfolio"></property>
+        <property name="TOOLTIP_EDIT_EPORTFOLIO"    value="Edit this ePortfolio"></property>
+        <property name="TOOLTIP_VIEW_EPORTFOLIO"    value="View this ePortfolio"></property>
         <property name="TOOLTIP_EXIT"		    value="Exit the Application"></property>
 	<property name="TOOLTIP_ADD_SLIDE"	    value="Add Slide"></property>
 	<property name="TOOLTIP_REMOVE_SLIDE"	    value="Remove Slide"></property>

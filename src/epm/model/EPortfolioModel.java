@@ -79,10 +79,15 @@ public class EPortfolioModel {
      * @param initImageFileName File name of the slide image to add.
      * @param initImagePath File path for the slide image to add.
      */
-    public void addPage(   String initImageFileName,
-			    String initImagePath) {
-	Page slideToAdd = new Page(initImageFileName, initImagePath);
-	pages.add(slideToAdd);
+    public void addPage(){
+        Page page = new Page();
+        pages.add(page);
+	ui.reloadSlideShowPane(this);
+    }
+    
+    public void addPage(String title, String name){
+        Page page = new Page(title, name);
+        pages.add(page);
 	ui.reloadSlideShowPane(this);
     }
     

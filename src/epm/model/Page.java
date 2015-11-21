@@ -9,9 +9,8 @@ package epm.model;
  * @author McKilla Gorilla & _____________
  */
 public class Page {
-    String imageFileName;
-    String imagePath;
-    String caption;
+    String title;
+    String studentName;
      
     /**
      * Constructor, it initializes all slide data.
@@ -20,36 +19,29 @@ public class Page {
      * @param initImagePath File path for the image.
      * 
      */
-    public Page(String initImageFileName, String initImagePath) {
-	imageFileName = initImageFileName;
-	imagePath = initImagePath;
-        caption = "";
+    public Page() {
+        title = "";
+        studentName = "";
+    }
+    
+    public Page(String title, String studentName) {
+        this.title = title;
+        this.studentName = studentName;
     }
     
     // ACCESSOR METHODS
-    public String getImageFileName() { return imageFileName; }
-    public String getImagePath() { return imagePath; }
+    public String getTitle() { return title; }
+    public String getStudentName() { return studentName; }
     
     // MUTATOR METHODS
-    public void setImageFileName(String initImageFileName) {
-	imageFileName = initImageFileName;
+    public void setTitle(String newTitle) {
+	title = newTitle;
     }
     
-    public void setImagePath(String initImagePath) {
-	imagePath = initImagePath;
+    public void setStudentName(String newStudentName) {
+	studentName = newStudentName;
     }
     
-    public void setImage(String initPath, String initFileName) {
-	imagePath = initPath;
-	imageFileName = initFileName;
-    }
     
-    public void setCaption(String cap){
-        caption = cap;
-    }
     
-    public String getCaption(){
-        return caption;
-    }
-            
 }

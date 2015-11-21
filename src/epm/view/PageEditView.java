@@ -37,7 +37,7 @@ import static epm.file.EPortfolioFileManager.SLASH;
  * 
  * 
  */
-public class PageEditView extends HBox {
+public class PageEditView extends VBox {
     // SLIDE THIS COMPONENT EDITS
     Page page;
     
@@ -45,9 +45,11 @@ public class PageEditView extends HBox {
     ImageView imageSelectionView;
     
     // CONTROLS FOR EDITING THE CAPTION
-    VBox captionVBox;
-    Label captionLabel;
-    TextField captionTextField;
+    Label title;
+    TextField titleField;
+    Label name;
+    TextField nameField;
+    
     
     // PROVIDES RESPONSES FOR IMAGE SELECTION
     ImageSelectionController imageController;
@@ -58,31 +60,16 @@ public class PageEditView extends HBox {
      * 
      * @param initSlide The slide to be edited by this component.
      */
-    public PageEditView(Page initSlide) {
+    public PageEditView(Page initPage) {
 	// FIRST SELECT THE CSS STYLE CLASS FOR THIS CONTAINER
 	this.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
 	// KEEP THE SLIDE FOR LATER
-	page = initSlide;
+	page = initPage;
 	
-	// MAKE SURE WE ARE DISPLAYING THE PROPER IMAGE
-	imageSelectionView = new ImageView();
-	updateSlideImage();
-
-	// SETUP THE CAPTION CONTROLS
-	captionVBox = new VBox();
-	PropertiesManager props = PropertiesManager.getPropertiesManager();
-	captionLabel = new Label(props.getProperty(LanguagePropertyType.LABEL_CAPTION));
-	captionTextField = new TextField();
-        captionTextField.setOnKeyReleased( e -> {
-            page.setCaption(captionTextField.getText());
-        });
-        captionTextField.setText(page.getCaption());
-	captionVBox.getChildren().add(captionLabel);
-	captionVBox.getChildren().add(captionTextField);
+	
         
 	// LAY EVERYTHING OUT INSIDE THIS COMPONENT
 	getChildren().add(imageSelectionView);
-	getChildren().add(captionVBox);
 
 	// SETUP THE EVENT HANDLERS
 	imageController = new ImageSelectionController();
@@ -96,7 +83,9 @@ public class PageEditView extends HBox {
      * update the image displayed.
      */
     public void updateSlideImage() {
-	String imagePath = page.getImagePath() + SLASH + page.getImageFileName();
+        //TO FIX
+	/*
+        String imagePath = page.getImagePath() + SLASH + page.getImageFileName();
 	File file = new File(imagePath);
 	try {
             //checks if file is valid
@@ -134,6 +123,7 @@ public class PageEditView extends HBox {
            stage.setTitle(props.getProperty(MISSING_IMAGE_TITLE));
            stage.show();
 	}
+        */
     }
     
     public ImageView getImageView()

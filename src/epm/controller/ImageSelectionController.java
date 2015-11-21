@@ -42,7 +42,8 @@ public class ImageSelectionController {
 	
 	// LET'S OPEN THE FILE CHOOSER
 	File file = imageFileChooser.showOpenDialog(null);
-	if (file != null) {
+        //TO FIX
+	/*if (file != null) {
 	    String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
 	    String fileName = file.getName();
 	    slideToEdit.setImage(path, fileName);
@@ -50,6 +51,6 @@ public class ImageSelectionController {
 	}	    
 	else {
 	    // @todo provide error message for no files selected
-	}
+	}*/
     }
 }

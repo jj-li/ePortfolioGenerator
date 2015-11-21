@@ -44,6 +44,16 @@ public class StartupConstants {
     public static String ICON_PREVIOUS = "Previous.png";
     public static String ICON_NEXT = "Next.png";
     public static String WINDOWS_ICON = "WindowsIcon.png";
+    public static String ICON_ADD_TEXT = "Text.png";
+    public static String ICON_ADD_IMAGE = "Image.png";
+    public static String ICON_ADD_SLIDESHOW = "Slideshow.png";
+    public static String ICON_ADD_VIDEO = "Video.png";
+    public static String ICON_EDIT_FONT = "Font.png";
+    public static String ICON_REMOVE_COMPONENT = "RemoveComponent.png";
+    public static String ICON_EDIT_COMPONENT = "EditComponent.png";
+    public static String ICON_ADD_HYPERLINK = "Hyperlink.png";
+    public static String ICON_EDIT_HYPERLINK = "EditHyperlink.png";
+    
     // @todo
     public static String    DEFAULT_SLIDE_IMAGE = "DefaultStartSlide.png";
     public static int	    DEFAULT_THUMBNAIL_WIDTH = 200;

@@ -21,12 +21,21 @@
         <property name="TOOLTIP_EDIT_EPORTFOLIO"    value="Edit this ePortfolio"></property>
         <property name="TOOLTIP_VIEW_EPORTFOLIO"    value="View this ePortfolio"></property>
         <property name="TOOLTIP_EXIT"		    value="Exit the Application"></property>
-	<property name="TOOLTIP_ADD_SLIDE"	    value="Add Slide"></property>
-	<property name="TOOLTIP_REMOVE_SLIDE"	    value="Remove Slide"></property>
+	<property name="TOOLTIP_ADD_SLIDE"	    value="Add Page"></property>
+	<property name="TOOLTIP_REMOVE_SLIDE"	    value="Remove Page"></property>
 	<property name="TOOLTIP_MOVE_UP"	    value="Move Slide Up"></property>
 	<property name="TOOLTIP_MOVE_DOWN"	    value="Move Slide Down"></property>
 	<property name="TOOLTIP_PREVIOUS_SLIDE"	    value="Previous Slide"></property>
 	<property name="TOOLTIP_NEXT_SLIDE"	    value="Next Slide"></property>
+        <property name="TOOLTIP_EDIT_COMPONENT"	    value="Edit Selected Component"></property>
+	<property name="TOOLTIP_ADD_TEXT"	    value="Add Text Component"></property>
+	<property name="TOOLTIP_ADD_VIDEO"	    value="Add Video Component"></property>
+	<property name="TOOLTIP_ADD_IMAGE"	    value="Add Image Component"></property>
+	<property name="TOOLTIP_ADD_SLIDESHOW"	    value="Add Slideshow Component"></property>
+        <property name="TOOLTIP_ADD_HYPERLINK"	    value="Add Hyperlink"></property>
+	<property name="TOOLTIP_EDIT_HYPERLINK"	    value="Edit Hyperlink"></property>
+	<property name="TOOLTIP_EDIT_FONT"	    value="Edit Front for Selected Text Component"></property>
+        <property name="TOOLTIP_REMOVE_COMPONENT"	    value="Remove Selected Component"></property>
 	
 	<!-- DEFAULT VALUES -->
 	<property name="DEFAULT_IMAGE_CAPTION"	    value="ENTER CAPTION: "></property>

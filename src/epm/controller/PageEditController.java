@@ -27,5 +27,8 @@ public class PageEditController {
      * Provides a response for when the user wishes to add a new
      * slide to the slide show.
      */
-    
+    public void addPage() {
+        EPortfolioModel ePortfolio = ui.getEPortfolio();
+        ePortfolio.addPage();
+    }
 }

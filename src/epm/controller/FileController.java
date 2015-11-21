@@ -111,8 +111,6 @@ public class FileController {
                 // THE APPROPRIATE CONTROLS
                 ui.updateToolbarControls(saved);
                 // TELL THE USER THE SLIDE SHOW HAS BEEN CREATED
-                ErrorHandler handle = ui.getErrorHandler();
-                handle.processError(SLIDE_SHOW_CREATED, prop.getProperty(SLIDE_SHOW_CREATED_TITLE));
             }
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
@@ -210,6 +208,8 @@ public class FileController {
         Boolean jsDirectory = new File("sites/" + slideShowToShow.getTitle() +"/js").mkdirs();
         Boolean imgDirectory = new File("sites/" + slideShowToShow.getTitle() +"/img").mkdirs();
         File imgs = new File("sites/" + slideShowToShow.getTitle() +"/img");
+        //TO FIX
+        /*
         if (imgs.exists()) {
             for (File files : imgs.listFiles()) {
                 boolean fileExists = false;
@@ -220,7 +220,8 @@ public class FileController {
                 if (!fileExists)
                     files.delete();
             }
-        }    
+        }  
+        */
         String jsString = "";
         String jsPath = "sites/Template/js/TemplateJS.js";
         File jsFile = new File(jsPath);
@@ -297,6 +298,8 @@ public class FileController {
     {
         for (Page s : slideShowToShow.getPages())
         {
+            //TO FIX
+            /*
             String imagePath = s.getImagePath() + SLASH + s.getImageFileName();
             File image = new File(imagePath);
             File newImage = new File("sites/" + slideShowToShow.getTitle() + "/img/" + s.getImageFileName());
@@ -310,6 +313,7 @@ public class FileController {
             catch (IOException e) {
                 e.printStackTrace();
             } 
+            */
         }
         
         File next = new File("sites/Template/img/next.png");

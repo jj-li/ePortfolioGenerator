@@ -14,15 +14,14 @@
 }
 
 .workspace_spacing {
-    -fx-padding: 8px 0px 0px 0px;
+    -fx-padding: 15px 0px 0px 0px;
 }
 
 .slide_show_edit_vbox {
     -fx-background-radius: 5.0;
-    -fx-background-color: rgb(255, 255, 90);
+    -fx-background-color: #add8e6;
     -fx-padding: 0px 10px 0px 10px;
     -fx-spacing: 10px;
-    -fx-alignment: center-left;
 }
 
 .slide_edit_view {
@@ -42,9 +41,9 @@
 }
 
 .vertical_toolbar_button {
-    -fx-background-color: rgb(255, 255, 35);
+    -fx-background-color: #ffc966;
     -fx-border-color: rgb(0, 0, 0);
-    -fx-padding: 13px 13px 13px 13px;
+    -fx-padding: 5px 5px 5px 5px;
 }
 
 .horizontal_toolbar_button {
@@ -54,7 +53,7 @@
 }
 
 .horizontal_toolbar {
-    -fx-hgap: 5px;
+    -fx-hgap: 7px;
     -fx-padding: 5px 5px 5px 5px;
 }
 
@@ -70,6 +69,8 @@
 
 .slide_spacing {
     -fx-spacing: 5px;
+    -fx-background-color: #66ff66;
+    -fx-border-color: rgb(0, 0, 0);
 }
 
 

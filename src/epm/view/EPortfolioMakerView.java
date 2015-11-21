@@ -47,13 +47,30 @@ import static epm.LanguagePropertyType.TOOLTIP_REMOVE_SLIDE;
 import static epm.LanguagePropertyType.TOOLTIP_SAVE_SLIDE_SHOW;
 import static epm.LanguagePropertyType.TOOLTIP_SAVE_AS_SLIDE_SHOW;
 import static epm.EPortfolioMaker.CORRUPTED_SLIDE;
+import static epm.LanguagePropertyType.TOOLTIP_ADD_HYPERLINK;
+import static epm.LanguagePropertyType.TOOLTIP_ADD_IMAGE;
+import static epm.LanguagePropertyType.TOOLTIP_ADD_SLIDESHOW;
+import static epm.LanguagePropertyType.TOOLTIP_ADD_TEXT;
+import static epm.LanguagePropertyType.TOOLTIP_ADD_VIDEO;
+import static epm.LanguagePropertyType.TOOLTIP_EDIT_COMPONENT;
 import static epm.LanguagePropertyType.TOOLTIP_EDIT_EPORTFOLIO;
+import static epm.LanguagePropertyType.TOOLTIP_EDIT_FONT;
+import static epm.LanguagePropertyType.TOOLTIP_EDIT_HYPERLINK;
 import static epm.LanguagePropertyType.TOOLTIP_EXPORT_EPORTFOLIO;
+import static epm.LanguagePropertyType.TOOLTIP_REMOVE_COMPONENT;
 import static epm.LanguagePropertyType.TOOLTIP_VIEW_EPORTFOLIO;
 import static epm.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static epm.StartupConstants.CSS_CLASS_SLIDE_SHOW_EDIT_VBOX;
 import static epm.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
+import static epm.StartupConstants.ICON_ADD_HYPERLINK;
+import static epm.StartupConstants.ICON_ADD_IMAGE;
 import static epm.StartupConstants.ICON_ADD_SLIDE;
+import static epm.StartupConstants.ICON_ADD_SLIDESHOW;
+import static epm.StartupConstants.ICON_ADD_TEXT;
+import static epm.StartupConstants.ICON_ADD_VIDEO;
+import static epm.StartupConstants.ICON_EDIT_COMPONENT;
+import static epm.StartupConstants.ICON_EDIT_FONT;
+import static epm.StartupConstants.ICON_EDIT_HYPERLINK;
 import static epm.StartupConstants.ICON_EDIT_SLIDE_SHOW;
 import static epm.StartupConstants.ICON_EXIT;
 import static epm.StartupConstants.ICON_EXPORT_SLIDE_SHOW;
@@ -63,6 +80,7 @@ import static epm.StartupConstants.ICON_MOVE_UP;
 import static epm.StartupConstants.ICON_NEW_SLIDE_SHOW;
 import static epm.StartupConstants.ICON_NEXT;
 import static epm.StartupConstants.ICON_PREVIOUS;
+import static epm.StartupConstants.ICON_REMOVE_COMPONENT;
 import static epm.StartupConstants.ICON_REMOVE_SLIDE;
 import static epm.StartupConstants.ICON_SAVE_SLIDE_SHOW;
 import static epm.StartupConstants.ICON_SAVE_AS_SLIDE_SHOW;
@@ -76,6 +94,9 @@ import epm.model.Page;
 import epm.model.EPortfolioModel;
 import epm.error.ErrorHandler;
 import epm.file.EPortfolioFileManager;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.layout.Priority;
 
 /**
@@ -114,14 +135,22 @@ public class EPortfolioMakerView {
 
     // THIS WILL GO IN THE LEFT SIDE OF THE SCREEN
     VBox slideEditToolbar;
-    Button addSlideButton;
-    Button removeSlideButton;
-    Button moveUpSlideButton;
-    Button moveDownSlideButton;
+    Button addPageButton;
+    Button removePageButton;
+    Button addTextButton;
+    Button addImageButton;
+    Button addVideoButton;
+    Button addSlideshowButton;
+    Button addHyperlinkButton;
+    Button editHyperlinkButton;
+    Button editComponentButton;
+    Button removeComponentButton;
+    Button editFontButton;
+
     
     // AND THIS WILL GO IN THE CENTER
     ScrollPane slidesEditorScrollPane;
-    VBox slidesEditorPane;
+    TabPane pageEditorPane;
 
     // THIS IS THE SLIDE SHOW WE'RE WORKING WITH
     EPortfolioModel ePortfolio;
@@ -217,19 +246,64 @@ public class EPortfolioMakerView {
         // THIS WILL GO IN THE LEFT SIDE OF THE SCREEN
 	slideEditToolbar = new VBox();
 	slideEditToolbar.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_EDIT_VBOX);
-	addSlideButton = this.initChildButton(slideEditToolbar,	ICON_ADD_SLIDE,	 TOOLTIP_ADD_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
-        removeSlideButton = this.initChildButton(slideEditToolbar, ICON_REMOVE_SLIDE, TOOLTIP_REMOVE_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
-        moveUpSlideButton = this.initChildButton(slideEditToolbar, ICON_MOVE_UP, TOOLTIP_ADD_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
-        moveDownSlideButton = this.initChildButton(slideEditToolbar, ICON_MOVE_DOWN, TOOLTIP_REMOVE_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  true);
-	
-	// AND THIS WILL GO IN THE CENTER
-	slidesEditorPane = new VBox();
-        slidesEditorPane.getStyleClass().add("slide_spacing");
-	slidesEditorScrollPane = new ScrollPane(slidesEditorPane);
-        slidesEditorScrollPane.getStyleClass().add("slide_panes");
+        HBox top = new HBox();
+	addPageButton = this.initChildButton(top, ICON_ADD_SLIDE, TOOLTIP_ADD_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        removePageButton = this.initChildButton(top, ICON_REMOVE_SLIDE, TOOLTIP_REMOVE_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        top.setStyle("-fx-spacing: 5px");
+        
+        VBox bottom = new VBox();
+        HBox one = new HBox();
+        HBox two = new HBox();
+        HBox three = new HBox();
+        HBox four = new HBox();
+        HBox five = new HBox();
+        addTextButton = this.initChildButton(one, ICON_ADD_TEXT, TOOLTIP_ADD_TEXT, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        addImageButton = this.initChildButton(one, ICON_ADD_IMAGE, TOOLTIP_ADD_IMAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        addVideoButton = this.initChildButton(two, ICON_ADD_VIDEO, TOOLTIP_ADD_VIDEO, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        addSlideshowButton = this.initChildButton(two, ICON_ADD_SLIDESHOW, TOOLTIP_ADD_SLIDESHOW, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        addHyperlinkButton = this.initChildButton(three, ICON_ADD_HYPERLINK, TOOLTIP_ADD_HYPERLINK, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        editHyperlinkButton = this.initChildButton(three, ICON_EDIT_HYPERLINK, TOOLTIP_EDIT_HYPERLINK, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        editComponentButton = this.initChildButton(four, ICON_EDIT_COMPONENT, TOOLTIP_EDIT_COMPONENT, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        removeComponentButton = this.initChildButton(four, ICON_REMOVE_COMPONENT, TOOLTIP_REMOVE_COMPONENT, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        editFontButton = this.initChildButton(five, ICON_EDIT_FONT, TOOLTIP_EDIT_FONT, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        one.setStyle("-fx-spacing: 5px");
+        two.setStyle("-fx-spacing: 5px");
+        three.setStyle("-fx-spacing: 5px");
+        four.setStyle("-fx-spacing: 5px");
+        five.setStyle("-fx-spacing: 5px");
+        bottom.setStyle("-fx-spacing: 5px;");
+        
+        Screen screen = Screen.getPrimary();
+	Rectangle2D bounds = screen.getVisualBounds();
+        double totalHeight = bounds.getHeight();
+        double firstHeight = top.getHeight();
+        double secondHeight = totalHeight/4;
+        double finalHeight = secondHeight - firstHeight;
+        
+        bottom.getChildren().addAll(one, two, three, four, five);
+        slideEditToolbar.getChildren().add(top);
+        slideEditToolbar.getChildren().add(bottom);
+        slideEditToolbar.setStyle("-fx-spacing:" + finalHeight + "px;");
+        
+        pageEditorPane = new TabPane();
+        Tab tab = new Tab();
+        tab.setText("Tab 1");
+        HBox hbox = new HBox();
+        hbox.getChildren().add(new Label("Tab1"));
+        tab.setContent(hbox);
+        pageEditorPane.getTabs().add(tab);
+        pageEditorPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+        pageEditorPane.prefWidthProperty().bind(workspace.widthProperty());
+        pageEditorPane.setStyle("-fx-border-color: rgb(0, 0, 0);");//
+        
+        
 	// NOW PUT THESE TWO IN THE WORKSPACE
 	workspace.getChildren().add(slideEditToolbar);
-	workspace.getChildren().add(slidesEditorScrollPane);
+	workspace.getChildren().add(pageEditorPane);
+    }
+    
+    public ObservableList<Tab> getTabs() {
+        return pageEditorPane.getTabs();
     }
     
     private void initEventHandlers() {
@@ -253,7 +327,9 @@ public class EPortfolioMakerView {
 	
 	// THEN THE SLIDE SHOW EDIT CONTROLS
 	editController = new PageEditController(this);
-	
+	addPageButton.setOnAction(e -> {
+            editController.addPage();
+        });
     }
 
     /**
@@ -365,9 +441,7 @@ public class EPortfolioMakerView {
     
     public void updateSidebarControls(boolean saved)
     {
-        removeSlideButton.setDisable(saved);
-        moveUpSlideButton.setDisable(saved);
-        moveDownSlideButton.setDisable(saved);
+        removePageButton.setDisable(saved);
     }
     
     /**
@@ -377,10 +451,10 @@ public class EPortfolioMakerView {
      * @param slideShowToLoad SLide show being reloaded.
      */
     public void reloadSlideShowPane(EPortfolioModel ePortfolioToLoad) {
-        ePortfolioTitle.setText(ePortfolioToLoad.getTitle());
-	slidesEditorPane.getChildren().clear();
+        getTabs().clear();
 	for (Page page : ePortfolioToLoad.getPages()) {
-	    PageEditView pageEditor = new PageEditView(page);
+            Tab tab = new Tab(page.getTitle());
+	    getTabs().add(tab);
 	}
     }
     

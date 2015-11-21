@@ -128,9 +128,8 @@ public class EPortfolioFileManager {
     
     private JsonObject makeSlideJsonObject(Page page) {
         JsonObject jso = Json.createObjectBuilder()
-		.add(JSON_IMAGE_FILE_NAME, page.getImageFileName())
-		.add(JSON_IMAGE_PATH, page.getImagePath())
-                .add(JSON_CAPTION, page.getCaption())
+		.add(JSON_IMAGE_FILE_NAME, page.getTitle())
+		.add(JSON_IMAGE_PATH, page.getStudentName())
 		.build();
 	return jso;
     }

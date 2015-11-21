@@ -6,7 +6,7 @@
 package epm.view;
 
 import static epm.StartupConstants.STYLE_SHEET_UI;
-import epm.controller.ImageSelectionController;
+import epm.controller.VideoSelectionController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,9 +21,9 @@ import javafx.stage.Stage;
  *
  * @author icysniper
  */
-public class ImageComponentDialogue extends Stage{
-    Button selectImage;
-    Text imagePath;
+public class VideoComponentDialogue extends Stage{
+    Button selectVideo;
+    Text videoPath;
     HBox top;
     HBox last;
     VBox screen;
@@ -33,37 +33,37 @@ public class ImageComponentDialogue extends Stage{
     Label heightLabel;
     TextField widthField;
     TextField heightField;
-    Button addComponent = new Button("Add Image");
+    Button addComponent = new Button("Add Video");
     
-    public ImageComponentDialogue() {
-        selectImage = new Button("Select Image");
-        imagePath = new Text();
+    public VideoComponentDialogue() {
+        selectVideo = new Button("Select Video");
+        videoPath = new Text();
         top = new HBox();
         last = new HBox();
         screen = new VBox();
-        widthLabel = new Label("Image Width: ");
-        heightLabel = new Label("Image Height: ");
+        widthLabel = new Label("Video Width: ");
+        heightLabel = new Label("Video Height: ");
         widthField = new TextField();
         heightField = new TextField();
         pane = new Pane();
         
-        selectImage.setOnMouseClicked( e-> {
+        selectVideo.setOnMouseClicked( e-> {
             try {
-                ImageSelectionController selectImage = new ImageSelectionController();
-                imagePath.setText(selectImage.processSelectImage()); 
+                VideoSelectionController selectVideo = new VideoSelectionController();
+                videoPath.setText(selectVideo.processSelectVideo()); 
             }
             catch (NullPointerException e1){
                 
             }
         });
         
-        top.getChildren().add(selectImage);
+        top.getChildren().add(selectVideo);
         HBox bottomOne = new HBox();
         HBox bottomTwo = new HBox();
         bottomOne.getChildren().addAll(widthLabel, widthField);
         bottomTwo.getChildren().addAll(heightLabel, heightField);
         last.getChildren().add(addComponent);
-        screen.getChildren().addAll(top, imagePath, bottomOne, bottomTwo, last);
+        screen.getChildren().addAll(top, videoPath, bottomOne, bottomTwo, last);
         pane.getChildren().add(screen);
         
         last.setStyle("-fx-padding: 10px 0px 0px 0px");
@@ -72,7 +72,7 @@ public class ImageComponentDialogue extends Stage{
         screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
         
         scene = new Scene(pane, 380, 190);
-        imagePath.setWrappingWidth(scene.getWidth());
+        videoPath.setWrappingWidth(scene.getWidth());
         scene.getStylesheets().add(STYLE_SHEET_UI);
         this.setScene(scene);
     }

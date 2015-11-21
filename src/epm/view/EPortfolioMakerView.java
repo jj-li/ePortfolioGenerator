@@ -345,6 +345,11 @@ public class EPortfolioMakerView {
            ImageComponentDialogue imageComponent = new ImageComponentDialogue(); 
            imageComponent.showAndWait();
         });
+        
+        addVideoButton.setOnAction ( e->{
+            VideoComponentDialogue videoComponent = new VideoComponentDialogue(); 
+            videoComponent.showAndWait();
+        });
     }
 
     /**

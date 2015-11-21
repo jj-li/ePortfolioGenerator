@@ -66,16 +66,23 @@ public class PageEditView extends VBox {
 	// KEEP THE SLIDE FOR LATER
 	page = initPage;
 	
-	
+        title = new Label("Page Title:");
+        titleField = new TextField();
+        name = new Label("Student Name:");
+        nameField = new TextField();
+        HBox titleSection = new HBox();
+        HBox nameSection = new HBox();
         
+        titleSection.getChildren().addAll(title, titleField);
+        nameSection.getChildren().addAll(name, nameField);
 	// LAY EVERYTHING OUT INSIDE THIS COMPONENT
-	getChildren().add(imageSelectionView);
+	getChildren().addAll(titleSection, nameSection);
 
-	// SETUP THE EVENT HANDLERS
+	/*// SETUP THE EVENT HANDLERS
 	imageController = new ImageSelectionController();
 	imageSelectionView.setOnMousePressed(e -> {
 	    imageController.processSelectImage(page, this);
-	});
+	});*/
     }
     
     /**

@@ -453,7 +453,9 @@ public class EPortfolioMakerView {
     public void reloadSlideShowPane(EPortfolioModel ePortfolioToLoad) {
         getTabs().clear();
 	for (Page page : ePortfolioToLoad.getPages()) {
+            PageEditView pageEdit = new PageEditView(page);
             Tab tab = new Tab(page.getTitle());
+            tab.setContent(pageEdit);
 	    getTabs().add(tab);
 	}
     }

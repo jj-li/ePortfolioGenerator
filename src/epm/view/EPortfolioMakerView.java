@@ -334,6 +334,11 @@ public class EPortfolioMakerView {
         removePageButton.setOnAction( e-> {
             editController.removePage();
         });
+        
+        addTextButton.setOnAction( e-> {
+            TextComponentDialogue addComponent = new TextComponentDialogue();
+            addComponent.showAndWait();
+        });
     }
 
     /**
@@ -463,7 +468,6 @@ public class EPortfolioMakerView {
                 PageEditView selectedPageEditView = (PageEditView)(selectedTab.getContent());
                 Page selectedPage = selectedPageEditView.getPage();
                 ePortfolioToLoad.setSelectedPage(selectedPage);
-                System.out.println(ePortfolioToLoad.getSelectedPage());//
             });
 	}
     }

@@ -82,7 +82,6 @@ public class EPortfolioModel {
     public void addPage(){
         Page page = new Page();
         pages.add(page);
-        System.out.println(page);//
 	ui.reloadSlideShowPane(this);
     }
     
@@ -96,11 +95,9 @@ public class EPortfolioModel {
     public void removePage(Page selectedPage) {
         if (!isPageSelected())
             return;
-        System.out.println(selectedPage);//
         for (int i = pages.size()-1; i >= 0; i--) {
             Page page = pages.get(i);
             if (selectedPage.equals(page)){
-                System.out.println(page);//
                 pages.remove(i);
             }
         }

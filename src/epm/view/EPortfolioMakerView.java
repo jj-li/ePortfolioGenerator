@@ -115,7 +115,7 @@ public class EPortfolioMakerView {
     // THIS PANE ORGANIZES THE BIG PICTURE CONTAINERS FOR THE
     // APPLICATION GUI
     BorderPane epmPane;
-
+    
     // THIS IS THE TOP TOOLBAR AND ITS CONTROLS
     FlowPane fileToolbarPane;
     FlowPane fileToolbarPaneLeft;
@@ -453,8 +453,8 @@ public class EPortfolioMakerView {
     public void reloadSlideShowPane(EPortfolioModel ePortfolioToLoad) {
         getTabs().clear();
 	for (Page page : ePortfolioToLoad.getPages()) {
-            PageEditView pageEdit = new PageEditView(page);
             Tab tab = new Tab(page.getTitle());
+            PageEditView pageEdit = new PageEditView(page, tab);
             tab.setContent(pageEdit);
 	    getTabs().add(tab);
 	}

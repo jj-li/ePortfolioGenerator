@@ -29,6 +29,8 @@ import static epm.StartupConstants.WINDOWS_ICON;
 import epm.controller.ImageSelectionController;
 import epm.model.Page;
 import static epm.file.EPortfolioFileManager.SLASH;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 
 /**
  * This UI component has the controls for editing a single slide
@@ -37,19 +39,19 @@ import static epm.file.EPortfolioFileManager.SLASH;
  * 
  * 
  */
-public class PageEditView extends VBox {
+public class PageEditView extends ScrollPane {
     // SLIDE THIS COMPONENT EDITS
     Page page;
     
     // DISPLAYS THE IMAGE FOR THIS SLIDE
     ImageView imageSelectionView;
     
-    // CONTROLS FOR EDITING THE CAPTION
     Label title;
     TextField titleField;
     Label name;
     TextField nameField;
     
+    Tab tab;
     
     // PROVIDES RESPONSES FOR IMAGE SELECTION
     ImageSelectionController imageController;
@@ -60,24 +62,36 @@ public class PageEditView extends VBox {
      * 
      * @param initSlide The slide to be edited by this component.
      */
-    public PageEditView(Page initPage) {
+    public PageEditView(Page initPage, Tab tab) {
 	// FIRST SELECT THE CSS STYLE CLASS FOR THIS CONTAINER
 	this.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
 	// KEEP THE SLIDE FOR LATER
 	page = initPage;
-	
-        title = new Label("Page Title:");
-        titleField = new TextField();
-        name = new Label("Student Name:");
-        nameField = new TextField();
+	this.tab = tab;
+        
+        title = new Label("Page Title: ");
+        titleField = new TextField(page.getTitle());
+        titleField.setOnKeyReleased( e-> {
+            page.setTitle(titleField.getText());
+            tab.setText(page.getTitle());
+        });
+        name = new Label("Student Name: ");
+        nameField = new TextField(page.getStudentName());
+        nameField.setOnKeyReleased( e-> {
+            page.setStudentName(nameField.getText());
+        });
         HBox titleSection = new HBox();
         HBox nameSection = new HBox();
         
+        
         titleSection.getChildren().addAll(title, titleField);
         nameSection.getChildren().addAll(name, nameField);
+        VBox everything = new VBox();
+        everything.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
+        everything.getChildren().addAll(titleSection, nameSection);
 	// LAY EVERYTHING OUT INSIDE THIS COMPONENT
-	getChildren().addAll(titleSection, nameSection);
-
+	setContent(everything);
+        setStyle("-fx-background: rgb(255, 255, 75)");
 	/*// SETUP THE EVENT HANDLERS
 	imageController = new ImageSelectionController();
 	imageSelectionView.setOnMousePressed(e -> {

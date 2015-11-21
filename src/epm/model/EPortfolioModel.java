@@ -37,7 +37,7 @@ public class EPortfolioModel {
     }
 
     // ACCESSOR METHODS
-    public boolean isSlideSelected() {
+    public boolean isPageSelected() {
 	return selectedSlide != null;
     }
     
@@ -45,7 +45,7 @@ public class EPortfolioModel {
 	return pages;
     }
     
-    public Page getSelectedSlide() {
+    public Page getSelectedPage() {
 	return selectedSlide;
     }
 
@@ -54,7 +54,7 @@ public class EPortfolioModel {
     }
     
     // MUTATOR METHODS
-    public void setSelectedSlide(Page initSelectedSlide) {
+    public void setSelectedPage(Page initSelectedSlide) {
 	selectedSlide = initSelectedSlide;
     }
     
@@ -82,6 +82,7 @@ public class EPortfolioModel {
     public void addPage(){
         Page page = new Page();
         pages.add(page);
+        System.out.println(page);//
 	ui.reloadSlideShowPane(this);
     }
     
@@ -92,5 +93,17 @@ public class EPortfolioModel {
     }
     
     
-    
+    public void removePage(Page selectedPage) {
+        if (!isPageSelected())
+            return;
+        System.out.println(selectedPage);//
+        for (int i = pages.size()-1; i >= 0; i--) {
+            Page page = pages.get(i);
+            if (selectedPage.equals(page)){
+                System.out.println(page);//
+                pages.remove(i);
+            }
+        }
+        ui.reloadSlideShowPane(this);
+    }
 }

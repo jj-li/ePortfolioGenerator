@@ -31,4 +31,9 @@ public class PageEditController {
         EPortfolioModel ePortfolio = ui.getEPortfolio();
         ePortfolio.addPage();
     }
+    
+    public void removePage() {
+        EPortfolioModel ePortfolio = ui.getEPortfolio();
+        ePortfolio.removePage(ePortfolio.getSelectedPage());
+    }
 }

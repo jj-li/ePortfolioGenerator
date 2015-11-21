@@ -99,6 +99,10 @@ public class PageEditView extends ScrollPane {
 	});*/
     }
     
+    public Page getPage() {
+        return page;
+    }
+    
     /**
      * This function gets the image for the slide and uses it to
      * update the image displayed.

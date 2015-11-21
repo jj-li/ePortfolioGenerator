@@ -94,6 +94,7 @@ import epm.model.Page;
 import epm.model.EPortfolioModel;
 import epm.error.ErrorHandler;
 import epm.file.EPortfolioFileManager;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
@@ -330,6 +331,9 @@ public class EPortfolioMakerView {
 	addPageButton.setOnAction(e -> {
             editController.addPage();
         });
+        removePageButton.setOnAction( e-> {
+            editController.removePage();
+        });
     }
 
     /**
@@ -439,10 +443,6 @@ public class EPortfolioMakerView {
 	saveEPortfolioButton.setDisable(saved);
     }
     
-    public void updateSidebarControls(boolean saved)
-    {
-        removePageButton.setDisable(saved);
-    }
     
     /**
      * Uses the slide show data to reload all the components for
@@ -457,6 +457,14 @@ public class EPortfolioMakerView {
             PageEditView pageEdit = new PageEditView(page, tab);
             tab.setContent(pageEdit);
 	    getTabs().add(tab);
+            pageEditorPane.setOnMouseClicked( e-> {
+                SingleSelectionModel<Tab> selectionModel = pageEditorPane.getSelectionModel();
+                Tab selectedTab = selectionModel.getSelectedItem();
+                PageEditView selectedPageEditView = (PageEditView)(selectedTab.getContent());
+                Page selectedPage = selectedPageEditView.getPage();
+                ePortfolioToLoad.setSelectedPage(selectedPage);
+                System.out.println(ePortfolioToLoad.getSelectedPage());//
+            });
 	}
     }
     

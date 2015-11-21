@@ -29,8 +29,10 @@ import static epm.StartupConstants.WINDOWS_ICON;
 import epm.controller.ImageSelectionController;
 import epm.model.Page;
 import static epm.file.EPortfolioFileManager.SLASH;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextArea;
 
 /**
  * This UI component has the controls for editing a single slide
@@ -50,6 +52,14 @@ public class PageEditView extends ScrollPane {
     TextField titleField;
     Label name;
     TextField nameField;
+    Label layoutLabel;
+    ComboBox layout;
+    Label cssLabel;
+    ComboBox css;
+    Label fontLabel;
+    ComboBox font;
+    Label footerLabel;
+    TextArea footerField;
     
     Tab tab;
     
@@ -69,29 +79,27 @@ public class PageEditView extends ScrollPane {
 	page = initPage;
 	this.tab = tab;
         
-        title = new Label("Page Title: ");
-        titleField = new TextField(page.getTitle());
-        titleField.setOnKeyReleased( e-> {
-            page.setTitle(titleField.getText());
-            tab.setText(page.getTitle());
-        });
-        name = new Label("Student Name: ");
-        nameField = new TextField(page.getStudentName());
-        nameField.setOnKeyReleased( e-> {
-            page.setStudentName(nameField.getText());
-        });
+        initTitleAndName();
         HBox titleSection = new HBox();
         HBox nameSection = new HBox();
+        
+        initLayoutFontAndCSS();
+        HBox layoutCSSFont = new HBox();
+        
+        initFooter();
+        HBox footer = new HBox();
         
         
         titleSection.getChildren().addAll(title, titleField);
         nameSection.getChildren().addAll(name, nameField);
+        layoutCSSFont.getChildren().addAll(layoutLabel, layout, cssLabel, css, fontLabel, font);
+        footer.getChildren().addAll(footerLabel, footerField);
         VBox everything = new VBox();
         everything.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
-        everything.getChildren().addAll(titleSection, nameSection);
+        everything.getChildren().addAll(layoutCSSFont, titleSection, nameSection, footer);
 	// LAY EVERYTHING OUT INSIDE THIS COMPONENT
 	setContent(everything);
-        setStyle("-fx-background: rgb(255, 255, 75)");
+        setStyle("-fx-background: #ffffb2");
 	/*// SETUP THE EVENT HANDLERS
 	imageController = new ImageSelectionController();
 	imageSelectionView.setOnMousePressed(e -> {
@@ -103,6 +111,42 @@ public class PageEditView extends ScrollPane {
         return page;
     }
     
+    private void initTitleAndName() {
+        title = new Label("Page Title: ");
+        titleField = new TextField(page.getTitle());
+        titleField.setOnKeyReleased( e-> {
+            page.setTitle(titleField.getText());
+            tab.setText(page.getTitle());
+        });
+        name = new Label("Student Name: ");
+        nameField = new TextField(page.getStudentName());
+        nameField.setOnKeyReleased( e-> {
+            page.setStudentName(nameField.getText());
+        });
+    }
+    
+    private void initLayoutFontAndCSS() {
+        layoutLabel = new Label("Page Layout: ");
+        layout = new ComboBox();
+        layout.getItems().addAll("Top-Left Nagivation", "Left Navgiation", "Middle-Left Navigation", "Middle-Right Navigation", "Middle Navigation");
+        layout.setValue("Top-Left Navation");
+        
+        cssLabel = new Label("     Page Color Scheme: ");
+        css = new ComboBox();
+        css.getItems().addAll("Blue/Yellow", "Cyan/Red", "Orange/Yellow", "Red/Green", "Green/Blue");
+        css.setValue("Blue/Yellow");
+        
+        fontLabel = new Label("     Page Font: ");
+        font = new ComboBox();
+        font.getItems().addAll("PT Sans", "Dosis", "Yanone Kaffeesatz", "Oxygen", "Nunito");
+        font.setValue("PT Sans");
+    }
+    
+    private void initFooter() {
+        footerLabel = new Label("Page Footer: ");
+        footerField = new TextArea();
+
+    }
     /**
      * This function gets the image for the slide and uses it to
      * update the image displayed.

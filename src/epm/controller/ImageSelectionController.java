@@ -28,11 +28,10 @@ public class ImageSelectionController {
      * @param view The user interface control group where the image
      * will appear after selection.
      */
-    public void processSelectImage(Page slideToEdit, PageEditView view) {
+    public String processSelectImage() {
 	FileChooser imageFileChooser = new FileChooser();
 	
-	// SET THE STARTING DIRECTORY
-	imageFileChooser.setInitialDirectory(new File(PATH_SLIDE_SHOW_IMAGES));
+	
 	
 	// LET'S ONLY SEE IMAGE FILES
 	FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
@@ -42,6 +41,7 @@ public class ImageSelectionController {
 	
 	// LET'S OPEN THE FILE CHOOSER
 	File file = imageFileChooser.showOpenDialog(null);
+        return file.getPath();
         //TO FIX
 	/*if (file != null) {
 	    String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));

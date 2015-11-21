@@ -89,6 +89,7 @@ import static epm.StartupConstants.PATH_ICONS;
 import static epm.StartupConstants.STYLE_SHEET_UI;
 import static epm.StartupConstants.WINDOWS_ICON;
 import epm.controller.FileController;
+import epm.controller.ImageSelectionController;
 import epm.controller.PageEditController;
 import epm.model.Page;
 import epm.model.EPortfolioModel;
@@ -338,6 +339,11 @@ public class EPortfolioMakerView {
         addTextButton.setOnAction( e-> {
             TextComponentDialogue addComponent = new TextComponentDialogue();
             addComponent.showAndWait();
+        });
+        
+        addImageButton.setOnAction ( e-> {
+           ImageComponentDialogue imageComponent = new ImageComponentDialogue(); 
+           imageComponent.showAndWait();
         });
     }
 

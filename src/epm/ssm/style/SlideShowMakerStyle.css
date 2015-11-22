@@ -39,7 +39,7 @@
 
 // TOOLBAR CONTROLS
 .horizontal_toolbar_pane, .vertical_toolbar_pane {
-    -fx-background-color: #A69800;    
+    -fx-background-color: #add8e6;    
     -fx-padding:5;
 }
 
@@ -51,12 +51,14 @@
     -fx-alignment: center;
     -fx-orientation: vertical;
     -fx-vgap:20;
+    -fx-padding: 0px 0px 0px 8px;
 }
 
 .vertical_toolbar_button {
     -fx-background-color: #FFF373;
     -fx-padding: 10px 10px 10px 10px;
     -fx-spacing: 50px;
+    -fx-border-color: rgb(0,0,0);
 }
 
 .horizontal_toolbar_button {
@@ -72,10 +74,11 @@
 }
 
 .slides_editor_pane {
-    -fx-background-color: #FFF373;
+    -fx-background-color: #add8e6;
     -fx-padding: 30;    
     -fx-hgap:35;
     -fx-vgap:40;
+    -fx-spacing: 10px;
 }
 
 .slide_edit_view, .selected_slide_edit_view {
@@ -85,12 +88,12 @@
 }
 
 .slide_edit_view {
-    -fx-background-color: #C89E00;
+    -fx-background-color: #ffc966;
     -fx-border-color: black;
 }
 
 .selected_slide_edit_view {
-    -fx-background-color: #FFDC73;
+    -fx-background-color: ffffb2;
     -fx-border-color: #BFB330;
 }
 

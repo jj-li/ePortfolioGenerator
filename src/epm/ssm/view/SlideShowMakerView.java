@@ -183,8 +183,7 @@ public class SlideShowMakerView {
     private void initEventHandlers() {
 	// FIRST THE FILE CONTROLS
 	SlideShowModel slideShow = getSlideShow();
-	slideShow.reset();
-        reloadTitleControls();	
+	slideShow.reset();	
         reloadSlideShowPane();
         
         
@@ -226,10 +225,8 @@ public class SlideShowMakerView {
 	Rectangle2D bounds = screen.getVisualBounds();
 
 	// AND USE IT TO SIZE THE WINDOW
-	primaryStage.setX(bounds.getMinX());
-	primaryStage.setY(bounds.getMinY());
-	primaryStage.setWidth(bounds.getWidth());
-	primaryStage.setHeight(bounds.getHeight());
+	primaryStage.setWidth(bounds.getWidth()*0.75);
+	primaryStage.setHeight(bounds.getHeight()*0.75);
 
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER
 	ssmPane = new BorderPane();
@@ -298,7 +295,6 @@ public class SlideShowMakerView {
      */
     public void reloadSlideShowPane() {
 	slidesEditorPane.getChildren().clear();
-	reloadTitleControls();
 	for (Slide slide : slideShow.getSlides()) {
 	    SlideEditView slideEditor = new SlideEditView(this, slide);
 	    if (slideShow.isSelectedSlide(slide))
@@ -307,7 +303,7 @@ public class SlideShowMakerView {
 		slideEditor.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
 	    slidesEditorPane.getChildren().add(slideEditor);
 	    slideEditor.setOnMousePressed(e -> {
-		slideShow.setSelectedSlide(slide);
+                slideShow.setSelectedSlide(slide);
 		this.reloadSlideShowPane();
 	    });
 	}
@@ -317,21 +313,7 @@ public class SlideShowMakerView {
     private void initTitleControls() {
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
 	String labelPrompt = props.getProperty(LABEL_SLIDESHOW_TITLE);
-	titlePane = new FlowPane();
-	titleLabel = new Label(labelPrompt);
-	titleTextField = new TextField();
 	
-	titlePane.getChildren().add(titleLabel);
-	titlePane.getChildren().add(titleTextField);
-	
-	titlePane.getStyleClass().add(CSS_CLASS_TITLE_PANE);
-	titleLabel.getStyleClass().add(CSS_CLASS_TITLE_PROMPT);
-	titleTextField.getStyleClass().add(CSS_CLASS_TITLE_TEXT_FIELD);
     }
     
-    public void reloadTitleControls() {
-	if (slidesEditorPane.getChildren().size() == 0)
-	    slidesEditorPane.getChildren().add(titlePane);
-	titleTextField.setText(slideShow.getTitle());
-    }
 }

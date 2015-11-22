@@ -34,6 +34,8 @@ public class VideoComponentDialogue extends Stage{
     TextField widthField;
     TextField heightField;
     Button addComponent = new Button("Add Video");
+    Label captionLabel;
+    TextField captionField;
     
     public VideoComponentDialogue() {
         selectVideo = new Button("Select Video");
@@ -45,6 +47,8 @@ public class VideoComponentDialogue extends Stage{
         heightLabel = new Label("Video Height: ");
         widthField = new TextField();
         heightField = new TextField();
+        captionLabel = new Label("Video Caption: ");
+        captionField = new TextField();
         pane = new Pane();
         
         selectVideo.setOnMouseClicked( e-> {
@@ -60,18 +64,21 @@ public class VideoComponentDialogue extends Stage{
         top.getChildren().add(selectVideo);
         HBox bottomOne = new HBox();
         HBox bottomTwo = new HBox();
+        HBox bottomThree = new HBox();
         bottomOne.getChildren().addAll(widthLabel, widthField);
         bottomTwo.getChildren().addAll(heightLabel, heightField);
+        bottomThree.getChildren().addAll(captionLabel, captionField);
         last.getChildren().add(addComponent);
-        screen.getChildren().addAll(top, videoPath, bottomOne, bottomTwo, last);
+        screen.getChildren().addAll(top, videoPath, bottomOne, bottomTwo, bottomThree, last);
         pane.getChildren().add(screen);
         
         last.setStyle("-fx-padding: 10px 0px 0px 0px");
         bottomOne.setStyle("-fx-padding: 10px 0px 0px 0px");
         bottomTwo.setStyle("-fx-padding: 10px 0px 0px 0px");
+        bottomThree.setStyle("-fx-padding: 10px 0px 0px 0px");
         screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
         
-        scene = new Scene(pane, 380, 190);
+        scene = new Scene(pane, 380, 230);
         videoPath.setWrappingWidth(scene.getWidth());
         scene.getStylesheets().add(STYLE_SHEET_UI);
         this.setScene(scene);

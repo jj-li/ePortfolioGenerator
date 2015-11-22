@@ -297,7 +297,7 @@ public class EPortfolioMakerView {
         pageEditorPane.getTabs().add(tab);
         pageEditorPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         pageEditorPane.prefWidthProperty().bind(workspace.widthProperty());
-        pageEditorPane.setStyle("-fx-border-color: rgb(0, 0, 0);");//
+        pageEditorPane.setStyle("-fx-border-color: rgb(0, 0, 0); -fx-background: #ffffb2");//
         
         
 	// NOW PUT THESE TWO IN THE WORKSPACE
@@ -482,9 +482,11 @@ public class EPortfolioMakerView {
             pageEditorPane.setOnMouseClicked( e-> {
                 SingleSelectionModel<Tab> selectionModel = pageEditorPane.getSelectionModel();
                 Tab selectedTab = selectionModel.getSelectedItem();
-                PageEditView selectedPageEditView = (PageEditView)(selectedTab.getContent());
-                Page selectedPage = selectedPageEditView.getPage();
-                ePortfolioToLoad.setSelectedPage(selectedPage);
+                if (selectedTab != null) {
+                    PageEditView selectedPageEditView = (PageEditView)(selectedTab.getContent());
+                    Page selectedPage = selectedPageEditView.getPage();
+                    ePortfolioToLoad.setSelectedPage(selectedPage);
+                }
             });
 	}
     }

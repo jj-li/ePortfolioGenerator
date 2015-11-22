@@ -45,6 +45,7 @@
 
 .horizontal_toolbar_pane {
     -fx-hgap:2;
+    -fx-padding: 0px 0px 10px 10px;
 }
 
 .vertical_toolbar_pane {

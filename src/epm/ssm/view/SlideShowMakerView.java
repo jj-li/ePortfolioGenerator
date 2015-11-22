@@ -72,10 +72,7 @@ public class SlideShowMakerView {
 
     // THIS IS THE TOP TOOLBAR AND ITS CONTROLS
     FlowPane fileToolbarPane;
-    Button newSlideShowButton;
-    Button loadSlideShowButton;
-    Button saveSlideShowButton;
-    Button viewSlideShowButton;
+    Button addSlideShow;
     Button exitButton;
     
     // WORKSPACE
@@ -213,6 +210,9 @@ public class SlideShowMakerView {
 
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
 	// START AS ENABLED (false), WHILE OTHERS DISABLED (true)
+        addSlideShow = new Button("Add Slideshow Component");
+        addSlideShow.setStyle("-fx-padding: 10px 10px 10px 10px; -fx-alignment: center");
+        fileToolbarPane.getChildren().add(addSlideShow);
 
     }
 
@@ -231,7 +231,7 @@ public class SlideShowMakerView {
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER
 	ssmPane = new BorderPane();
 	ssmPane.getStyleClass().add(CSS_CLASS_WORKSPACE);
-	ssmPane.setTop(fileToolbarPane);
+	ssmPane.setBottom(fileToolbarPane);
         ssmPane.setCenter(workspace);
 	primaryScene = new Scene(ssmPane);
 	

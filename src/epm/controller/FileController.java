@@ -201,8 +201,8 @@ public class FileController {
     
     public void handleViewSlideShowRequest()
     {
-        handleSaveSlideShowRequest();
         EPortfolioModel slideShowToShow = ui.getEPortfolio();
+        /*handleSaveSlideShowRequest();
         
         Boolean siteDirectory = new File("sites/" + slideShowToShow.getTitle()).mkdirs();
         Boolean cssDirectory = new File("sites/" + slideShowToShow.getTitle() +"/css").mkdirs();
@@ -210,7 +210,7 @@ public class FileController {
         Boolean imgDirectory = new File("sites/" + slideShowToShow.getTitle() +"/img").mkdirs();
         File imgs = new File("sites/" + slideShowToShow.getTitle() +"/img");
         //TO FIX
-        /*
+        
         if (imgs.exists()) {
             for (File files : imgs.listFiles()) {
                 boolean fileExists = false;
@@ -222,7 +222,7 @@ public class FileController {
                     files.delete();
             }
         }  
-        */
+        
         String jsString = "";
         String jsPath = "sites/Template/js/TemplateJS.js";
         File jsFile = new File(jsPath);
@@ -291,8 +291,8 @@ public class FileController {
             e2.printStackTrace();
         }
         
-        copyImages(slideShowToShow);
-        ui.viewSlideShow(slideShowToShow);
+        copyImages(slideShowToShow);*/
+        ui.viewPage(slideShowToShow);
     }
     
     private static void copyImages(EPortfolioModel slideShowToShow)
@@ -453,6 +453,11 @@ public class FileController {
      */
     public boolean isSaved() {
         return saved;
+    }
+    
+    public void handleEditEPortfolioRequest() {
+        EPortfolioModel slideShowToShow = ui.getEPortfolio();
+        ui.editWorkspace(slideShowToShow);
     }
 }
 

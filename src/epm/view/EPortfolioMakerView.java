@@ -316,18 +316,24 @@ public class EPortfolioMakerView {
 	    fileController.handleNewSlideShowRequest();
 	});
 	loadEPortfolioButton.setOnAction(e -> {
-	    fileController.handleLoadSlideShowRequest();
+	    
 	});
 	saveEPortfolioButton.setOnAction(e -> {
-	    fileController.handleSaveSlideShowRequest();
+	    
 	});
 	exitButton.setOnAction(e -> {
-	    fileController.handleExitRequest();
+	    
 	});
         saveAsEPortfolioButton.setOnAction( e -> {
+            
+        });
+	viewEPortfolioButton.setOnAction( e-> {
             fileController.handleViewSlideShowRequest();
         });
-	
+        editEPortfolioButton.setOnAction( e-> {
+            fileController.handleEditEPortfolioRequest();
+        });
+        
 	// THEN THE SLIDE SHOW EDIT CONTROLS
 	editController = new PageEditController(this);
 	addPageButton.setOnAction(e -> {
@@ -493,16 +499,16 @@ public class EPortfolioMakerView {
     
     
     
-    public void viewSlideShow(EPortfolioModel ePortfolioToShow)
+    public void viewPage(EPortfolioModel ePortfolioToShow)
     {
+        workspace.getChildren().clear();
         PropertiesManager prop = PropertiesManager.getPropertiesManager();
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
         WebView page = new WebView(); 
         WebEngine webEngine = page.getEngine(); 
-        page.resize(bounds.getWidth(), bounds.getHeight());
+        page.prefWidthProperty().bind(workspace.widthProperty());
+        page.prefHeightProperty().bind(workspace.heightProperty());
        
-        File htmlFile = new File("sites/" + ePortfolioToShow.getTitle() + "/index.html");
+        File htmlFile = new File("sites/" + "dummyPage.html");
         try {
            URL fileURL = htmlFile.toURI().toURL();
            webEngine.load(fileURL.toExternalForm());
@@ -511,22 +517,17 @@ public class EPortfolioMakerView {
             ErrorHandler handle = new ErrorHandler(this);
             handle.processError(FAILED_SLIDE_SHOW_LOAD, prop.getProperty(FAILED_SLIDE_SHOW_LOAD_TITLE));
         }
-        Scene webScene = new Scene(page);
-        Stage webStage = new Stage();
-        webStage.getIcons().add(new Image("file:" + PATH_ICONS + WINDOWS_ICON));
-        webStage.setTitle(prop.getProperty(ePortfolioToShow.getTitle()));
-
-	webStage.setX(bounds.getMinX());
-	webStage.setY(bounds.getMinY());
-	webStage.setWidth(bounds.getWidth());
-	webStage.setHeight(bounds.getHeight());
-        
-        webStage.setScene(webScene);
-        webStage.show();
-        
-        
+        workspace.getChildren().add(page);
     
-        }
     }
+    
+    public void editWorkspace(EPortfolioModel ePortfolioToShow)
+    {
+        workspace.getChildren().clear();
+        workspace.getChildren().add(slideEditToolbar);
+	workspace.getChildren().add(pageEditorPane);
+        reloadSlideShowPane(ePortfolioToShow);
+    }
+}
  
     

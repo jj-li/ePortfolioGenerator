@@ -95,6 +95,7 @@ import epm.model.Page;
 import epm.model.EPortfolioModel;
 import epm.error.ErrorHandler;
 import epm.file.EPortfolioFileManager;
+import epm.ssm.SlideShowMaker;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -349,6 +350,11 @@ public class EPortfolioMakerView {
         addVideoButton.setOnAction ( e->{
             VideoComponentDialogue videoComponent = new VideoComponentDialogue(); 
             videoComponent.showAndWait();
+        });
+        
+        addSlideshowButton.setOnAction ( e-> {
+            SlideShowMaker slideShow = new SlideShowMaker();
+            slideShow.showAndWait();
         });
     }
 

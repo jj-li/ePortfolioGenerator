@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This XML file allows us to easily customize the look and language used
+    in our program's user interface. Note that this is for customizing settings
+    for the Slide Show Maker interface. 
+-->
+<properties>
+    <property_list>    
+        <property name="TITLE_WINDOW"		value="Diaesityksen Luomisohjelma"></property>  
+        
+        <!-- PROGRAM ICON FILES -->
+	
+        <!-- TOOLTIPS FOR BUTTONS -->
+        <property name="TOOLTIP_NEW_SLIDE_SHOW"	    value="Luo uusi diaesitys"></property>
+        <property name="TOOLTIP_LOAD_SLIDE_SHOW"    value="Lataa Olemassa diaesitys"></property>
+        <property name="TOOLTIP_SAVE_SLIDE_SHOW"    value="Tallenna tämä Kuvaesitys"></property>
+        <property name="TOOLTIP_VIEW_SLIDE_SHOW"    value="Tarkasta tämä Kuvaesitys"></property>
+        <property name="TOOLTIP_EXIT"		    value="Poistua sovelluksesta"></property>
+	<property name="TOOLTIP_ADD_SLIDE"	    value="Lisää dia"></property>
+	<property name="TOOLTIP_REMOVE_SLIDE"	    value="Poista dia"></property>
+	<property name="TOOLTIP_MOVE_UP"	    value="Siirrä dia ylös"></property>
+	<property name="TOOLTIP_MOVE_DOWN"	    value="Siirrä liukua"></property>
+	<property name="TOOLTIP_PREVIOUS_SLIDE"	    value="Edellinen dia"></property>
+	<property name="TOOLTIP_NEXT_SLIDE"	    value="Seuraava dia"></property>
+	
+	<!-- DEFAULT VALUES -->
+	<property name="DEFAULT_IMAGE_CAPTION"	    value="&lt;ANNA KUVATEKSTI&gt;"></property>
+	
+	<!-- UI LABELS -->
+	<property name="LABEL_CAPTION"		    value="Kuvateksti:"></property>
+	<property name="LABEL_SLIDESHOW_TITLE"	    value="Diaesitys Otsikko:"></property>
+	<property name="LABEL_SAVE_UNSAVED_WORK"    value="Tallenna tallentamattomat työtä?"></property>
+        
+	<!-- ERROR FEEDBACK MESSAGES -->
+	<property name="ERROR_SLIDESHOW_LOADING"    value="Diaesitys tiedostomuoto Virhe"></property>
+	<property name="ERROR_NO_SLIDESHOW_IMAGES"  value="Ei kuvia Galleria nähdäksesi"></property>
+	<property name="ERROR_UNEXPECTED"	    value="Odottamaton virhe on tapahtunut"></property>
+        
+        
+    </property_list>
+    <property_options_list>
+    </property_options_list>
+</properties>

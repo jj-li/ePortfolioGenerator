@@ -82,5 +82,61 @@ public class VideoComponentDialogue extends Stage{
         videoPath.setWrappingWidth(scene.getWidth());
         scene.getStylesheets().add(STYLE_SHEET_UI);
         this.setScene(scene);
+        this.setTitle("Add Video");
+        
+        selectVideo.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        addComponent.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+    }
+    
+    public VideoComponentDialogue(String url, String caption, double width, double height) {
+        selectVideo = new Button("Select Video");
+        videoPath = new Text(url);
+        top = new HBox();
+        last = new HBox();
+        screen = new VBox();
+        widthLabel = new Label("Video Width: ");
+        heightLabel = new Label("Video Height: ");
+        widthField = new TextField("" + width);
+        heightField = new TextField("" + height);
+        captionLabel = new Label("Video Caption: ");
+        captionField = new TextField(caption);
+        pane = new Pane();
+        
+        selectVideo.setOnMouseClicked( e-> {
+            try {
+                VideoSelectionController selectVideo = new VideoSelectionController();
+                videoPath.setText(selectVideo.processSelectVideo()); 
+            }
+            catch (NullPointerException e1){
+                
+            }
+        });
+        
+        Button editVideo = new Button("Edit Video");
+        top.getChildren().add(selectVideo);
+        HBox bottomOne = new HBox();
+        HBox bottomTwo = new HBox();
+        HBox bottomThree = new HBox();
+        bottomOne.getChildren().addAll(widthLabel, widthField);
+        bottomTwo.getChildren().addAll(heightLabel, heightField);
+        bottomThree.getChildren().addAll(captionLabel, captionField);
+        last.getChildren().add(editVideo);
+        screen.getChildren().addAll(top, videoPath, bottomOne, bottomTwo, bottomThree, last);
+        pane.getChildren().add(screen);
+        
+        last.setStyle("-fx-padding: 10px 0px 0px 0px");
+        bottomOne.setStyle("-fx-padding: 10px 0px 0px 0px");
+        bottomTwo.setStyle("-fx-padding: 10px 0px 0px 0px");
+        bottomThree.setStyle("-fx-padding: 10px 0px 0px 0px");
+        screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
+        
+        scene = new Scene(pane, 380, 230);
+        videoPath.setWrappingWidth(scene.getWidth());
+        scene.getStylesheets().add(STYLE_SHEET_UI);
+        this.setScene(scene);
+        this.setTitle("Edit Video");
+        
+        selectVideo.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        editVideo.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
     }
 }

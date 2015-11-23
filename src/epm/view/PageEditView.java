@@ -33,6 +33,7 @@ import epm.model.ImageComponent;
 import epm.model.SlideShowComponent;
 import epm.model.TextComponent;
 import epm.model.VideoComponent;
+import epm.ssm.SlideShowMaker;
 import java.util.ArrayList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ComboBox;
@@ -209,6 +210,7 @@ public class PageEditView extends VBox {
                     selectedHBox = paragraphComponent;
                     selectedTextComponent = component;
                     paragraphComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                    page.setPageEditView(this);
                 });
                 paragraphComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 paragraphField.setWrappingWidth(bounds.getWidth()-500);
@@ -230,6 +232,7 @@ public class PageEditView extends VBox {
                     selectedHBox = listComponent;
                     selectedTextComponent = component;
                     listComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                    page.setPageEditView(this);
                 });
                 listComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 getChildren().add(listComponent);
@@ -247,6 +250,7 @@ public class PageEditView extends VBox {
                     selectedHBox = headerComponent;
                     selectedTextComponent = component;
                     headerComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                    page.setPageEditView(this);
                 });
                 headerComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 headerField.setWrappingWidth(bounds.getWidth()-500);
@@ -261,8 +265,9 @@ public class PageEditView extends VBox {
             HBox imageComponent = new HBox();
             Text width = new Text("Width: " + component.getWidth() + "px");
             Text height = new Text("Height: " + component.getHeight() + "px");
+            Text position = new Text("Floating position: " + component.getPosition());
             VBox widthHeight = new VBox();
-            widthHeight.getChildren().addAll(width, height);
+            widthHeight.getChildren().addAll(width, height, position);
             widthHeight.setStyle("-fx-padding: 5px 5px 5px 5px;");
             imageComponent.getChildren().addAll(imageLabel, imageView, widthHeight);
             imageComponent.setOnMouseClicked(e-> {
@@ -273,6 +278,7 @@ public class PageEditView extends VBox {
                     selectedHBox = imageComponent;
                     selectedImageComponent = component;
                     imageComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                    page.setPageEditView(this);
             });
             imageComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
             getChildren().add(imageComponent);
@@ -307,6 +313,7 @@ public class PageEditView extends VBox {
                     selectedHBox = videoComponent;
                     selectedVideoComponent = component;
                     videoComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                    page.setPageEditView(this);
             });
             videoComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
             getChildren().addAll(videoComponent);
@@ -361,6 +368,7 @@ public class PageEditView extends VBox {
                     selectedHBox = slideShowComponent;
                     selectedSlideShowComponent = component;
                     slideShowComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                    page.setPageEditView(this);
             });
             getChildren().add(slideShowComponent);
             slideShowComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
@@ -393,5 +401,41 @@ public class PageEditView extends VBox {
         selectedImageComponent = null;
         selectedSlideShowComponent = null;
         selectedHBox = null;
+    }
+    
+    public void displayEditBox() {
+        if (!isNoneSelected()) {
+            if (isTextSelected()) {
+                String type = selectedTextComponent.getTextType();
+                if (type.equalsIgnoreCase("list")) {
+                    TextComponentDialogue dialogue = new TextComponentDialogue(type, selectedTextComponent.getList());
+                    dialogue.showAndWait();
+                }
+                else {
+                    TextComponentDialogue dialogue = new TextComponentDialogue(type, selectedTextComponent.getData());
+                    dialogue.showAndWait();
+                }    
+            }
+            else if (isVideoSelected()) {
+                String url = selectedVideoComponent.getUrl();
+                String caption = selectedVideoComponent.getCaption();
+                double height = selectedVideoComponent.getHeight();
+                double width = selectedVideoComponent.getWidth();
+                VideoComponentDialogue dialogue = new VideoComponentDialogue(url, caption, width, height);
+                dialogue.showAndWait();
+            }
+            else if (isImageSelected()) {
+                String url = selectedImageComponent.getUrl();
+                String position = selectedImageComponent.getPosition();
+                double height = selectedImageComponent.getHeight();
+                double width = selectedImageComponent.getWidth();
+                ImageComponentDialogue dialogue = new ImageComponentDialogue(url, position, width, height);
+                dialogue.showAndWait();
+            }
+            else {
+                SlideShowMaker slideShow = selectedSlideShowComponent.getSlideShow();
+                slideShow.showAndWait();
+            }
+        }
     }
 }

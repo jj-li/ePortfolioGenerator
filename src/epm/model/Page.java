@@ -3,6 +3,7 @@
  **/
 package epm.model;
 
+import epm.view.PageEditView;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +12,7 @@ import java.util.ArrayList;
  * @author McKilla Gorilla & _____________
  */
 public class Page {
+    PageEditView selectedPageEditView;
     String title;
     String studentName;
     ArrayList<TextComponent> textComponents;
@@ -46,7 +48,7 @@ public class Page {
         textComponents.add(header);
         
         String imagePath = "images/slide_show_images/ArchesUtah.jpg";
-        ImageComponent image = new ImageComponent(imagePath, "neither", 200, 200);
+        ImageComponent image = new ImageComponent(imagePath, "Neither", 200, 200);
         imageComponents.add(image);
         
         String videoPath = "sites/Videos/oow2010-2.flv";
@@ -113,5 +115,13 @@ public class Page {
     
     public void addSlideShowComponent(SlideShowComponent slideShowComponent) {
         slideShowComponents.add(slideShowComponent);
+    }
+    
+    public void setPageEditView(PageEditView editView) {
+        selectedPageEditView = editView;
+    }
+    
+    public PageEditView getSelectedPageEditView() {
+        return selectedPageEditView;
     }
 }

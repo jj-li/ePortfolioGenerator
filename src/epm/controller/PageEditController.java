@@ -4,7 +4,9 @@ import properties_manager.PropertiesManager;
 import static epm.StartupConstants.DEFAULT_SLIDE_IMAGE;
 import static epm.StartupConstants.PATH_SLIDE_SHOW_IMAGES;
 import epm.model.EPortfolioModel;
+import epm.model.Page;
 import epm.view.EPortfolioMakerView;
+import epm.view.PageEditView;
 
 /**
  * This controller provides responses for the slideshow edit toolbar,
@@ -35,5 +37,14 @@ public class PageEditController {
     public void removePage() {
         EPortfolioModel ePortfolio = ui.getEPortfolio();
         ePortfolio.removePage(ePortfolio.getSelectedPage());
+    }
+    
+    public void editComponent() {
+        Page page = ui.getEPortfolio().getSelectedPage();
+        if (page != null) {
+            PageEditView editView = page.getSelectedPageEditView();
+            if (editView != null)
+                editView.displayEditBox();
+        }
     }
 }

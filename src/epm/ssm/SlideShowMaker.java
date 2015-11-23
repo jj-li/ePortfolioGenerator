@@ -30,8 +30,7 @@ public class SlideShowMaker extends Stage{
         boolean success = loadProperties(languageCode);
         if (success) {
             PropertiesManager props = PropertiesManager.getPropertiesManager();
-            String appTitle = props.getProperty(TITLE_WINDOW);
-            ui.startUI(this, appTitle);
+            ui.startUI(this, "Add Slide Show Component");
 	} // THERE WAS A PROBLEM LOADING THE PROPERTIES FILE
 	else {
 	}
@@ -43,8 +42,7 @@ public class SlideShowMaker extends Stage{
         boolean success = loadProperties(languageCode);
         if (success) {
             PropertiesManager props = PropertiesManager.getPropertiesManager();
-            String appTitle = props.getProperty(TITLE_WINDOW);
-            ui.startUI(this, appTitle, paths, captions);
+            ui.startUI(this, "Edit Slide Show Component", paths, captions);
 	} // THERE WAS A PROBLEM LOADING THE PROPERTIES FILE
 	else {
 	}

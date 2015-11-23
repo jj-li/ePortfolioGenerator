@@ -46,20 +46,20 @@
 .horizontal_toolbar_pane {
     -fx-hgap:2;
     -fx-padding: 0px 0px 10px 10px;
+    -fx-alignment: center;
 }
 
 .vertical_toolbar_pane {
     -fx-alignment: center;
     -fx-orientation: vertical;
     -fx-vgap:20;
-    -fx-padding: 0px 0px 0px 8px;
+    -fx-padding: 0px 0px 0px 10px;
 }
 
 .vertical_toolbar_button {
-    -fx-background-color: #FFF373;
+    -fx-background-color: #ffc966;
     -fx-padding: 10px 10px 10px 10px;
     -fx-spacing: 50px;
-    -fx-border-color: rgb(0,0,0);
 }
 
 .horizontal_toolbar_button {

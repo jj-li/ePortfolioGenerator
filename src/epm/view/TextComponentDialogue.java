@@ -6,6 +6,7 @@
 package epm.view;
 
 import static epm.StartupConstants.STYLE_SHEET_UI;
+import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -132,5 +133,88 @@ public class TextComponentDialogue extends Stage{
         screen.prefWidthProperty().bind(scene.widthProperty());
         screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
         this.setScene(scene);
+        this.setTitle("Add Text Component");
+        
+        addComponent.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+    }
+    
+    public TextComponentDialogue(String type, String data) {
+        textArea = new TextArea(data);
+        textArea.setWrapText(true);
+        textField = new TextField(data);
+        paragraphFonts = new ComboBox();
+        paragraphFonts.getItems().addAll("Times New Roman", "Comic Sans MS", "Montserrat", "Merriweather", "Josefin Sans");
+        paragraphFonts.setValue("Times New Roman");
+        paragraphFontsLabel = new Label("Paragraph Font: ");
+        screen = new VBox();
+        pane = new Pane();
+        HBox top = new HBox();
+        HBox bottom = new HBox();
+        Button editHeader = new Button("Edit Header");
+        Button editParagraph = new Button("Edit Paragraph");
+        if (type.equalsIgnoreCase("paragraph")) {
+            top.getChildren().addAll(paragraphFontsLabel, paragraphFonts);
+            bottom.getChildren().addAll(textArea);
+            bottom.setStyle("-fx-padding: 10px 0px 10px 0px");
+            screen.getChildren().addAll(top, bottom, editParagraph);
+            pane.getChildren().add(screen);
+            scene = new Scene(pane, 600, 350);
+            this.setTitle("Edit Paragraph");
+        }
+        else {
+            top.getChildren().addAll(textField);
+            top.setStyle("-fx-padding: 0px 0px 10px 0px");
+            screen.getChildren().addAll(top, editHeader);
+            pane.getChildren().add(screen);
+            scene = new Scene(pane, 300, 200);
+            textField.prefWidthProperty().bind(scene.widthProperty());
+            this.setTitle("Edit Header");
+        }
+        scene.getStylesheets().add(STYLE_SHEET_UI);
+        screen.prefWidthProperty().bind(scene.widthProperty());
+        screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
+        this.setScene(scene);
+        
+        editHeader.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        editParagraph.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+    }
+    
+    public TextComponentDialogue(String type, ArrayList<String> data) {
+        removeItemButton = new Button("Remove Item");
+        addItemButton = new Button("Add Item");
+        addItemField = new TextField();
+        list = new ListView<String>();
+        addItemButton.setOnMouseClicked( e-> {
+            list.getItems().add(addItemField.getText());
+            addItemField.clear();
+        });
+        removeItemButton.setOnMouseClicked( e-> {
+            int selectedIdx = list.getSelectionModel().getSelectedIndex();
+             if (selectedIdx != -1) {
+                list.getItems().remove(selectedIdx);
+             }
+        });
+        Button editList = new Button("Edit List");
+        for (String s : data)
+            list.getItems().add(s);
+        
+        HBox top = new HBox();
+        top.getChildren().addAll(list);
+        HBox bottom = new HBox();
+        bottom.getChildren().addAll(addItemField, addItemButton, removeItemButton);
+        bottom.setStyle("-fx-padding: 10px 0px 10px 0px;");
+        pane = new Pane();
+        screen = new VBox();
+        screen.getChildren().addAll(top, bottom, editList);
+        pane.getChildren().add(screen);
+        scene = new Scene(pane, 405, 500);
+        scene.getStylesheets().add(STYLE_SHEET_UI);
+        list.prefWidthProperty().bind(scene.widthProperty());
+        screen.prefWidthProperty().bind(scene.widthProperty());
+        screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
+        this.setScene(scene);
+        this.setTitle("Edit List");
+        
+        editList.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
     }
 }

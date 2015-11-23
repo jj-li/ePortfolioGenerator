@@ -134,7 +134,7 @@ public class SlideShowMakerView {
      */
     public void startUI(Stage initPrimaryStage, String windowTitle) {
 	// THE TOOLBAR ALONG THE NORTH
-	initFileToolbar();
+	initFileToolbar(false);
 
         // INIT THE CENTER WORKSPACE CONTROLS BUT DON'T ADD THEM
 	// TO THE WINDOW YET
@@ -152,15 +152,8 @@ public class SlideShowMakerView {
     //TO DO - ADD in the ability to load paths and captions!
     public void startUI(Stage initPrimaryStage, String windowTitle, ArrayList<String> paths, ArrayList<String> captions) {
         
-        for (int i = 0; i < paths.size(); i++) {
-            File file = new File(paths.get(i));
-	    String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
-            String fileName = file.getName();
-            slideShow.addSlide(fileName, fileName, path);
-	}
-        
 	// THE TOOLBAR ALONG THE NORTH
-	initFileToolbar();
+	initFileToolbar(true);
 
         // INIT THE CENTER WORKSPACE CONTROLS BUT DON'T ADD THEM
 	// TO THE WINDOW YET
@@ -173,6 +166,12 @@ public class SlideShowMakerView {
 	// KEEP THE WINDOW FOR LATER
 	primaryStage = initPrimaryStage;
 	initWindow(windowTitle);
+        for (int i = 0; i < paths.size(); i++) {
+            File file = new File(paths.get(i));
+	    String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
+            String fileName = file.getName();
+            slideShow.addSlide(fileName, path, captions.get(i));
+	}
     }
 
     // UI SETUP HELPER METHODS
@@ -232,14 +231,17 @@ public class SlideShowMakerView {
      * This function initializes all the buttons in the toolbar at the top of
      * the application window. These are related to file management.
      */
-    private void initFileToolbar() {
+    private void initFileToolbar(boolean load) {
 	fileToolbarPane = new FlowPane();
 	fileToolbarPane.getStyleClass().add(CSS_CLASS_HORIZONTAL_TOOLBAR_PANE);
 
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
 	// START AS ENABLED (false), WHILE OTHERS DISABLED (true)
-        addSlideShow = new Button("Add Slideshow Component");
-        addSlideShow.setStyle("-fx-padding: 10px 10px 10px 10px; -fx-alignment: center");
+        if (!load)
+            addSlideShow = new Button("Add Slideshow Component");
+        else
+            addSlideShow = new Button("Edit Slideshow Component");
+        addSlideShow.setStyle("-fx-padding: 10px 10px 10px 10px; -fx-alignment: center; -fx-border-color: rgb(0,0,0); -fx-font-weight: bolder");
         fileToolbarPane.getChildren().add(addSlideShow);
 
     }

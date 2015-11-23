@@ -85,5 +85,61 @@ public class ImageComponentDialogue extends Stage{
         imagePath.setWrappingWidth(scene.getWidth());
         scene.getStylesheets().add(STYLE_SHEET_UI);
         this.setScene(scene);
+        
+        selectImage.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        addComponent.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+    }
+    
+    public ImageComponentDialogue(String url, String position, double width, double height) {
+        selectImage = new Button("Select Image");
+        imagePath = new Text(url);
+        top = new HBox();
+        last = new HBox();
+        screen = new VBox();
+        widthLabel = new Label("Image Width: ");
+        heightLabel = new Label("Image Height: ");
+        widthField = new TextField("" + width);
+        heightField = new TextField("" + height);
+        pane = new Pane();
+        imagePositionLabel = new Label("Image Float: ");
+        imagePosition = new ComboBox();
+        imagePosition.getItems().addAll("Left", "Right", "Neither");
+        imagePosition.setValue(position);
+        
+        selectImage.setOnMouseClicked( e-> {
+            try {
+                ImageSelectionController selectImage = new ImageSelectionController();
+                imagePath.setText(selectImage.processSelectImage()); 
+            }
+            catch (NullPointerException e1){
+                
+            }
+        });
+        
+        Button editImage = new Button("Edit Image");
+        top.getChildren().add(selectImage);
+        HBox bottomOne = new HBox();
+        HBox bottomTwo = new HBox();
+        HBox bottomThree = new HBox();
+        bottomOne.getChildren().addAll(imagePositionLabel, imagePosition);
+        bottomTwo.getChildren().addAll(widthLabel, widthField);
+        bottomThree.getChildren().addAll(heightLabel, heightField);
+        last.getChildren().add(editImage);
+        screen.getChildren().addAll(top, imagePath, bottomOne, bottomTwo, bottomThree, last);
+        pane.getChildren().add(screen);
+        
+        last.setStyle("-fx-padding: 10px 0px 0px 0px");
+        bottomOne.setStyle("-fx-padding: 10px 0px 0px 0px");
+        bottomTwo.setStyle("-fx-padding: 10px 0px 0px 0px");
+        bottomThree.setStyle("-fx-padding: 10px 0px 0px 0px");
+        screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
+        
+        scene = new Scene(pane, 380, 230);
+        imagePath.setWrappingWidth(scene.getWidth());
+        scene.getStylesheets().add(STYLE_SHEET_UI);
+        this.setScene(scene);
+        
+        selectImage.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        editImage.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
     }
 }

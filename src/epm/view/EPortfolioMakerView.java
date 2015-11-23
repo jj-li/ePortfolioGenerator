@@ -362,6 +362,10 @@ public class EPortfolioMakerView {
             SlideShowMaker slideShow = new SlideShowMaker();
             slideShow.showAndWait();
         });
+        
+        editComponentButton.setOnAction (e -> {
+            editController.editComponent();
+        });
     }
 
     /**

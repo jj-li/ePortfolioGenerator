@@ -27,6 +27,7 @@ public class SlideShowComponent {
     public SlideShowComponent(ArrayList<String> paths, ArrayList<String> caps) {
         imagePaths = paths;
         captions = caps;
+        createSlideShow();
     }
     
     public SlideShowMaker getSlideShow() {
@@ -34,7 +35,7 @@ public class SlideShowComponent {
     }
     
     public void createSlideShow() {
-        SlideShowMaker slideShow = new SlideShowMaker(imagePaths, captions);
+        slideShow = new SlideShowMaker(imagePaths, captions);
     }
     
     public ArrayList<String> getImagePaths() {

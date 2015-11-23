@@ -27,18 +27,18 @@ public class EPortfolioModel {
     EPortfolioMakerView ui;
     String title;
     ObservableList<Page> pages;
-    Page selectedSlide;
+    Page selectedPage;
     
     public EPortfolioModel(EPortfolioMakerView initUI) {
 	ui = initUI;
 	pages = FXCollections.observableArrayList();
-        selectedSlide = null;
+        selectedPage = null;
 	reset();	
     }
 
     // ACCESSOR METHODS
     public boolean isPageSelected() {
-	return selectedSlide != null;
+	return selectedPage != null;
     }
     
     public ObservableList<Page> getPages() {
@@ -46,7 +46,7 @@ public class EPortfolioModel {
     }
     
     public Page getSelectedPage() {
-	return selectedSlide;
+	return selectedPage;
     }
 
     public String getTitle() { 
@@ -55,7 +55,7 @@ public class EPortfolioModel {
     
     // MUTATOR METHODS
     public void setSelectedPage(Page initSelectedSlide) {
-	selectedSlide = initSelectedSlide;
+	selectedPage = initSelectedSlide;
     }
     
     public void setTitle(String initTitle) { 
@@ -71,7 +71,7 @@ public class EPortfolioModel {
 	pages.clear();
 	PropertiesManager props = PropertiesManager.getPropertiesManager();
 	title = props.getProperty(LanguagePropertyType.DEFAULT_SLIDE_SHOW_TITLE);
-	selectedSlide = null;
+	selectedPage = null;
     }
 
     /**

@@ -14,6 +14,7 @@ public class Page {
     String title;
     String studentName;
     ArrayList<TextComponent> textComponents;
+    ArrayList<ImageComponent> imageComponents;
      
     /**
      * Constructor, it initializes all slide data.
@@ -23,9 +24,10 @@ public class Page {
      * 
      */
     public Page() {
-        title = "";
+        title = "New Page";
         studentName = "";
         textComponents = new ArrayList<TextComponent>();
+        imageComponents = new ArrayList<ImageComponent>();
         
         //Hard coded data.
         TextComponent paragraph = new TextComponent("paragraph", "The oldest classical Greek and Latin writing had little or no space between words, and could be written in boustrophedon (alternating directions). Over time, text direction (left to right) became standardized, and word dividers and terminal punctuation became common. The first way to divide sentences into groups was the original paragraphos, similar to an underscore at the beginning of the new group.[3] The Greek paragraphos evolved into the pilcrow (¶), which in English manuscripts in the Middle Ages can be seen inserted inline between sentences. The hedera leaf has also been used in the same way.");
@@ -38,6 +40,10 @@ public class Page {
         textComponents.add(paragraph);
         textComponents.add(list);
         textComponents.add(header);
+        
+        String imagePath = "images/slide_show_images/ArchesUtah.jpg";
+        ImageComponent image = new ImageComponent(imagePath, "neither", 200, 200);
+        imageComponents.add(image);
     }
     
     public Page(String title, String studentName) {
@@ -64,6 +70,14 @@ public class Page {
     
     public ArrayList<TextComponent> getTextComponents() {
         return textComponents;
+    }
+    
+    public ArrayList<ImageComponent> getImageComponents() {
+        return imageComponents;
+    }
+    
+    public void addImageComponent(ImageComponent imageComponent) {
+        imageComponents.add(imageComponent);
     }
     
 }

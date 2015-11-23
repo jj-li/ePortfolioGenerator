@@ -29,6 +29,7 @@ import static epm.StartupConstants.WINDOWS_ICON;
 import epm.controller.ImageSelectionController;
 import epm.model.Page;
 import static epm.file.EPortfolioFileManager.SLASH;
+import epm.model.ImageComponent;
 import epm.model.TextComponent;
 import java.util.ArrayList;
 import javafx.geometry.Rectangle2D;
@@ -176,6 +177,7 @@ public class PageEditView extends VBox {
         Screen screen = Screen.getPrimary();
 	Rectangle2D bounds = screen.getVisualBounds();
         ArrayList<TextComponent> textComponents = page.getTextComponents();
+        ArrayList<ImageComponent> imageComponents = page.getImageComponents();
         for (TextComponent component : textComponents) {
             String textType = component.getTextType();
             if (textType.equalsIgnoreCase("paragraph")){
@@ -208,6 +210,15 @@ public class PageEditView extends VBox {
                 getChildren().add(headerComponent);
             }
                 
+        };
+        
+        for (ImageComponent component : imageComponents) {
+            Label imageLabel = new Label("Image: ");
+            ImageView imageView = component.getImageView();
+            HBox imageComponent = new HBox();
+            imageComponent.getChildren().addAll(imageLabel, imageView);
+            imageComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            getChildren().add(imageComponent);
         };
     }
     

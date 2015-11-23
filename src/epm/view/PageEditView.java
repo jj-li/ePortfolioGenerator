@@ -78,6 +78,12 @@ public class PageEditView extends VBox {
     
     // PROVIDES RESPONSES FOR IMAGE SELECTION
     ImageSelectionController imageController;
+    
+    HBox selectedHBox;
+    TextComponent selectedTextComponent;
+    ImageComponent selectedImageComponent;
+    VideoComponent selectedVideoComponent;
+    SlideShowComponent selectedSlideShowComponent;
 
     /**
      * THis constructor initializes the full UI for this component, using
@@ -195,6 +201,15 @@ public class PageEditView extends VBox {
                 Text paragraphField = new Text(component.getData());
                 HBox paragraphComponent = new HBox();
                 paragraphComponent.getChildren().addAll(paragraphLabel, paragraphField);
+                paragraphComponent.setOnMouseClicked(e-> {
+                    if (!isNoneSelected()) {
+                        selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                        resetSelectedComponents();
+                    }
+                    selectedHBox = paragraphComponent;
+                    selectedTextComponent = component;
+                    paragraphComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                });
                 paragraphComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 paragraphField.setWrappingWidth(bounds.getWidth()-500);
                 getChildren().add(paragraphComponent);
@@ -207,6 +222,15 @@ public class PageEditView extends VBox {
                     list.getItems().add(s);
                 HBox listComponent = new HBox();
                 listComponent.getChildren().addAll(listLabel, list);
+                listComponent.setOnMouseClicked(e-> {
+                    if (!isNoneSelected()) {
+                        selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                        resetSelectedComponents();
+                    }
+                    selectedHBox = listComponent;
+                    selectedTextComponent = component;
+                    listComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                });
                 listComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 getChildren().add(listComponent);
             }
@@ -215,6 +239,15 @@ public class PageEditView extends VBox {
                 Text headerField = new Text(component.getData());
                 HBox headerComponent = new HBox();
                 headerComponent.getChildren().addAll(headerLabel, headerField);
+                headerComponent.setOnMouseClicked(e-> {
+                    if (!isNoneSelected()) {
+                        selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                        resetSelectedComponents();
+                    }
+                    selectedHBox = headerComponent;
+                    selectedTextComponent = component;
+                    headerComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                });
                 headerComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 headerField.setWrappingWidth(bounds.getWidth()-500);
                 getChildren().add(headerComponent);
@@ -232,6 +265,15 @@ public class PageEditView extends VBox {
             widthHeight.getChildren().addAll(width, height);
             widthHeight.setStyle("-fx-padding: 5px 5px 5px 5px;");
             imageComponent.getChildren().addAll(imageLabel, imageView, widthHeight);
+            imageComponent.setOnMouseClicked(e-> {
+                    if (!isNoneSelected()) {
+                        selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                        resetSelectedComponents();
+                    }
+                    selectedHBox = imageComponent;
+                    selectedImageComponent = component;
+                    imageComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            });
             imageComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
             getChildren().add(imageComponent);
         };
@@ -257,6 +299,15 @@ public class PageEditView extends VBox {
             widthHeight.getChildren().addAll(width, height, play, stop);
             widthHeight.setStyle("-fx-padding: 5px 5px 5px 5px; -fx-spacing: 5px;");
             videoComponent.getChildren().addAll(videoLabel, video, widthHeight);
+            videoComponent.setOnMouseClicked(e-> {
+                    if (!isNoneSelected()) {
+                        selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                        resetSelectedComponents();
+                    }
+                    selectedHBox = videoComponent;
+                    selectedVideoComponent = component;
+                    videoComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            });
             videoComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
             getChildren().addAll(videoComponent);
         };
@@ -302,11 +353,45 @@ public class PageEditView extends VBox {
             
             HBox slideShowComponent = new HBox();
             slideShowComponent.getChildren().addAll(slideShowLabel, currentImage);
-            
+            slideShowComponent.setOnMouseClicked(e-> {
+                    if (!isNoneSelected()) {
+                        selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                        resetSelectedComponents();
+                    }
+                    selectedHBox = slideShowComponent;
+                    selectedSlideShowComponent = component;
+                    slideShowComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            });
             getChildren().add(slideShowComponent);
             slideShowComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
         };
     }
     
+    public boolean isTextSelected() {
+        return (selectedTextComponent != null);
+    }
     
+    public boolean isVideoSelected() {
+        return (selectedVideoComponent != null);
+    }
+    
+    public boolean isImageSelected() {
+        return (selectedImageComponent != null);
+    }
+    
+    public boolean isSlideShowSelected() {
+        return (selectedSlideShowComponent != null);
+    }
+    
+    public boolean isNoneSelected() {
+        return (!isTextSelected() && !isVideoSelected() && !isImageSelected() && !isSlideShowSelected());
+    }
+    
+    public void resetSelectedComponents() {
+        selectedTextComponent = null;
+        selectedVideoComponent = null;
+        selectedImageComponent = null;
+        selectedSlideShowComponent = null;
+        selectedHBox = null;
+    }
 }

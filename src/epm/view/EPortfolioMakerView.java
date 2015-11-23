@@ -252,7 +252,7 @@ public class EPortfolioMakerView {
         HBox top = new HBox();
 	addPageButton = this.initChildButton(top, ICON_ADD_SLIDE, TOOLTIP_ADD_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
         removePageButton = this.initChildButton(top, ICON_REMOVE_SLIDE, TOOLTIP_REMOVE_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
-        top.setStyle("-fx-spacing: 5px");
+        top.setStyle("-fx-spacing: 7px");
         
         VBox bottom = new VBox();
         HBox one = new HBox();
@@ -269,12 +269,12 @@ public class EPortfolioMakerView {
         editComponentButton = this.initChildButton(four, ICON_EDIT_COMPONENT, TOOLTIP_EDIT_COMPONENT, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
         removeComponentButton = this.initChildButton(four, ICON_REMOVE_COMPONENT, TOOLTIP_REMOVE_COMPONENT, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
         editFontButton = this.initChildButton(five, ICON_EDIT_FONT, TOOLTIP_EDIT_FONT, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
-        one.setStyle("-fx-spacing: 5px");
-        two.setStyle("-fx-spacing: 5px");
-        three.setStyle("-fx-spacing: 5px");
-        four.setStyle("-fx-spacing: 5px");
-        five.setStyle("-fx-spacing: 5px");
-        bottom.setStyle("-fx-spacing: 5px;");
+        one.setStyle("-fx-spacing: 7px");
+        two.setStyle("-fx-spacing: 7px");
+        three.setStyle("-fx-spacing: 7px");
+        four.setStyle("-fx-spacing: 7px");
+        five.setStyle("-fx-spacing: 7px");
+        bottom.setStyle("-fx-spacing: 7px;");
         
         Screen screen = Screen.getPrimary();
 	Rectangle2D bounds = screen.getVisualBounds();

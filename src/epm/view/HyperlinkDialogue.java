@@ -66,6 +66,43 @@ public class HyperlinkDialogue extends Stage{
         scene.getStylesheets().add(STYLE_SHEET_UI);
         screen.prefWidthProperty().bind(scene.widthProperty());
         screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-spacing: 10px");
+        addHyperlink.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+    }
+    
+    public HyperlinkDialogue(String text, String selected, String link) {
+        pane = new Pane();
+        textArea = new TextArea(text);
+        textArea.setWrapText(true);
+        selectedText = new Text(selected);
+        selectedText.setWrappingWidth(360);
+        selectedText.setStyle("-fx-border-color: rgb(0,0,0);");
+        textArea.setOnMouseClicked( e-> {
+            String str = textArea.getSelectedText();
+            if (str != null && !str.equals(""))
+                selectedText.setText(str);
+        });
+        screen = new VBox();
+        top = new HBox();
+        mid = new HBox();
+        bot = new HBox();
+        addHyperlink = new Button("Edit Hyperlink");
+        url = new TextField(link);
+        
+        top.getChildren().addAll(textArea);
+        mid.getChildren().addAll(new Label("Selected Text: "), selectedText);
+        bot.getChildren().addAll(new Label("Hyperlink URL: "), url);
+        
+        screen.getChildren().addAll(top, mid, bot, addHyperlink);
+        pane.getChildren().add(screen);
+        scene = new Scene(pane, 500, 500);
+        
+        this.setScene(scene);
+        this.setTitle("Edit Hyperlink");
+        
+        scene.getStylesheets().add(STYLE_SHEET_UI);
+        screen.prefWidthProperty().bind(scene.widthProperty());
+        screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-spacing: 10px");
+        addHyperlink.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
     }
     
 }

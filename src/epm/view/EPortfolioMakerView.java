@@ -297,12 +297,15 @@ public class EPortfolioMakerView {
         pageEditorPane.getTabs().add(tab);
         pageEditorPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         pageEditorPane.prefWidthProperty().bind(workspace.widthProperty());
-        pageEditorPane.setStyle("-fx-border-color: rgb(0, 0, 0); -fx-background: #ffffb2");//
+        pageEditorPane.setStyle("-fx-border-color: rgb(0, 0, 0); -fx-background: #ffffb2;");//
         
         
 	// NOW PUT THESE TWO IN THE WORKSPACE
 	workspace.getChildren().add(slideEditToolbar);
 	workspace.getChildren().add(pageEditorPane);
+        VBox temp = new VBox();
+        temp.setMinWidth(109);
+        workspace.getChildren().add(temp);
     }
     
     public ObservableList<Tab> getTabs() {
@@ -387,6 +390,19 @@ public class EPortfolioMakerView {
                 if (editView != null) {
                     if (editView.isParagraphSelected()) {
                         HyperlinkDialogue dialogue = new HyperlinkDialogue(editView.getParagraph());
+                        dialogue.showAndWait();
+                    }
+                }  
+            }
+        });
+        
+        editHyperlinkButton.setOnAction ( e-> {
+            Page page = ePortfolio.getSelectedPage();
+            if (page != null) {
+                PageEditView editView = page.getSelectedPageEditView();
+                if (editView != null) {
+                    if (editView.isParagraphSelected()) {
+                        HyperlinkDialogue dialogue = new HyperlinkDialogue(editView.getParagraph(), "classical Greek", "https://en.wikipedia.org/wiki/Classical_Greece");
                         dialogue.showAndWait();
                     }
                 }  

@@ -38,12 +38,14 @@ import epm.ssm.SlideShowMaker;
 import java.util.ArrayList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 
 /**
@@ -200,14 +202,22 @@ public class PageEditView extends VBox {
             String textType = component.getTextType();
             if (textType.equalsIgnoreCase("paragraph")){
                 Label paragraphLabel = new Label("Paragraph: ");
+                
+                //Hard Coded Data
                 String hyperlink = "classical Greek";
                 int position = component.getData().indexOf(hyperlink);
                 String beforeHyperlink = component.getData().substring(0, position);
                 String afterHyperlink = component.getData().substring(position + hyperlink.length());
                 Text before = new Text(beforeHyperlink);
                 Text after = new Text(afterHyperlink);
-                Text now = new Text(hyperlink);
+                //Text now = new Text(hyperlink);
+               // now.setFill(Color.BLUE);
+                Hyperlink now = new Hyperlink();
+                now.setText(hyperlink);
+                now.setTooltip(new Tooltip("https://en.wikipedia.org/wiki/Classical_Greece"));
                 TextFlow paragraphField = new TextFlow(before, now, after);
+                //End of Hard Coded Data
+                
                 HBox paragraphComponent = new HBox();
                 paragraphComponent.getChildren().addAll(paragraphLabel, paragraphField);
                 paragraphComponent.setOnMouseClicked(e-> {
@@ -221,7 +231,7 @@ public class PageEditView extends VBox {
                     page.setPageEditView(this);
                 });
                 paragraphComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
-                paragraphField.setWidth(100);
+                paragraphField.setMaxWidth(bounds.getWidth()/(1.5));
                 getChildren().add(paragraphComponent);
             }
             else if (textType.equalsIgnoreCase("list")) {

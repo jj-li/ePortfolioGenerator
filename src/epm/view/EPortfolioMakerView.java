@@ -366,6 +366,19 @@ public class EPortfolioMakerView {
         editComponentButton.setOnAction (e -> {
             editController.editComponent();
         });
+        
+        editFontButton.setOnAction (e-> {
+            Page page = ePortfolio.getSelectedPage();
+            if (page != null) {
+                PageEditView editView = page.getSelectedPageEditView();
+                if (editView != null) {
+                    if (editView.isTextSelected()) {
+                        FontDialogue dialogue = new FontDialogue();
+                        dialogue.showAndWait();
+                    }
+                }  
+            }
+        });
     }
 
     /**

@@ -375,6 +375,20 @@ public class PageEditView extends VBox {
         };
     }
     
+    public boolean isParagraphSelected() {
+        if (isTextSelected()) {
+            return (selectedTextComponent.getTextType().equalsIgnoreCase("paragraph"));
+        }
+        return false;
+    }
+    
+    public String getParagraph() {
+        if (isParagraphSelected())
+            return selectedTextComponent.getData();
+        else
+            return "";
+    }
+    
     public boolean isTextSelected() {
         return (selectedTextComponent != null);
     }

@@ -379,6 +379,19 @@ public class EPortfolioMakerView {
                 }  
             }
         });
+        
+        addHyperlinkButton.setOnAction (e-> {
+            Page page = ePortfolio.getSelectedPage();
+            if (page != null) {
+                PageEditView editView = page.getSelectedPageEditView();
+                if (editView != null) {
+                    if (editView.isParagraphSelected()) {
+                        HyperlinkDialogue dialogue = new HyperlinkDialogue(editView.getParagraph());
+                        dialogue.showAndWait();
+                    }
+                }  
+            }
+        });
     }
 
     /**

@@ -483,13 +483,18 @@ public class EPortfolioMakerView {
 	for (Page page : ePortfolioToLoad.getPages()) {
             Tab tab = new Tab(page.getTitle());
             PageEditView pageEdit = new PageEditView(page, tab);
-            tab.setContent(pageEdit);
+            pageEdit.reloadComponents();
+            ScrollPane scrollPane = new ScrollPane();
+            scrollPane.setContent(pageEdit);
+            scrollPane.setStyle("-fx-background: #ffffb2");
+            tab.setContent(scrollPane);
 	    getTabs().add(tab);
             pageEditorPane.setOnMouseClicked( e-> {
                 SingleSelectionModel<Tab> selectionModel = pageEditorPane.getSelectionModel();
                 Tab selectedTab = selectionModel.getSelectedItem();
                 if (selectedTab != null) {
-                    PageEditView selectedPageEditView = (PageEditView)(selectedTab.getContent());
+                    ScrollPane selectedScrollPane = (ScrollPane)(selectedTab.getContent());
+                    PageEditView selectedPageEditView = (PageEditView)selectedScrollPane.getContent();
                     Page selectedPage = selectedPageEditView.getPage();
                     ePortfolioToLoad.setSelectedPage(selectedPage);
                 }

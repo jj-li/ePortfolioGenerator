@@ -29,10 +29,15 @@ import static epm.StartupConstants.WINDOWS_ICON;
 import epm.controller.ImageSelectionController;
 import epm.model.Page;
 import static epm.file.EPortfolioFileManager.SLASH;
+import epm.model.TextComponent;
+import java.util.ArrayList;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.stage.Screen;
 
 /**
  * This UI component has the controls for editing a single slide
@@ -41,7 +46,7 @@ import javafx.scene.control.TextArea;
  * 
  * 
  */
-public class PageEditView extends ScrollPane {
+public class PageEditView extends VBox {
     // SLIDE THIS COMPONENT EDITS
     Page page;
     
@@ -73,9 +78,9 @@ public class PageEditView extends ScrollPane {
      * @param initSlide The slide to be edited by this component.
      */
     public PageEditView(Page initPage, Tab tab) {
-	// FIRST SELECT THE CSS STYLE CLASS FOR THIS CONTAINER
+        imageController = new ImageSelectionController();
+        imageSelectionView = new ImageView();
 	this.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
-	// KEEP THE SLIDE FOR LATER
 	page = initPage;
 	this.tab = tab;
         
@@ -94,17 +99,10 @@ public class PageEditView extends ScrollPane {
         nameSection.getChildren().addAll(name, nameField);
         layoutCSSFont.getChildren().addAll(layoutLabel, layout, cssLabel, css, fontLabel, font);
         footer.getChildren().addAll(footerLabel, footerField);
-        VBox everything = new VBox();
-        everything.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
-        everything.getChildren().addAll(layoutCSSFont, titleSection, nameSection, footer);
-	// LAY EVERYTHING OUT INSIDE THIS COMPONENT
-	setContent(everything);
+        getChildren().addAll(layoutCSSFont, titleSection, nameSection, initBannerImg(), footer);
+
         setStyle("-fx-background: #ffffb2");
-	/*// SETUP THE EVENT HANDLERS
-	imageController = new ImageSelectionController();
-	imageSelectionView.setOnMousePressed(e -> {
-	    imageController.processSelectImage(page, this);
-	});*/
+	
     }
     
     public Page getPage() {
@@ -147,56 +145,71 @@ public class PageEditView extends ScrollPane {
         footerField = new TextArea();
 
     }
-    /**
-     * This function gets the image for the slide and uses it to
-     * update the image displayed.
-     */
-    public void updateSlideImage() {
-        //TO FIX
-	/*
-        String imagePath = page.getImagePath() + SLASH + page.getImageFileName();
-	File file = new File(imagePath);
-	try {
-            //checks if file is valid
-            if (!file.exists())
-                throw new Exception();
-            
-	    // GET AND SET THE IMAGE
-	    URL fileURL = file.toURI().toURL();
-	    Image slideImage = new Image(fileURL.toExternalForm());
-	    imageSelectionView.setImage(slideImage);
-	    
-	    // AND RESIZE IT
-	    double scaledWidth = DEFAULT_THUMBNAIL_WIDTH;
-	    double perc = scaledWidth / slideImage.getWidth();
-	    double scaledHeight = slideImage.getHeight() * perc;
-	    imageSelectionView.setFitWidth(scaledWidth);
-	    imageSelectionView.setFitHeight(scaledHeight);
-	} catch (Exception e) {
-           CORRUPTED_SLIDE = page;
-	   PropertiesManager props = PropertiesManager.getPropertiesManager();
-           Button btOK = new Button("OK");
-           Text text = new Text(page.getImageFileName() + props.getProperty(MISSING_IMAGE));
-           GridPane pane = new GridPane();
-           pane.getStyleClass().add("error_box");
-           pane.add(text, 1, 1);
-           pane.add(btOK, 1, 2);
-           Scene scene = new Scene(pane, 600, 100);
-           scene.getStylesheets().add(STYLE_SHEET_UI);
-           Stage stage = new Stage();
-           btOK.setOnAction(e1 -> {
-               stage.close();
-           });
-           stage.setScene(scene);
-           stage.getIcons().add(new Image("file:" + PATH_ICONS + WINDOWS_ICON));
-           stage.setTitle(props.getProperty(MISSING_IMAGE_TITLE));
-           stage.show();
-	}
-        */
+    
+    private HBox initBannerImg() {
+        HBox bannerImg = new HBox();
+        Button selectImg = new Button("Select Banner Image");
+        selectImg.setOnMouseClicked(e-> {
+            String path = imageController.processSelectImage();
+            File file = new File(path);
+            try {
+                // GET AND SET THE IMAGE
+                URL fileURL = file.toURI().toURL();
+                Image image = new Image(fileURL.toExternalForm());
+                imageSelectionView.setImage(image);
+                double scaledWidth = 100;
+                double perc = scaledWidth / image.getWidth();
+                double scaledHeight = image.getHeight() * perc;
+                imageSelectionView.setFitWidth(scaledWidth);
+                imageSelectionView.setFitHeight(scaledHeight);
+            }
+            catch (Exception e1) {
+                
+            }
+        });
+        bannerImg.getChildren().addAll(selectImg, imageSelectionView);
+        bannerImg.setStyle("-fx-spacing: 10px;");
+        return bannerImg;
     }
     
-    public ImageView getImageView()
-    {
-        return imageSelectionView;
-    }        
+    public void reloadComponents() {
+        Screen screen = Screen.getPrimary();
+	Rectangle2D bounds = screen.getVisualBounds();
+        ArrayList<TextComponent> textComponents = page.getTextComponents();
+        for (TextComponent component : textComponents) {
+            String textType = component.getTextType();
+            if (textType.equalsIgnoreCase("paragraph")){
+                Label paragraphLabel = new Label("Paragraph: ");
+                Text paragraphField = new Text(component.getData());
+                HBox paragraphComponent = new HBox();
+                paragraphComponent.getChildren().addAll(paragraphLabel, paragraphField);
+                paragraphComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                paragraphField.setWrappingWidth(bounds.getWidth()-500);
+                getChildren().add(paragraphComponent);
+            }
+            else if (textType.equalsIgnoreCase("list")) {
+                Label listLabel = new Label("List: ");
+                ArrayList<String> data = component.getList();
+                ListView<String> list = new ListView<String>();
+                for (String s : data)
+                    list.getItems().add(s);
+                HBox listComponent = new HBox();
+                listComponent.getChildren().addAll(listLabel, list);
+                listComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                getChildren().add(listComponent);
+            }
+            else {
+                Label headerLabel = new Label("Header: ");
+                Text headerField = new Text(component.getData());
+                HBox headerComponent = new HBox();
+                headerComponent.getChildren().addAll(headerLabel, headerField);
+                headerComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                headerField.setWrappingWidth(bounds.getWidth()-500);
+                getChildren().add(headerComponent);
+            }
+                
+        };
+    }
+    
+    
 }

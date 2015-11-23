@@ -4,6 +4,7 @@ import static epm.ssm.LanguagePropertyType.TITLE_WINDOW;
 import static epm.ssm.StartupConstants.PATH_DATA;
 import static epm.ssm.StartupConstants.PROPERTIES_SCHEMA_FILE_NAME;
 import epm.ssm.view.SlideShowMakerView;
+import java.util.ArrayList;
 import javafx.stage.Stage;
 
 import xml_utilities.InvalidXMLFileFormatException;
@@ -31,6 +32,19 @@ public class SlideShowMaker extends Stage{
             PropertiesManager props = PropertiesManager.getPropertiesManager();
             String appTitle = props.getProperty(TITLE_WINDOW);
             ui.startUI(this, appTitle);
+	} // THERE WAS A PROBLEM LOADING THE PROPERTIES FILE
+	else {
+	}
+    }
+    
+    public SlideShowMaker(ArrayList<String> paths, ArrayList<String> captions) {
+        String languageCode = "EN";
+        // LOAD APP SETTINGS INTO THE GUI AND START IT UP
+        boolean success = loadProperties(languageCode);
+        if (success) {
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            String appTitle = props.getProperty(TITLE_WINDOW);
+            ui.startUI(this, appTitle, paths, captions);
 	} // THERE WAS A PROBLEM LOADING THE PROPERTIES FILE
 	else {
 	}

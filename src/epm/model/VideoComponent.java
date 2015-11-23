@@ -16,11 +16,11 @@ import javafx.scene.media.MediaView;
  * @author icysniper
  */
 public class VideoComponent {
-    String videoUrl;
-    String videoCaption;
-    double width;
-    double height;
-    MediaView videoView;
+    private String videoUrl;
+    private String videoCaption;
+    private double width;
+    private double height;
+    private MediaView videoView;
     
     public VideoComponent(String url, String caption, double width, double height) {
         videoUrl = url;

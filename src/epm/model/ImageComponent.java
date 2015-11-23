@@ -15,11 +15,11 @@ import javafx.scene.image.ImageView;
  * @author icysniper
  */
 public class ImageComponent {
-    String imageUrl;
-    String imagePosition;
-    double width;
-    double height;
-    ImageView imageView;
+    private String imageUrl;
+    private String imagePosition;
+    private double width;
+    private double height;
+    private ImageView imageView;
     
     public ImageComponent(String url, String position, double width, double height) {
         imageUrl = url;

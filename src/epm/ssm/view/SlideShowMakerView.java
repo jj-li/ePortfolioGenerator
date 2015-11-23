@@ -52,6 +52,8 @@ import static epm.ssm.StartupConstants.STYLE_SHEET_UI;
 import epm.ssm.controller.SlideShowEditController;
 import epm.ssm.model.Slide;
 import epm.ssm.model.SlideShowModel;
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * This class provides the User Interface for this application,
@@ -131,6 +133,32 @@ public class SlideShowMakerView {
      * @param windowTitle The title for this window.
      */
     public void startUI(Stage initPrimaryStage, String windowTitle) {
+	// THE TOOLBAR ALONG THE NORTH
+	initFileToolbar();
+
+        // INIT THE CENTER WORKSPACE CONTROLS BUT DON'T ADD THEM
+	// TO THE WINDOW YET
+	initWorkspace();
+
+	// NOW SETUP THE EVENT HANDLERS
+	initEventHandlers();
+
+	// AND FINALLY START UP THE WINDOW (WITHOUT THE WORKSPACE)
+	// KEEP THE WINDOW FOR LATER
+	primaryStage = initPrimaryStage;
+	initWindow(windowTitle);
+    }
+    
+    //TO DO - ADD in the ability to load paths and captions!
+    public void startUI(Stage initPrimaryStage, String windowTitle, ArrayList<String> paths, ArrayList<String> captions) {
+        
+        for (int i = 0; i < paths.size(); i++) {
+            File file = new File(paths.get(i));
+	    String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
+            String fileName = file.getName();
+            slideShow.addSlide(fileName, fileName, path);
+	}
+        
 	// THE TOOLBAR ALONG THE NORTH
 	initFileToolbar();
 

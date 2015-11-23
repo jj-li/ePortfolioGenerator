@@ -30,6 +30,7 @@ import epm.controller.ImageSelectionController;
 import epm.model.Page;
 import static epm.file.EPortfolioFileManager.SLASH;
 import epm.model.ImageComponent;
+import epm.model.SlideShowComponent;
 import epm.model.TextComponent;
 import epm.model.VideoComponent;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.media.MediaView;
 import javafx.stage.Screen;
 
@@ -70,6 +72,9 @@ public class PageEditView extends VBox {
     TextArea footerField;
     
     Tab tab;
+    
+    Text currentCaption;
+    VBox currentImage = new VBox();
     
     // PROVIDES RESPONSES FOR IMAGE SELECTION
     ImageSelectionController imageController;
@@ -181,6 +186,7 @@ public class PageEditView extends VBox {
         ArrayList<TextComponent> textComponents = page.getTextComponents();
         ArrayList<ImageComponent> imageComponents = page.getImageComponents();
         ArrayList<VideoComponent> videoComponents = page.getVideoComponents();
+        ArrayList<SlideShowComponent> slideShowComponents = page.getSlideShowComponents();
         
         for (TextComponent component : textComponents) {
             String textType = component.getTextType();
@@ -253,6 +259,52 @@ public class PageEditView extends VBox {
             videoComponent.getChildren().addAll(videoLabel, video, widthHeight);
             videoComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
             getChildren().addAll(videoComponent);
+        };
+        
+        for (SlideShowComponent component : slideShowComponents) {
+            Label slideShowLabel = new Label("Slide Show: ");
+            
+            Button previous = new Button();
+            String previousPath = "file:images/icons/Previous.png";
+            Image previousImage = new Image(previousPath);
+            previous.setGraphic(new ImageView(previousImage));
+            previous.setTooltip(new Tooltip("Previous Slide"));
+            
+            Button next = new Button();
+            String nextPath = "file:images/icons/Next.png";
+            Image nextImage = new Image(nextPath);
+            next.setGraphic(new ImageView(nextImage));
+            next.setTooltip(new Tooltip("Next Slide"));
+            
+            ArrayList<ImageView> imageViews = component.createImages();
+            ArrayList<String> captions = component.getCaptions();
+            
+            HBox buttons = new HBox();
+            buttons.getChildren().addAll(previous, next);
+            
+            currentCaption = new Text(captions.get(component.getPosition()));
+            buttons.setStyle("-fx-spacing: 15px; -fx-alignment: CENTER;");
+            currentImage.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption, buttons);
+            
+            previous.setOnMouseClicked(e-> {
+                component.decreasePosition();
+                currentImage.getChildren().clear();
+                currentCaption = new Text(captions.get(component.getPosition()));
+                currentImage.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption, buttons);
+            });
+            
+            next.setOnMouseClicked(e-> {
+                component.increasePosition();
+                currentImage.getChildren().clear();
+                currentCaption = new Text(captions.get(component.getPosition()));
+                currentImage.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption, buttons);
+            });
+            
+            HBox slideShowComponent = new HBox();
+            slideShowComponent.getChildren().addAll(slideShowLabel, currentImage);
+            
+            getChildren().add(slideShowComponent);
+            slideShowComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
         };
     }
     

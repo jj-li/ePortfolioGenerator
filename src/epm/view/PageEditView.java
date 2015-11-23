@@ -31,6 +31,7 @@ import epm.model.Page;
 import static epm.file.EPortfolioFileManager.SLASH;
 import epm.model.ImageComponent;
 import epm.model.TextComponent;
+import epm.model.VideoComponent;
 import java.util.ArrayList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ComboBox;
@@ -38,6 +39,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.media.MediaView;
 import javafx.stage.Screen;
 
 /**
@@ -178,6 +180,8 @@ public class PageEditView extends VBox {
 	Rectangle2D bounds = screen.getVisualBounds();
         ArrayList<TextComponent> textComponents = page.getTextComponents();
         ArrayList<ImageComponent> imageComponents = page.getImageComponents();
+        ArrayList<VideoComponent> videoComponents = page.getVideoComponents();
+        
         for (TextComponent component : textComponents) {
             String textType = component.getTextType();
             if (textType.equalsIgnoreCase("paragraph")){
@@ -216,9 +220,39 @@ public class PageEditView extends VBox {
             Label imageLabel = new Label("Image: ");
             ImageView imageView = component.getImageView();
             HBox imageComponent = new HBox();
-            imageComponent.getChildren().addAll(imageLabel, imageView);
+            Text width = new Text("Width: " + component.getWidth() + "px");
+            Text height = new Text("Height: " + component.getHeight() + "px");
+            VBox widthHeight = new VBox();
+            widthHeight.getChildren().addAll(width, height);
+            widthHeight.setStyle("-fx-padding: 5px 5px 5px 5px;");
+            imageComponent.getChildren().addAll(imageLabel, imageView, widthHeight);
             imageComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
             getChildren().add(imageComponent);
+        };
+        
+        for (VideoComponent component : videoComponents) {
+            Label videoLabel = new Label("Video: ");
+            MediaView mediaView = component.getMediaView();
+            Text caption = new Text(component.getCaption());
+            HBox videoComponent = new HBox();
+            Text width = new Text("Width: " + component.getWidth() + "px");
+            Text height = new Text("Height: " + component.getHeight() + "px");
+            VBox widthHeight = new VBox();
+            VBox video = new VBox();
+            Button play = new Button("Play Video");
+            Button stop = new Button("Stop Video");
+            play.setOnMouseClicked( e-> {
+                mediaView.getMediaPlayer().play();
+            });
+            stop.setOnMouseClicked( e-> {
+                mediaView.getMediaPlayer().stop();
+            });
+            video.getChildren().addAll(mediaView, caption);
+            widthHeight.getChildren().addAll(width, height, play, stop);
+            widthHeight.setStyle("-fx-padding: 5px 5px 5px 5px; -fx-spacing: 5px;");
+            videoComponent.getChildren().addAll(videoLabel, video, widthHeight);
+            videoComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            getChildren().addAll(videoComponent);
         };
     }
     

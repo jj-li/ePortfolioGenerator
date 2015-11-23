@@ -15,6 +15,7 @@ public class Page {
     String studentName;
     ArrayList<TextComponent> textComponents;
     ArrayList<ImageComponent> imageComponents;
+    ArrayList<VideoComponent> videoComponents;
      
     /**
      * Constructor, it initializes all slide data.
@@ -28,6 +29,7 @@ public class Page {
         studentName = "";
         textComponents = new ArrayList<TextComponent>();
         imageComponents = new ArrayList<ImageComponent>();
+        videoComponents = new ArrayList<VideoComponent>();
         
         //Hard coded data.
         TextComponent paragraph = new TextComponent("paragraph", "The oldest classical Greek and Latin writing had little or no space between words, and could be written in boustrophedon (alternating directions). Over time, text direction (left to right) became standardized, and word dividers and terminal punctuation became common. The first way to divide sentences into groups was the original paragraphos, similar to an underscore at the beginning of the new group.[3] The Greek paragraphos evolved into the pilcrow (¶), which in English manuscripts in the Middle Ages can be seen inserted inline between sentences. The hedera leaf has also been used in the same way.");
@@ -44,6 +46,10 @@ public class Page {
         String imagePath = "images/slide_show_images/ArchesUtah.jpg";
         ImageComponent image = new ImageComponent(imagePath, "neither", 200, 200);
         imageComponents.add(image);
+        
+        String videoPath = "sites/Videos/oow2010-2.flv";
+        VideoComponent video = new VideoComponent(videoPath, "A dummy video", 350, 400);
+        videoComponents.add(video);
     }
     
     public Page(String title, String studentName) {
@@ -80,4 +86,11 @@ public class Page {
         imageComponents.add(imageComponent);
     }
     
+    public ArrayList<VideoComponent> getVideoComponents() {
+        return videoComponents;
+    }
+    
+    public void addVideoComponent(VideoComponent videoComponent) {
+        videoComponents.add(videoComponent);
+    }
 }

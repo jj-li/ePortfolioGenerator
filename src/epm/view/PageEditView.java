@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 import epm.LanguagePropertyType;
@@ -199,7 +200,14 @@ public class PageEditView extends VBox {
             String textType = component.getTextType();
             if (textType.equalsIgnoreCase("paragraph")){
                 Label paragraphLabel = new Label("Paragraph: ");
-                Text paragraphField = new Text(component.getData());
+                String hyperlink = "classical Greek";
+                int position = component.getData().indexOf(hyperlink);
+                String beforeHyperlink = component.getData().substring(0, position);
+                String afterHyperlink = component.getData().substring(position + hyperlink.length());
+                Text before = new Text(beforeHyperlink);
+                Text after = new Text(afterHyperlink);
+                Text now = new Text(hyperlink);
+                TextFlow paragraphField = new TextFlow(before, now, after);
                 HBox paragraphComponent = new HBox();
                 paragraphComponent.getChildren().addAll(paragraphLabel, paragraphField);
                 paragraphComponent.setOnMouseClicked(e-> {
@@ -213,7 +221,7 @@ public class PageEditView extends VBox {
                     page.setPageEditView(this);
                 });
                 paragraphComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
-                paragraphField.setWrappingWidth(bounds.getWidth()-500);
+                paragraphField.setWidth(100);
                 getChildren().add(paragraphComponent);
             }
             else if (textType.equalsIgnoreCase("list")) {

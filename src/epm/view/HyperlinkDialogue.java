@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -22,7 +23,7 @@ import javafx.stage.Stage;
  */
 public class HyperlinkDialogue extends Stage{
     TextArea textArea;
-    TextField selectedText;
+    Text selectedText;
     VBox screen;
     HBox top;
     HBox mid;
@@ -36,10 +37,11 @@ public class HyperlinkDialogue extends Stage{
         pane = new Pane();
         textArea = new TextArea(text);
         textArea.setWrapText(true);
-        selectedText = new TextField();
-        textArea.setOnMouseReleased( e-> {
+        selectedText = new Text();
+        selectedText.setWrappingWidth(360);
+        selectedText.setStyle("-fx-border-color: rgb(0,0,0);");
+        textArea.setOnMouseClicked( e-> {
             String str = textArea.getSelectedText();
-            System.out.println("Ho" + str);//
             if (str != null && !str.equals(""))
                 selectedText.setText(str);
         });

@@ -210,10 +210,9 @@ public class PageEditView extends VBox {
                 String afterHyperlink = component.getData().substring(position + hyperlink.length());
                 Text before = new Text(beforeHyperlink);
                 Text after = new Text(afterHyperlink);
-                //Text now = new Text(hyperlink);
-               // now.setFill(Color.BLUE);
                 Hyperlink now = new Hyperlink();
                 now.setText(hyperlink);
+                now.setStyle("-fx-text-fill: #1919ff");
                 now.setTooltip(new Tooltip("https://en.wikipedia.org/wiki/Classical_Greece"));
                 TextFlow paragraphField = new TextFlow(before, now, after);
                 //End of Hard Coded Data

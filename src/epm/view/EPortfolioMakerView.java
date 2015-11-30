@@ -297,7 +297,7 @@ public class EPortfolioMakerView {
         pageEditorPane.getTabs().add(tab);
         pageEditorPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         pageEditorPane.prefWidthProperty().bind(workspace.widthProperty());
-        pageEditorPane.setStyle("-fx-border-color: rgb(0, 0, 0); -fx-background: #ffffb2;");//
+        pageEditorPane.setStyle("-fx-border-color: rgb(0, 0, 0); -fx-background: #ffffe5;");//
         
         
 	// NOW PUT THESE TWO IN THE WORKSPACE
@@ -347,18 +347,21 @@ public class EPortfolioMakerView {
         });
         
         addTextButton.setOnAction( e-> {
-            TextComponentDialogue addComponent = new TextComponentDialogue();
+            TextComponentDialogue addComponent = new TextComponentDialogue(ePortfolio.getSelectedPage());
             addComponent.showAndWait();
+            reloadSlideShowPane(ePortfolio);
         });
         
         addImageButton.setOnAction ( e-> {
-           ImageComponentDialogue imageComponent = new ImageComponentDialogue(); 
+           ImageComponentDialogue imageComponent = new ImageComponentDialogue(ePortfolio.getSelectedPage()); 
            imageComponent.showAndWait();
+           reloadSlideShowPane(ePortfolio);
         });
         
         addVideoButton.setOnAction ( e->{
-            VideoComponentDialogue videoComponent = new VideoComponentDialogue(); 
+            VideoComponentDialogue videoComponent = new VideoComponentDialogue(ePortfolio.getSelectedPage()); 
             videoComponent.showAndWait();
+            reloadSlideShowPane(ePortfolio);
         });
         
         addSlideshowButton.setOnAction ( e-> {
@@ -532,7 +535,7 @@ public class EPortfolioMakerView {
             pageEdit.reloadComponents();
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setContent(pageEdit);
-            scrollPane.setStyle("-fx-background: #ffffb2");
+            scrollPane.setStyle("-fx-background: #ffffe5");
             tab.setContent(scrollPane);
 	    getTabs().add(tab);
             pageEditorPane.setOnMouseClicked( e-> {

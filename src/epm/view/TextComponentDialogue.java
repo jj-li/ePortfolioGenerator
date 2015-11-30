@@ -6,6 +6,8 @@
 package epm.view;
 
 import static epm.StartupConstants.STYLE_SHEET_UI;
+import epm.model.Page;
+import epm.model.TextComponent;
 import java.util.ArrayList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -48,7 +50,10 @@ public class TextComponentDialogue extends Stage{
     Label paragraphFontsLabel;
     Button removeItemButton;
     
-    public TextComponentDialogue() {
+    public TextComponentDialogue(Page page) {
+        addComponent.setOnMouseClicked( e-> {
+            addTextComponent(page);
+        });
         removeItemButton = new Button("Remove Item");
         textField = new TextField();
         textArea = new TextArea();
@@ -177,6 +182,7 @@ public class TextComponentDialogue extends Stage{
         
         editHeader.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
         editParagraph.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        
     }
     
     public TextComponentDialogue(String type, ArrayList<String> data) {
@@ -216,5 +222,26 @@ public class TextComponentDialogue extends Stage{
         this.setTitle("Edit List");
         
         editList.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+    }
+    
+    public void addTextComponent(Page page) {
+        RadioButton selected = (RadioButton)types.getSelectedToggle();
+        String textualType = selected.getText();
+        if (textualType.equalsIgnoreCase("paragraph")) {
+            TextComponent component = new TextComponent(textualType, textArea.getText());
+            page.addTextComponent(component);
+        }
+        else if (textualType.equalsIgnoreCase("header")) {
+            TextComponent component = new TextComponent(textualType, textField.getText());
+            page.addTextComponent(component);
+        }
+        else {
+            ArrayList<String> data = new ArrayList<String>();
+            for (String s : list.getItems())
+                data.add(s);
+            TextComponent component = new TextComponent(textualType, data);
+            page.addTextComponent(component);
+        }
+        this.hide();
     }
 }

@@ -7,6 +7,8 @@ package epm.view;
 
 import static epm.StartupConstants.STYLE_SHEET_UI;
 import epm.controller.ImageSelectionController;
+import epm.model.ImageComponent;
+import epm.model.Page;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -38,7 +40,10 @@ public class ImageComponentDialogue extends Stage{
     ComboBox imagePosition;
     Label imagePositionLabel;
     
-    public ImageComponentDialogue() {
+    public ImageComponentDialogue(Page page) {
+        addComponent.setOnMouseClicked(e-> {
+            addImageComponent(page);
+        });
         selectImage = new Button("Select Image");
         imagePath = new Text();
         top = new HBox();
@@ -141,5 +146,14 @@ public class ImageComponentDialogue extends Stage{
         
         selectImage.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
         editImage.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+    }
+    
+    public void addImageComponent(Page page) {
+        double width = Double.parseDouble(widthField.getText());
+        double height = Double.parseDouble(heightField.getText());
+        String position = (String)imagePosition.getValue();
+        ImageComponent component = new ImageComponent(imagePath.getText(), position, width, height);
+        page.addImageComponent(component);
+        this.hide();
     }
 }

@@ -7,6 +7,8 @@ package epm.view;
 
 import static epm.StartupConstants.STYLE_SHEET_UI;
 import epm.controller.VideoSelectionController;
+import epm.model.Page;
+import epm.model.VideoComponent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,7 +39,10 @@ public class VideoComponentDialogue extends Stage{
     Label captionLabel;
     TextField captionField;
     
-    public VideoComponentDialogue() {
+    public VideoComponentDialogue(Page page) {
+        addComponent.setOnMouseClicked(e-> {
+            addVideoComponent(page);
+        });
         selectVideo = new Button("Select Video");
         videoPath = new Text();
         top = new HBox();
@@ -78,7 +83,7 @@ public class VideoComponentDialogue extends Stage{
         bottomThree.setStyle("-fx-padding: 10px 0px 0px 0px");
         screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
         
-        scene = new Scene(pane, 380, 230);
+        scene = new Scene(pane, 380, 275);
         videoPath.setWrappingWidth(scene.getWidth());
         scene.getStylesheets().add(STYLE_SHEET_UI);
         this.setScene(scene);
@@ -138,5 +143,14 @@ public class VideoComponentDialogue extends Stage{
         
         selectVideo.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
         editVideo.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+    }
+    
+    public void addVideoComponent(Page page) {
+        double width = Double.parseDouble(widthField.getText());
+        double height = Double.parseDouble(heightField.getText());
+        String caption = captionField.getText();
+        VideoComponent component = new VideoComponent(videoPath.getText(), caption, width, height);
+        page.addVideoComponent(component);
+        this.hide();
     }
 }

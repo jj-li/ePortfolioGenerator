@@ -27,7 +27,7 @@
 .slide_edit_view {
     -fx-padding: 7px 0px 10px 15px;
     -fx-background-radius: 10.0;
-    -fx-background-color: ffffb2;
+    -fx-background-color: #ffffe5;
     -fx-border-thickness: 10px;
     -fx-spacing: 10px;
 }
@@ -55,7 +55,7 @@
 }
 
 .slide_panes {
-    -fx-background: rgb(255,255,55);
+    -fx-background: #ffffe5;
     -fx-border-color: rgb(0, 0, 0);
 }
 

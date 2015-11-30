@@ -119,7 +119,7 @@ public class PageEditView extends VBox {
         footer.getChildren().addAll(footerLabel, footerField);
         getChildren().addAll(layoutCSSFont, titleSection, nameSection, initBannerImg(), footer);
 
-        setStyle("-fx-background: #ffffb2");
+        setStyle("-fx-background: #ffffe5");
 	
     }
     
@@ -202,7 +202,7 @@ public class PageEditView extends VBox {
             String textType = component.getTextType();
             if (textType.equalsIgnoreCase("paragraph")){
                 Label paragraphLabel = new Label("Paragraph: ");
-                
+                /**
                 //Hard Coded Data
                 String hyperlink = "classical Greek";
                 int position = component.getData().indexOf(hyperlink);
@@ -216,7 +216,9 @@ public class PageEditView extends VBox {
                 now.setTooltip(new Tooltip("https://en.wikipedia.org/wiki/Classical_Greece"));
                 TextFlow paragraphField = new TextFlow(before, now, after);
                 //End of Hard Coded Data
-                
+                **/
+                Text data = new Text(component.getData());
+                TextFlow paragraphField = new TextFlow(data);
                 HBox paragraphComponent = new HBox();
                 paragraphComponent.getChildren().addAll(paragraphLabel, paragraphField);
                 paragraphComponent.setOnMouseClicked(e-> {

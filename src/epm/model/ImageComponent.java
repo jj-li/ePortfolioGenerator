@@ -20,14 +20,16 @@ public class ImageComponent {
     private double width;
     private double height;
     private ImageView imageView;
+    private String caption;
     
-    public ImageComponent(String url, String position, double width, double height) {
+    public ImageComponent(String url, String position, double width, double height, String caption) {
         imageUrl = url;
         imagePosition = position;
         this.width = width;
         this.height = height;
         imageView = new ImageView();
         setImageView();
+        this.caption = caption;
     }
     
     public String getUrl(){
@@ -64,6 +66,14 @@ public class ImageComponent {
     
     public ImageView getImageView() {
         return imageView;
+    }
+    
+    public String getCaption() {
+        return caption;
+    }
+    
+    public void setCaption(String newCaption) {
+        caption = newCaption;
     }
     
     public void setImageView() {

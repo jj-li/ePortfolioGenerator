@@ -39,6 +39,8 @@ public class ImageComponentDialogue extends Stage{
     Button addComponent = new Button("Add Image");
     ComboBox imagePosition;
     Label imagePositionLabel;
+    Label captionLabel;
+    TextField captionField;
     
     public ImageComponentDialogue(Page page) {
         addComponent.setOnMouseClicked(e-> {
@@ -58,6 +60,8 @@ public class ImageComponentDialogue extends Stage{
         imagePosition = new ComboBox();
         imagePosition.getItems().addAll("Left", "Right", "Neither");
         imagePosition.setValue("Left");
+        captionLabel = new Label("Image Caption: ");
+        captionField = new TextField();
         
         selectImage.setOnMouseClicked( e-> {
             try {
@@ -73,20 +77,23 @@ public class ImageComponentDialogue extends Stage{
         HBox bottomOne = new HBox();
         HBox bottomTwo = new HBox();
         HBox bottomThree = new HBox();
+        HBox bottomFour = new HBox();
         bottomOne.getChildren().addAll(imagePositionLabel, imagePosition);
         bottomTwo.getChildren().addAll(widthLabel, widthField);
         bottomThree.getChildren().addAll(heightLabel, heightField);
+        bottomFour.getChildren().addAll(captionLabel, captionField);
         last.getChildren().add(addComponent);
-        screen.getChildren().addAll(top, imagePath, bottomOne, bottomTwo, bottomThree, last);
+        screen.getChildren().addAll(top, imagePath, bottomOne, bottomTwo, bottomThree, bottomFour, last);
         pane.getChildren().add(screen);
         
         last.setStyle("-fx-padding: 10px 0px 0px 0px");
         bottomOne.setStyle("-fx-padding: 10px 0px 0px 0px");
         bottomTwo.setStyle("-fx-padding: 10px 0px 0px 0px");
         bottomThree.setStyle("-fx-padding: 10px 0px 0px 0px");
+        bottomFour.setStyle("-fx-padding: 10px 0px 0px 0px");
         screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
         
-        scene = new Scene(pane, 380, 230);
+        scene = new Scene(pane, 380, 300);
         imagePath.setWrappingWidth(scene.getWidth());
         scene.getStylesheets().add(STYLE_SHEET_UI);
         this.setScene(scene);
@@ -95,7 +102,7 @@ public class ImageComponentDialogue extends Stage{
         addComponent.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
     }
     
-    public ImageComponentDialogue(String url, String position, double width, double height) {
+    public ImageComponentDialogue(String url, String position, double width, double height, ImageComponent component) {
         selectImage = new Button("Select Image");
         imagePath = new Text(url);
         top = new HBox();
@@ -110,6 +117,8 @@ public class ImageComponentDialogue extends Stage{
         imagePosition = new ComboBox();
         imagePosition.getItems().addAll("Left", "Right", "Neither");
         imagePosition.setValue(position);
+        captionLabel = new Label("Image Caption: ");
+        captionField = new TextField(component.getCaption());
         
         selectImage.setOnMouseClicked( e-> {
             try {
@@ -126,34 +135,53 @@ public class ImageComponentDialogue extends Stage{
         HBox bottomOne = new HBox();
         HBox bottomTwo = new HBox();
         HBox bottomThree = new HBox();
+        HBox bottomFour = new HBox();
         bottomOne.getChildren().addAll(imagePositionLabel, imagePosition);
         bottomTwo.getChildren().addAll(widthLabel, widthField);
         bottomThree.getChildren().addAll(heightLabel, heightField);
+        bottomFour.getChildren().addAll(captionLabel, captionField);
         last.getChildren().add(editImage);
-        screen.getChildren().addAll(top, imagePath, bottomOne, bottomTwo, bottomThree, last);
+        screen.getChildren().addAll(top, imagePath, bottomOne, bottomTwo, bottomThree, bottomFour, last);
         pane.getChildren().add(screen);
         
         last.setStyle("-fx-padding: 10px 0px 0px 0px");
         bottomOne.setStyle("-fx-padding: 10px 0px 0px 0px");
         bottomTwo.setStyle("-fx-padding: 10px 0px 0px 0px");
         bottomThree.setStyle("-fx-padding: 10px 0px 0px 0px");
+        bottomFour.setStyle("-fx-padding: 10px 0px 0px 0px");
         screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
         
-        scene = new Scene(pane, 380, 230);
+        scene = new Scene(pane, 380, 300);
         imagePath.setWrappingWidth(scene.getWidth());
         scene.getStylesheets().add(STYLE_SHEET_UI);
         this.setScene(scene);
         
         selectImage.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
         editImage.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        
+        editImage.setOnAction(e-> {
+            setImageComponent(component);
+        });
     }
     
     public void addImageComponent(Page page) {
         double width = Double.parseDouble(widthField.getText());
         double height = Double.parseDouble(heightField.getText());
         String position = (String)imagePosition.getValue();
-        ImageComponent component = new ImageComponent(imagePath.getText(), position, width, height);
+        ImageComponent component = new ImageComponent(imagePath.getText(), position, width, height, captionField.getText());
         page.addImageComponent(component);
+        this.hide();
+    }
+    
+    public void setImageComponent(ImageComponent component) {
+        double width = Double.parseDouble(widthField.getText());
+        double height = Double.parseDouble(heightField.getText());
+        String caption = captionField.getText();
+        component.setWidth(width);
+        component.setHeight(height);
+        component.setUrl(imagePath.getText());
+        component.setCaption(caption);
+        component.setImageView();
         this.hide();
     }
 }

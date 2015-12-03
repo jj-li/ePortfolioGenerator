@@ -24,11 +24,10 @@ public class SlideShowComponent {
     private ArrayList<ImageView> imageViews;
     private Page page;
     
-    public SlideShowComponent(ArrayList<String> paths, ArrayList<String> caps, Page page) {
+    public SlideShowComponent(ArrayList<String> paths, ArrayList<String> caps) {
         imagePaths = paths;
         captions = caps;
-        this.page = page;
-        createSlideShow(page);
+        createSlideShow();
         
     }
     
@@ -36,8 +35,8 @@ public class SlideShowComponent {
         return slideShow;
     }
     
-    public void createSlideShow(Page page) {
-        slideShow = new SlideShowMaker(imagePaths, captions, page);
+    public void createSlideShow() {
+        slideShow = new SlideShowMaker(imagePaths, captions, this);
     }
     
     public ArrayList<String> getImagePaths() {

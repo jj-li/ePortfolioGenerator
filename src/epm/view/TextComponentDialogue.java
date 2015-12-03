@@ -143,7 +143,7 @@ public class TextComponentDialogue extends Stage{
         addComponent.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
     }
     
-    public TextComponentDialogue(String type, String data) {
+    public TextComponentDialogue(String type, String data, TextComponent component) {
         textArea = new TextArea(data);
         textArea.setWrapText(true);
         textField = new TextField(data);
@@ -183,9 +183,19 @@ public class TextComponentDialogue extends Stage{
         editHeader.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
         editParagraph.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
         
+        editHeader.setOnAction(e-> {
+            component.setData(textField.getText());
+            this.hide();
+        });
+        editParagraph.setOnAction(e-> {
+            component.setData(textArea.getText());
+            component.setFont((String)paragraphFonts.getValue());
+            this.hide();
+        });
+        
     }
     
-    public TextComponentDialogue(String type, ArrayList<String> data) {
+    public TextComponentDialogue(String type, ArrayList<String> data, TextComponent component) {
         removeItemButton = new Button("Remove Item");
         addItemButton = new Button("Add Item");
         addItemField = new TextField();
@@ -222,6 +232,13 @@ public class TextComponentDialogue extends Stage{
         this.setTitle("Edit List");
         
         editList.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        editList.setOnAction(e-> {
+            ArrayList<String> items = new ArrayList<String>();
+            for (String s : list.getItems())
+                items.add(s);
+            component.setList(items);
+            this.hide();
+        });
     }
     
     public void addTextComponent(Page page) {

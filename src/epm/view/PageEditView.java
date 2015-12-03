@@ -279,14 +279,17 @@ public class PageEditView extends VBox {
         for (ImageComponent component : imageComponents) {
             Label imageLabel = new Label("Image: ");
             ImageView imageView = component.getImageView();
+            Text caption = new Text(component.getCaption());
             HBox imageComponent = new HBox();
+            VBox imageAndCaption = new VBox();
             Text width = new Text("Width: " + component.getWidth() + "px");
             Text height = new Text("Height: " + component.getHeight() + "px");
             Text position = new Text("Floating position: " + component.getPosition());
             VBox widthHeight = new VBox();
             widthHeight.getChildren().addAll(width, height, position);
             widthHeight.setStyle("-fx-padding: 5px 5px 5px 5px;");
-            imageComponent.getChildren().addAll(imageLabel, imageView, widthHeight);
+            imageAndCaption.getChildren().addAll(imageView, caption);
+            imageComponent.getChildren().addAll(imageLabel, imageAndCaption, widthHeight);
             imageComponent.setOnMouseClicked(e-> {
                     if (!isNoneSelected()) {
                         selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
@@ -371,14 +374,14 @@ public class PageEditView extends VBox {
             previous.setOnMouseClicked(e-> {
                 component.decreasePosition();
                 VBox currently = new VBox();
-                currently.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption);
+                currently.getChildren().addAll(imageViews.get(component.getPosition()), new Text(captions.get(component.getPosition())));
                 bp.setCenter(currently);
             });
             
             next.setOnMouseClicked(e-> {
                 component.increasePosition();
                 VBox currently = new VBox();
-                currently.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption);
+                currently.getChildren().addAll(imageViews.get(component.getPosition()), new Text(captions.get(component.getPosition())));
                 bp.setCenter(currently);
             });
             
@@ -446,11 +449,11 @@ public class PageEditView extends VBox {
             if (isTextSelected()) {
                 String type = selectedTextComponent.getTextType();
                 if (type.equalsIgnoreCase("list")) {
-                    TextComponentDialogue dialogue = new TextComponentDialogue(type, selectedTextComponent.getList());
+                    TextComponentDialogue dialogue = new TextComponentDialogue(type, selectedTextComponent.getList(), selectedTextComponent);
                     dialogue.showAndWait();
                 }
                 else {
-                    TextComponentDialogue dialogue = new TextComponentDialogue(type, selectedTextComponent.getData());
+                    TextComponentDialogue dialogue = new TextComponentDialogue(type, selectedTextComponent.getData(), selectedTextComponent);
                     dialogue.showAndWait();
                 }    
             }
@@ -459,7 +462,7 @@ public class PageEditView extends VBox {
                 String caption = selectedVideoComponent.getCaption();
                 double height = selectedVideoComponent.getHeight();
                 double width = selectedVideoComponent.getWidth();
-                VideoComponentDialogue dialogue = new VideoComponentDialogue(url, caption, width, height);
+                VideoComponentDialogue dialogue = new VideoComponentDialogue(url, caption, width, height, selectedVideoComponent);
                 dialogue.showAndWait();
             }
             else if (isImageSelected()) {
@@ -467,7 +470,7 @@ public class PageEditView extends VBox {
                 String position = selectedImageComponent.getPosition();
                 double height = selectedImageComponent.getHeight();
                 double width = selectedImageComponent.getWidth();
-                ImageComponentDialogue dialogue = new ImageComponentDialogue(url, position, width, height);
+                ImageComponentDialogue dialogue = new ImageComponentDialogue(url, position, width, height, selectedImageComponent);
                 dialogue.showAndWait();
             }
             else {

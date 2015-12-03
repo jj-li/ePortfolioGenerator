@@ -83,7 +83,7 @@ public class VideoComponentDialogue extends Stage{
         bottomThree.setStyle("-fx-padding: 10px 0px 0px 0px");
         screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
         
-        scene = new Scene(pane, 380, 275);
+        scene = new Scene(pane, 380, 300);
         videoPath.setWrappingWidth(scene.getWidth());
         scene.getStylesheets().add(STYLE_SHEET_UI);
         this.setScene(scene);
@@ -93,7 +93,7 @@ public class VideoComponentDialogue extends Stage{
         addComponent.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
     }
     
-    public VideoComponentDialogue(String url, String caption, double width, double height) {
+    public VideoComponentDialogue(String url, String caption, double width, double height, VideoComponent component) {
         selectVideo = new Button("Select Video");
         videoPath = new Text(url);
         top = new HBox();
@@ -135,7 +135,7 @@ public class VideoComponentDialogue extends Stage{
         bottomThree.setStyle("-fx-padding: 10px 0px 0px 0px");
         screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-hgap: 10px");
         
-        scene = new Scene(pane, 380, 230);
+        scene = new Scene(pane, 380, 300);
         videoPath.setWrappingWidth(scene.getWidth());
         scene.getStylesheets().add(STYLE_SHEET_UI);
         this.setScene(scene);
@@ -143,6 +143,10 @@ public class VideoComponentDialogue extends Stage{
         
         selectVideo.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
         editVideo.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        
+        editVideo.setOnAction(e-> {
+            setVideoComponent(component);
+        });
     }
     
     public void addVideoComponent(Page page) {
@@ -151,6 +155,18 @@ public class VideoComponentDialogue extends Stage{
         String caption = captionField.getText();
         VideoComponent component = new VideoComponent(videoPath.getText(), caption, width, height);
         page.addVideoComponent(component);
+        this.hide();
+    }
+    
+    public void setVideoComponent(VideoComponent component) {
+        double width = Double.parseDouble(widthField.getText());
+        double height = Double.parseDouble(heightField.getText());
+        String caption = captionField.getText();
+        component.setWidth(width);
+        component.setHeight(height);
+        component.setUrl(videoPath.getText());
+        component.setCaption(caption);
+        component.setMediaView();
         this.hide();
     }
 }

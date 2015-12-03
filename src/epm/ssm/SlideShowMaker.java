@@ -1,6 +1,7 @@
 package epm.ssm;
 
 import epm.model.Page;
+import epm.model.SlideShowComponent;
 import static epm.ssm.LanguagePropertyType.TITLE_WINDOW;
 import static epm.ssm.StartupConstants.PATH_DATA;
 import static epm.ssm.StartupConstants.PROPERTIES_SCHEMA_FILE_NAME;
@@ -37,16 +38,20 @@ public class SlideShowMaker extends Stage{
 	}
     }
     
-    public SlideShowMaker(ArrayList<String> paths, ArrayList<String> captions, Page page) {
+    public SlideShowMaker(ArrayList<String> paths, ArrayList<String> captions, SlideShowComponent component) {
         String languageCode = "EN";
         // LOAD APP SETTINGS INTO THE GUI AND START IT UP
         boolean success = loadProperties(languageCode);
         if (success) {
             PropertiesManager props = PropertiesManager.getPropertiesManager();
-            ui.startUI(this, "Edit Slide Show Component", paths, captions, page);
+            ui.startUI(this, "Edit Slide Show Component", paths, captions, component);
 	} // THERE WAS A PROBLEM LOADING THE PROPERTIES FILE
 	else {
 	}
+    }
+    
+    public void editComponent(SlideShowComponent component) {
+        ui.editSlideShowComponent(component);
     }
     
     /**

@@ -372,6 +372,7 @@ public class EPortfolioMakerView {
         
         editComponentButton.setOnAction (e -> {
             editController.editComponent();
+            reloadSlideShowPane(ePortfolio);
         });
         
         editFontButton.setOnAction (e-> {

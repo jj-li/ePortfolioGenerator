@@ -68,6 +68,7 @@ import javafx.collections.ObservableList;
 public class SlideShowMakerView {
 
     Page page;
+    SlideShowComponent component;
     
     // THIS IS THE MAIN APPLICATION UI WINDOW AND ITS SCENE GRAPH
     Stage primaryStage;
@@ -157,8 +158,7 @@ public class SlideShowMakerView {
     }
     
     //TO DO - ADD in the ability to load paths and captions!
-    public void startUI(Stage initPrimaryStage, String windowTitle, ArrayList<String> paths, ArrayList<String> captions, Page page) {
-        this.page = page;
+    public void startUI(Stage initPrimaryStage, String windowTitle, ArrayList<String> paths, ArrayList<String> captions, SlideShowComponent component) {
         
 	// THE TOOLBAR ALONG THE NORTH
 	initFileToolbar(true);
@@ -180,6 +180,8 @@ public class SlideShowMakerView {
             String fileName = file.getName();
             slideShow.addSlide(fileName, path, captions.get(i));
 	}
+        
+        this.component = component;
     }
 
     // UI SETUP HELPER METHODS
@@ -260,9 +262,12 @@ public class SlideShowMakerView {
                     imagePaths.add(s.getImagePath() + s.getImageFileName());
                     captions.add(s.getCaption());
                 }
-                SlideShowComponent component = new SlideShowComponent(imagePaths, captions, page);
+                SlideShowComponent component = new SlideShowComponent(imagePaths, captions);
                 page.addSlideShowComponent(component);
                 primaryStage.hide();
+            }
+            else {
+                editSlideShowComponent(component);
             }
         });
         addSlideShow.setStyle("-fx-padding: 10px 10px 10px 10px; -fx-alignment: center; -fx-border-color: rgb(0,0,0); -fx-font-weight: bolder");
@@ -270,6 +275,20 @@ public class SlideShowMakerView {
         
     }
 
+    public void editSlideShowComponent(SlideShowComponent component) {
+        ArrayList<String> imagePaths = new ArrayList<String>();
+        ArrayList<String> captions = new ArrayList<String>();
+        ObservableList<Slide> slides = slideShow.getSlides();
+        for (Slide s : slides) {
+            imagePaths.add(s.getImagePath() + s.getImageFileName());
+            captions.add(s.getCaption());
+        }
+        component.setImagePaths(imagePaths);
+        component.setCaptions(captions);
+        component.createSlideShow();
+        primaryStage.hide();
+    }
+    
     private void initWindow(String windowTitle) {
 	// SET THE WINDOW TITLE
 	primaryStage.setTitle(windowTitle);

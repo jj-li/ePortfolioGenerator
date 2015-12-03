@@ -230,6 +230,10 @@ public class PageEditView extends VBox {
                     page.setPageEditView(this);
                 });
                 paragraphComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                if (!isNoneSelected()) {
+                    if (component.equals(selectedTextComponent))
+                        paragraphComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                }
                 paragraphField.setMaxWidth(bounds.getWidth()/(1.5));
                 getChildren().add(paragraphComponent);
             }
@@ -251,7 +255,21 @@ public class PageEditView extends VBox {
                     listComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                     page.setPageEditView(this);
                 });
+                list.setOnMouseClicked(e-> {
+                    if (!isNoneSelected()) {
+                        selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                        resetSelectedComponents();
+                    }
+                    selectedHBox = listComponent;
+                    selectedTextComponent = component;
+                    listComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                    page.setPageEditView(this);
+                });
                 listComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                if (!isNoneSelected()) {
+                    if (component.equals(selectedTextComponent))
+                        listComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                }
                 getChildren().add(listComponent);
             }
             else {
@@ -270,6 +288,10 @@ public class PageEditView extends VBox {
                     page.setPageEditView(this);
                 });
                 headerComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                if (!isNoneSelected()) {
+                    if (component.equals(selectedTextComponent))
+                        headerComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                }
                 headerField.setWrappingWidth(bounds.getWidth()-500);
                 getChildren().add(headerComponent);
             }
@@ -301,6 +323,10 @@ public class PageEditView extends VBox {
                     page.setPageEditView(this);
             });
             imageComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            if (!isNoneSelected()) {
+                if (component.equals(selectedImageComponent))
+                    imageComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            }
             getChildren().add(imageComponent);
         };
         
@@ -336,6 +362,10 @@ public class PageEditView extends VBox {
                     page.setPageEditView(this);
             });
             videoComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            if (!isNoneSelected()) {
+                if (component.equals(selectedVideoComponent))
+                    videoComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            }
             getChildren().addAll(videoComponent);
         };
         
@@ -399,6 +429,10 @@ public class PageEditView extends VBox {
             });
             getChildren().add(slideShowComponent);
             slideShowComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            if (!isNoneSelected()) {
+                if (component.equals(selectedSlideShowComponent))
+                    slideShowComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+            }
         };
     }
     
@@ -409,11 +443,15 @@ public class PageEditView extends VBox {
         return false;
     }
     
-    public String getParagraph() {
-        if (isParagraphSelected())
-            return selectedTextComponent.getData();
-        else
-            return "";
+    public boolean isListSelected() {
+        if (isTextSelected()) {
+            return (selectedTextComponent.getTextType().equalsIgnoreCase("list"));
+        }
+        return false;
+    }
+    
+    public TextComponent getTextComponent() {
+        return selectedTextComponent;
     }
     
     public boolean isTextSelected() {

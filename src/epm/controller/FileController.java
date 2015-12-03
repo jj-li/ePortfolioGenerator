@@ -104,7 +104,6 @@ public class FileController {
                 // RESET THE DATA, WHICH SHOULD TRIGGER A RESET OF THE UI
                 EPortfolioModel ePortfolio = ui.getEPortfolio();
 		ePortfolio.reset();
-                ePortfolio.addPage();
                 ui.reloadSlideShowPane(ePortfolio);
                 saved = false;
 

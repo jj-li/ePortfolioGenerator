@@ -81,6 +81,7 @@ public class EPortfolioModel {
      */
     public void addPage(){
         Page page = new Page();
+        selectedPage = page;
         pages.add(page);
 	ui.reloadSlideShowPane(this);
     }

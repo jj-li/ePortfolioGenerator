@@ -16,17 +16,20 @@ public class TextComponent {
     private ArrayList<String> list;
     private String data;
     private String font;
+    private ArrayList<HyperlinkComponent> links;
     
     public TextComponent(String type, String text, String font) {
         textType = type;
         data = text;
         this.font = font;
+        links = new ArrayList<HyperlinkComponent>();
     }
     
     public TextComponent(String type, ArrayList<String> datas, String font) {
         textType = type;
         list = datas;
         this.font = font;
+        links = new ArrayList<HyperlinkComponent>();
     }
     
     public void setTextType(String newType) {
@@ -59,5 +62,13 @@ public class TextComponent {
     
     public void setFont(String newFont) {
         font = newFont;
+    }
+    
+    public ArrayList<HyperlinkComponent> getHyperlinks() {
+        return links;
+    }
+    
+    public void addHyperlink(HyperlinkComponent component) {
+        links.add(component);
     }
 }

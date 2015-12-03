@@ -95,6 +95,7 @@ import epm.model.Page;
 import epm.model.EPortfolioModel;
 import epm.error.ErrorHandler;
 import epm.file.EPortfolioFileManager;
+import epm.model.TextComponent;
 import epm.ssm.SlideShowMaker;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
@@ -394,8 +395,16 @@ public class EPortfolioMakerView {
                 PageEditView editView = page.getSelectedPageEditView();
                 if (editView != null) {
                     if (editView.isParagraphSelected()) {
-                        HyperlinkDialogue dialogue = new HyperlinkDialogue(editView.getParagraph());
+                        TextComponent component = editView.getTextComponent();
+                        HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getData(), component);
                         dialogue.showAndWait();
+                        reloadSlideShowPane(ePortfolio);
+                    }
+                    if (editView.isListSelected()) {
+                        TextComponent component = editView.getTextComponent();
+                        HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getList(), component);
+                        dialogue.showAndWait();
+                        reloadSlideShowPane(ePortfolio);
                     }
                 }  
             }
@@ -407,8 +416,14 @@ public class EPortfolioMakerView {
                 PageEditView editView = page.getSelectedPageEditView();
                 if (editView != null) {
                     if (editView.isParagraphSelected()) {
-                        HyperlinkDialogue dialogue = new HyperlinkDialogue(editView.getParagraph(), "classical Greek", "https://en.wikipedia.org/wiki/Classical_Greece");
+                        TextComponent component = editView.getTextComponent();
+                        HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getData(), component.getHyperlinks());
                         dialogue.showAndWait();
+                    }
+                    if (editView.isListSelected()) {
+                        TextComponent component = editView.getTextComponent();
+                        //HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getData(), component.getHyperlinks());
+                       // dialogue.showAndWait();
                     }
                 }  
             }
@@ -550,6 +565,8 @@ public class EPortfolioMakerView {
                     ePortfolioToLoad.setSelectedPage(selectedPage);
                 }
             });
+            if (ePortfolioToLoad.getSelectedPage().equals(page))
+                pageEditorPane.getSelectionModel().select(tab);
 	}
     }
     

@@ -15,15 +15,18 @@ public class TextComponent {
     private String textType;
     private ArrayList<String> list;
     private String data;
+    private String font;
     
-    public TextComponent(String type, String text) {
+    public TextComponent(String type, String text, String font) {
         textType = type;
         data = text;
+        this.font = font;
     }
     
-    public TextComponent(String type, ArrayList<String> datas) {
+    public TextComponent(String type, ArrayList<String> datas, String font) {
         textType = type;
         list = datas;
+        this.font = font;
     }
     
     public void setTextType(String newType) {
@@ -48,5 +51,13 @@ public class TextComponent {
     
     public String getData() {
         return data;
+    }
+    
+    public String getFont() {
+        return font;
+    }
+    
+    public void setFont(String newFont) {
+        font = newFont;
     }
 }

@@ -35,6 +35,7 @@ public class Page {
         videoComponents = new ArrayList<VideoComponent>();
         slideShowComponents = new ArrayList<SlideShowComponent>();
         
+        /*
         //Hard coded data.
         TextComponent paragraph = new TextComponent("paragraph", "The oldest classical Greek and Latin writing had little or no space between words, and could be written in boustrophedon (alternating directions). Over time, text direction (left to right) became standardized, and word dividers and terminal punctuation became common. The first way to divide sentences into groups was the original paragraphos, similar to an underscore at the beginning of the new group.[3] The Greek paragraphos evolved into the pilcrow (¶), which in English manuscripts in the Middle Ages can be seen inserted inline between sentences. The hedera leaf has also been used in the same way.");
         ArrayList<String> data = new ArrayList<String>();
@@ -65,6 +66,7 @@ public class Page {
         slideShowCaptions.add("Picture of Bryce Canyon in Utah");
         SlideShowComponent slideShowComponent = new SlideShowComponent(slideShowImagePaths, slideShowCaptions);
         slideShowComponents.add(slideShowComponent);
+        */
     }
     
     public Page(String title, String studentName) {

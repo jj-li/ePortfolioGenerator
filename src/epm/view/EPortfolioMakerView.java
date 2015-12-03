@@ -365,8 +365,9 @@ public class EPortfolioMakerView {
         });
         
         addSlideshowButton.setOnAction ( e-> {
-            SlideShowMaker slideShow = new SlideShowMaker();
+            SlideShowMaker slideShow = new SlideShowMaker(ePortfolio.getSelectedPage());
             slideShow.showAndWait();
+            reloadSlideShowPane(ePortfolio);
         });
         
         editComponentButton.setOnAction (e -> {

@@ -44,6 +44,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -76,9 +77,6 @@ public class PageEditView extends VBox {
     TextArea footerField;
     
     Tab tab;
-    
-    Text currentCaption;
-    VBox currentImage = new VBox();
     
     // PROVIDES RESPONSES FOR IMAGE SELECTION
     ImageSelectionController imageController;
@@ -359,35 +357,42 @@ public class PageEditView extends VBox {
             HBox buttons = new HBox();
             buttons.getChildren().addAll(previous, next);
             
+            Text currentCaption;
+            BorderPane bp = new BorderPane();
+            
             currentCaption = new Text(captions.get(component.getPosition()));
             buttons.setStyle("-fx-spacing: 15px; -fx-alignment: CENTER;");
-            currentImage.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption, buttons);
+            bp.setTop(slideShowLabel);
+            VBox current = new VBox();
+            current.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption);
+            bp.setCenter(current);
+            bp.setBottom(buttons);
             
             previous.setOnMouseClicked(e-> {
                 component.decreasePosition();
-                currentImage.getChildren().clear();
-                currentCaption = new Text(captions.get(component.getPosition()));
-                currentImage.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption, buttons);
+                VBox currently = new VBox();
+                currently.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption);
+                bp.setCenter(currently);
             });
             
             next.setOnMouseClicked(e-> {
                 component.increasePosition();
-                currentImage.getChildren().clear();
-                currentCaption = new Text(captions.get(component.getPosition()));
-                currentImage.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption, buttons);
+                VBox currently = new VBox();
+                currently.getChildren().addAll(imageViews.get(component.getPosition()), currentCaption);
+                bp.setCenter(currently);
             });
             
             HBox slideShowComponent = new HBox();
-            slideShowComponent.getChildren().addAll(slideShowLabel, currentImage);
+            slideShowComponent.getChildren().addAll(bp);
             slideShowComponent.setOnMouseClicked(e-> {
-                    if (!isNoneSelected()) {
-                        selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
-                        resetSelectedComponents();
-                    }
-                    selectedHBox = slideShowComponent;
-                    selectedSlideShowComponent = component;
-                    slideShowComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
-                    page.setPageEditView(this);
+                if (!isNoneSelected()) {
+                    selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                    resetSelectedComponents();
+                }
+                selectedHBox = slideShowComponent;
+                selectedSlideShowComponent = component;
+                slideShowComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
+                page.setPageEditView(this);
             });
             getChildren().add(slideShowComponent);
             slideShowComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");

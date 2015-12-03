@@ -228,18 +228,18 @@ public class TextComponentDialogue extends Stage{
         RadioButton selected = (RadioButton)types.getSelectedToggle();
         String textualType = selected.getText();
         if (textualType.equalsIgnoreCase("paragraph")) {
-            TextComponent component = new TextComponent(textualType, textArea.getText());
+            TextComponent component = new TextComponent(textualType, textArea.getText(), (String)paragraphFonts.getValue());
             page.addTextComponent(component);
         }
         else if (textualType.equalsIgnoreCase("header")) {
-            TextComponent component = new TextComponent(textualType, textField.getText());
+            TextComponent component = new TextComponent(textualType, textField.getText(), "");
             page.addTextComponent(component);
         }
         else {
             ArrayList<String> data = new ArrayList<String>();
             for (String s : list.getItems())
                 data.add(s);
-            TextComponent component = new TextComponent(textualType, data);
+            TextComponent component = new TextComponent(textualType, data, "");
             page.addTextComponent(component);
         }
         this.hide();

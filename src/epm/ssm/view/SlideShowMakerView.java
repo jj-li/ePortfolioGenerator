@@ -1,5 +1,7 @@
 package epm.ssm.view;
 
+import epm.model.Page;
+import epm.model.SlideShowComponent;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -54,6 +56,7 @@ import epm.ssm.model.Slide;
 import epm.ssm.model.SlideShowModel;
 import java.io.File;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 
 /**
  * This class provides the User Interface for this application,
@@ -64,6 +67,8 @@ import java.util.ArrayList;
  */
 public class SlideShowMakerView {
 
+    Page page;
+    
     // THIS IS THE MAIN APPLICATION UI WINDOW AND ITS SCENE GRAPH
     Stage primaryStage;
     Scene primaryScene;
@@ -132,7 +137,7 @@ public class SlideShowMakerView {
      * 
      * @param windowTitle The title for this window.
      */
-    public void startUI(Stage initPrimaryStage, String windowTitle) {
+    public void startUI(Stage initPrimaryStage, String windowTitle, Page page) {
 	// THE TOOLBAR ALONG THE NORTH
 	initFileToolbar(false);
 
@@ -147,10 +152,13 @@ public class SlideShowMakerView {
 	// KEEP THE WINDOW FOR LATER
 	primaryStage = initPrimaryStage;
 	initWindow(windowTitle);
+        
+        this.page = page;
     }
     
     //TO DO - ADD in the ability to load paths and captions!
-    public void startUI(Stage initPrimaryStage, String windowTitle, ArrayList<String> paths, ArrayList<String> captions) {
+    public void startUI(Stage initPrimaryStage, String windowTitle, ArrayList<String> paths, ArrayList<String> captions, Page page) {
+        this.page = page;
         
 	// THE TOOLBAR ALONG THE NORTH
 	initFileToolbar(true);
@@ -225,6 +233,7 @@ public class SlideShowMakerView {
 	moveSlideDownButton.setOnAction(e -> {
 	    editController.processMoveSlideDownRequest();
 	});
+        
     }
 
     /**
@@ -241,9 +250,24 @@ public class SlideShowMakerView {
             addSlideShow = new Button("Add Slideshow Component");
         else
             addSlideShow = new Button("Edit Slideshow Component");
+        
+        addSlideShow.setOnAction( e-> {
+            if (!load) {
+                ArrayList<String> imagePaths = new ArrayList<String>();
+                ArrayList<String> captions = new ArrayList<String>();
+                ObservableList<Slide> slides = slideShow.getSlides();
+                for (Slide s : slides) {
+                    imagePaths.add(s.getImagePath() + s.getImageFileName());
+                    captions.add(s.getCaption());
+                }
+                SlideShowComponent component = new SlideShowComponent(imagePaths, captions, page);
+                page.addSlideShowComponent(component);
+                primaryStage.hide();
+            }
+        });
         addSlideShow.setStyle("-fx-padding: 10px 10px 10px 10px; -fx-alignment: center; -fx-border-color: rgb(0,0,0); -fx-font-weight: bolder");
         fileToolbarPane.getChildren().add(addSlideShow);
-
+        
     }
 
     private void initWindow(String windowTitle) {

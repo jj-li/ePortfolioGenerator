@@ -22,20 +22,22 @@ public class SlideShowComponent {
     private SlideShowMaker slideShow;
     private int position;
     private ArrayList<ImageView> imageViews;
+    private Page page;
     
-    
-    public SlideShowComponent(ArrayList<String> paths, ArrayList<String> caps) {
+    public SlideShowComponent(ArrayList<String> paths, ArrayList<String> caps, Page page) {
         imagePaths = paths;
         captions = caps;
-        createSlideShow();
+        this.page = page;
+        createSlideShow(page);
+        
     }
     
     public SlideShowMaker getSlideShow() {
         return slideShow;
     }
     
-    public void createSlideShow() {
-        slideShow = new SlideShowMaker(imagePaths, captions);
+    public void createSlideShow(Page page) {
+        slideShow = new SlideShowMaker(imagePaths, captions, page);
     }
     
     public ArrayList<String> getImagePaths() {
@@ -44,6 +46,14 @@ public class SlideShowComponent {
     
     public ArrayList<String> getCaptions() {
         return captions;
+    }
+    
+    public void setImagePaths(ArrayList<String> newImagePaths) {
+        imagePaths = newImagePaths;
+    }
+    
+    public void setCaptions(ArrayList<String> newCaptions) {
+        captions = newCaptions;
     }
     
     public void increasePosition() {

@@ -10,8 +10,11 @@ import epm.model.HyperlinkComponent;
 import epm.model.Page;
 import epm.model.TextComponent;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -128,45 +131,134 @@ public class HyperlinkDialogue extends Stage{
         list.prefWidthProperty().bind(scene.widthProperty());
     }
     
-    public HyperlinkDialogue(String text, ArrayList<HyperlinkComponent> links) {
-        pane = new Pane();
+    public HyperlinkDialogue(String text, ArrayList<HyperlinkComponent> links, TextComponent component) {
+        Button editHyperlink = new Button("Edit Hyperlink");
+        editHyperlink.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        VBox everything = new VBox();
         textArea = new TextArea(text);
         textArea.setWrapText(true);
+        textArea.setEditable(false);
         ScrollPane sp = new ScrollPane();
+        everything.getChildren().add(textArea);
+        ArrayList<TextField> urls = new ArrayList<TextField>();
+        ArrayList<CheckBox> checks = new ArrayList<CheckBox>();
         for (HyperlinkComponent link : links) {
             selectedText = new Text(link.getSelectedText());
-            selectedText.setWrappingWidth(360);
+            selectedText.setWrappingWidth(350);
             selectedText.setStyle("-fx-border-color: rgb(0,0,0);");
-            textArea.setOnMouseClicked( e-> {
-                String str = textArea.getSelectedText();
-                if (str != null && !str.equals(""))
-                    selectedText.setText(str);
-            });
-            screen = new VBox();
-            top = new HBox();
+            
             mid = new HBox();
             bot = new HBox();
             addHyperlink = new Button("Edit Hyperlink");
             url = new TextField(link.getUrl());
 
-            top.getChildren().addAll(textArea);
             mid.getChildren().addAll(new Label("Selected Text: "), selectedText);
             bot.getChildren().addAll(new Label("Hyperlink URL: "), url);
-
-            screen.getChildren().addAll(top, mid, bot, addHyperlink);
-            pane.getChildren().add(screen);
+            
+            urls.add(url);
+            
+            CheckBox cb = new CheckBox("Remove Hyperlink");
+            checks.add(cb);
+            HBox checking = new HBox();
+            checking.getChildren().addAll(bot, cb);
+            checking.setStyle("-fx-spacing: 5px");
+            everything.getChildren().addAll(mid, checking);
         }
-        
-        sp.setContent(pane);
-        scene = new Scene(sp, 500, 500);
+        everything.getChildren().add(editHyperlink);
+        everything.setStyle("-fx-background-color: #add8e6; -fx-spacing: 10px;");
+        sp.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-spacing: 10px; -fx-background: #add8e6");
+        sp.setContent(everything);
+       
+        scene = new Scene(sp, 575, 500);
         
         this.setScene(scene);
         this.setTitle("Edit Hyperlink");
         
         scene.getStylesheets().add(STYLE_SHEET_UI);
-        screen.prefWidthProperty().bind(scene.widthProperty());
-        screen.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-spacing: 10px");
-        addHyperlink.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+
+        editHyperlink.setOnAction( e-> {
+            for (int i = urls.size()-1; i >= 0; i--) {
+                if (checks.get(i).selectedProperty().get() == false) {
+                    HyperlinkComponent temp = links.get(i);
+                    temp.setUrl(urls.get(i).getText());
+                }
+                else {
+                    component.removeHyperlink(i);
+                }
+            }
+            this.hide();
+        });
     }
     
+    
+     public HyperlinkDialogue(ArrayList<String> items, ArrayList<HyperlinkComponent> links, TextComponent textComponent) {
+        ListView<String> list = new ListView<String>();
+        for (String s : items)
+            list.getItems().add(s);
+        selectedText = new Text();
+        selectedText.setWrappingWidth(360);
+        selectedText.setStyle("-fx-border-color: rgb(0,0,0);");
+        
+        Button editHyperlink = new Button("Edit Hyperlink");
+        editHyperlink.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
+        url = new TextField();
+    
+        VBox everything = new VBox();
+
+        ScrollPane sp = new ScrollPane();
+        everything.getChildren().add(list);
+        ArrayList<TextField> urls = new ArrayList<TextField>();
+        ArrayList<Integer> positions  = new ArrayList<Integer>();
+        ArrayList<CheckBox> checks = new ArrayList<CheckBox>();
+        for (HyperlinkComponent link : links) {
+            selectedText = new Text(list.getItems().get(link.getIndex()));
+            selectedText.setWrappingWidth(350);
+            selectedText.setStyle("-fx-border-color: rgb(0,0,0);");
+            
+            mid = new HBox();
+            bot = new HBox();
+            url = new TextField(link.getUrl());
+
+            mid.getChildren().addAll(new Label("Selected Item: "), selectedText);
+            bot.getChildren().addAll(new Label("Hyperlink URL: "), url);
+            
+            urls.add(url);
+            positions.add(link.getIndex());
+            
+            CheckBox cb = new CheckBox("Remove Hyperlink");
+            checks.add(cb);
+            HBox checking = new HBox();
+            checking.getChildren().addAll(bot, cb);
+            checking.setStyle("-fx-spacing: 5px");
+            everything.getChildren().addAll(mid, checking);
+        }
+        everything.getChildren().add(editHyperlink);
+        everything.setStyle("-fx-background-color: #add8e6; -fx-spacing: 10px;");
+        sp.setStyle("-fx-padding: 10px 10px 0px 10px; -fx-spacing: 10px; -fx-background: #add8e6");
+        sp.setContent(everything);
+       
+        scene = new Scene(sp, 575, 500);
+        
+        this.setScene(scene);
+        this.setTitle("Edit Hyperlink");
+        
+        scene.getStylesheets().add(STYLE_SHEET_UI);
+
+        editHyperlink.setOnAction( e-> {
+            for (int i = urls.size()-1; i >= 0; i--) {
+                if (checks.get(i).selectedProperty().get() == false) {
+                    HyperlinkComponent temp = links.get(i);
+                    temp.setUrl(urls.get(i).getText());
+                }
+                else {
+                    textComponent.removeHyperlink(i);
+                }
+            }
+            this.hide();
+        });
+        
+       
+        
+        list.prefWidthProperty().bind(scene.widthProperty());
+    }
 }

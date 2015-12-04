@@ -417,13 +417,15 @@ public class EPortfolioMakerView {
                 if (editView != null) {
                     if (editView.isParagraphSelected()) {
                         TextComponent component = editView.getTextComponent();
-                        HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getData(), component.getHyperlinks());
+                        HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getData(), component.getHyperlinks(), component);
                         dialogue.showAndWait();
+                        reloadSlideShowPane(ePortfolio);
                     }
                     if (editView.isListSelected()) {
                         TextComponent component = editView.getTextComponent();
-                        //HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getData(), component.getHyperlinks());
-                       // dialogue.showAndWait();
+                        HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getList(), component.getHyperlinks(), component);
+                        dialogue.showAndWait();
+                        reloadSlideShowPane(ePortfolio);
                     }
                 }  
             }

@@ -71,4 +71,8 @@ public class TextComponent {
     public void addHyperlink(HyperlinkComponent component) {
         links.add(component);
     }
+    
+    public void removeHyperlink(int pos) {
+        links.remove(pos);
+    }
 }

@@ -275,7 +275,7 @@ public class PageEditView extends VBox {
                 }  
                 
                 for (HyperlinkComponent links : component.getHyperlinks()) {
-                    list.getItems().set(links.getIndex(), "Hyperlink - " + links.getIndexItem());
+                    list.getItems().set(links.getIndex(), "Hyperlink(" + links.getUrl() + ") - " + list.getItems().get(links.getIndex()));
                 }
                 
                 HBox listComponent = new HBox();

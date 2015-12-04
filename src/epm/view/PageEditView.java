@@ -30,6 +30,7 @@ import static epm.StartupConstants.WINDOWS_ICON;
 import epm.controller.ImageSelectionController;
 import epm.model.Page;
 import static epm.file.EPortfolioFileManager.SLASH;
+import epm.model.HyperlinkComponent;
 import epm.model.ImageComponent;
 import epm.model.SlideShowComponent;
 import epm.model.TextComponent;
@@ -200,23 +201,51 @@ public class PageEditView extends VBox {
             String textType = component.getTextType();
             if (textType.equalsIgnoreCase("paragraph")){
                 Label paragraphLabel = new Label("Paragraph: ");
-                /**
-                //Hard Coded Data
-                String hyperlink = "classical Greek";
-                int position = component.getData().indexOf(hyperlink);
-                String beforeHyperlink = component.getData().substring(0, position);
-                String afterHyperlink = component.getData().substring(position + hyperlink.length());
-                Text before = new Text(beforeHyperlink);
-                Text after = new Text(afterHyperlink);
-                Hyperlink now = new Hyperlink();
-                now.setText(hyperlink);
-                now.setStyle("-fx-text-fill: #1919ff");
-                now.setTooltip(new Tooltip("https://en.wikipedia.org/wiki/Classical_Greece"));
-                TextFlow paragraphField = new TextFlow(before, now, after);
-                //End of Hard Coded Data
-                **/
+                TextFlow paragraphField;
+                if (component.getHyperlinks().size() == 0)
+                    paragraphField = new TextFlow(new Text(component.getData()));
+                else
+                    paragraphField = new TextFlow();
+                
+                ArrayList<Hyperlink> links = new ArrayList<Hyperlink>();
+                ArrayList<Integer> positions = new ArrayList<Integer>();
+                for (HyperlinkComponent link : component.getHyperlinks()) {
+                    String hyperlink = link.getUrl();
+                    int position = link.getCompleteText().indexOf(link.getSelectedText());
+                    Hyperlink now = new Hyperlink();
+                    now.setText(link.getSelectedText());
+                    now.setStyle("-fx-text-fill: #1919ff");
+                    now.setTooltip(new Tooltip(hyperlink));
+                    links.add(now);
+                    positions.add((Integer)position);
+                }
+                positions.add(component.getData().length());
+                for (int i = 0; i < positions.size()-1; i++) {
+                    int index = i;
+                    for (int j = i + 1; j < positions.size(); j++)
+                        if (positions.get(j) < positions.get(index))
+                            index = j;
+
+                    int smallerNumber = positions.get(index); 
+                    positions.set(index, positions.get(i));
+                    positions.set(i, smallerNumber);
+                    Hyperlink temp = links.get(index); 
+                    links.set(index, links.get(i));
+                    links.set(i, temp);
+                }
+                
+                for (int i = 0; i < positions.size()-1; i++) {
+                    String beforeHyperlink = component.getData().substring(0, positions.get(i));
+                    String afterHyperlink = component.getData().substring(positions.get(i) + links.get(i).getText().length(), positions.get(i+1));
+                    Text before = new Text(beforeHyperlink);
+                    Text after = new Text(afterHyperlink);
+                    if (i == 0)
+                        paragraphField.getChildren().addAll(before, links.get(i), after);
+                    else
+                        paragraphField.getChildren().addAll(links.get(i), after);
+                }
+                    
                 Text data = new Text(component.getData());
-                TextFlow paragraphField = new TextFlow(data);
                 HBox paragraphComponent = new HBox();
                 paragraphComponent.getChildren().addAll(paragraphLabel, paragraphField);
                 paragraphComponent.setOnMouseClicked(e-> {
@@ -241,8 +270,14 @@ public class PageEditView extends VBox {
                 Label listLabel = new Label("List: ");
                 ArrayList<String> data = component.getList();
                 ListView<String> list = new ListView<String>();
-                for (String s : data)
+                for (String s : data) {
                     list.getItems().add(s);
+                }  
+                
+                for (HyperlinkComponent links : component.getHyperlinks()) {
+                    list.getItems().set(links.getIndex(), "Hyperlink - " + links.getIndexItem());
+                }
+                
                 HBox listComponent = new HBox();
                 listComponent.getChildren().addAll(listLabel, list);
                 listComponent.setOnMouseClicked(e-> {

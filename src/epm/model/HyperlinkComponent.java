@@ -34,6 +34,10 @@ public class HyperlinkComponent {
         return index;
     }
     
+    public String getIndexItem() {
+        return items.get(index);
+    }
+    
     public void setIndex(int index) {
         this.index = index;
     }

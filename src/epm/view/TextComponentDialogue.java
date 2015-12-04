@@ -196,6 +196,7 @@ public class TextComponentDialogue extends Stage{
     }
     
     public TextComponentDialogue(String type, ArrayList<String> data, TextComponent component) {
+        Button editItemButton = new Button("Edit Item");
         removeItemButton = new Button("Remove Item");
         addItemButton = new Button("Add Item");
         addItemField = new TextField();
@@ -210,6 +211,15 @@ public class TextComponentDialogue extends Stage{
                 list.getItems().remove(selectedIdx);
              }
         });
+        list.setOnMouseClicked( e-> {
+            addItemField.setText((String)list.getSelectionModel().getSelectedItem());
+        });
+        editItemButton.setOnMouseClicked( e-> {
+            int selectedIdx = list.getSelectionModel().getSelectedIndex();
+            if (selectedIdx != -1) {
+                list.getItems().set(selectedIdx, addItemField.getText());
+            }
+        });
         Button editList = new Button("Edit List");
         for (String s : data)
             list.getItems().add(s);
@@ -217,13 +227,13 @@ public class TextComponentDialogue extends Stage{
         HBox top = new HBox();
         top.getChildren().addAll(list);
         HBox bottom = new HBox();
-        bottom.getChildren().addAll(addItemField, addItemButton, removeItemButton);
-        bottom.setStyle("-fx-padding: 10px 0px 10px 0px;");
+        bottom.getChildren().addAll(addItemField, editItemButton, addItemButton, removeItemButton);
+        bottom.setStyle("-fx-padding: 10px 0px 10px 0px; -fx-spacing: 5px;");
         pane = new Pane();
         screen = new VBox();
         screen.getChildren().addAll(top, bottom, editList);
         pane.getChildren().add(screen);
-        scene = new Scene(pane, 405, 500);
+        scene = new Scene(pane, 510, 500);
         scene.getStylesheets().add(STYLE_SHEET_UI);
         list.prefWidthProperty().bind(scene.widthProperty());
         screen.prefWidthProperty().bind(scene.widthProperty());

@@ -258,11 +258,13 @@ public class SlideShowMakerView {
                 ArrayList<String> imagePaths = new ArrayList<String>();
                 ArrayList<String> captions = new ArrayList<String>();
                 ObservableList<Slide> slides = slideShow.getSlides();
+                ArrayList<String> imageNames = new ArrayList<String>();
                 for (Slide s : slides) {
                     imagePaths.add(s.getImagePath() + s.getImageFileName());
                     captions.add(s.getCaption());
+                    imageNames.add(s.getImageFileName());
                 }
-                SlideShowComponent component = new SlideShowComponent(imagePaths, captions);
+                SlideShowComponent component = new SlideShowComponent(imagePaths, captions, imageNames);
                 page.addSlideShowComponent(component);
                 primaryStage.hide();
             }
@@ -278,13 +280,16 @@ public class SlideShowMakerView {
     public void editSlideShowComponent(SlideShowComponent component) {
         ArrayList<String> imagePaths = new ArrayList<String>();
         ArrayList<String> captions = new ArrayList<String>();
+        ArrayList<String> imageNames = new ArrayList<String>();
         ObservableList<Slide> slides = slideShow.getSlides();
         for (Slide s : slides) {
             imagePaths.add(s.getImagePath() + s.getImageFileName());
             captions.add(s.getCaption());
+            imageNames.add(s.getImageFileName());
         }
         component.setImagePaths(imagePaths);
         component.setCaptions(captions);
+        component.setImageNames(imageNames);
         component.createSlideShow();
         primaryStage.hide();
     }

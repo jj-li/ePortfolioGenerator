@@ -170,6 +170,28 @@ public class FileController {
 	    return false;
         }
     }
+    
+     public boolean handleSaveAsEPortfolioRequest() {
+        try {
+	    // GET THE SLIDE SHOW TO SAVE
+	    EPortfolioModel ePortfolioToSave = ui.getEPortfolio();
+            // SAVE IT TO A FILE
+            slideShowIO.saveAsEPortfolio(ePortfolioToSave, ui);
+
+            // MARK IT AS SAVED
+            saved = true;
+
+            // AND REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
+            // THE APPROPRIATE CONTROLS
+            ui.updateToolbarControls(saved);
+	    return true;
+        } catch (IOException ioe) {
+            ErrorHandler eH = ui.getErrorHandler();
+            eH.processError(FAILED_SLIDE_SHOW_SAVE, prop.getProperty(FAILED_SLIDE_SHOW_SAVE_TITLE));
+            ioe.printStackTrace();
+	    return false;
+        }
+    }
 
      /**
      * This method will exit the application, making sure the user doesn't lose
@@ -428,6 +450,7 @@ public class FileController {
             }
         }
     }
+    
 
     /**
      * This mutator method marks the file as not saved, which means that when

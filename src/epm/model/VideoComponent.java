@@ -21,6 +21,7 @@ public class VideoComponent {
     private double width;
     private double height;
     private MediaView videoView;
+    private String videoName;
     
     public VideoComponent(String url, String caption, double width, double height) {
         videoUrl = url;
@@ -28,6 +29,8 @@ public class VideoComponent {
         this.width = width;
         this.height = height;
         setMediaView();
+        File file = new File(url);
+        videoName = file.getName();
     }
     
     public String getUrl(){
@@ -48,6 +51,8 @@ public class VideoComponent {
     
     public void setUrl(String url) {
         videoUrl = url;
+        File file = new File(url);
+        videoName = file.getName();
     }
     
     public void setCaption(String caption) {
@@ -82,5 +87,9 @@ public class VideoComponent {
             catch (Exception e1) {
                 
             }
+    }
+    
+    public String getVideoName() {
+        return videoName;
     }
 }

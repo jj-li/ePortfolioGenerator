@@ -6,6 +6,7 @@
 package epm.view;
 
 import static epm.StartupConstants.STYLE_SHEET_UI;
+import epm.model.HyperlinkComponent;
 import epm.model.Page;
 import epm.model.TextComponent;
 import java.util.ArrayList;

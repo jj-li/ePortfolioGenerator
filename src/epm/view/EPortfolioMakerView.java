@@ -330,7 +330,7 @@ public class EPortfolioMakerView {
 	    
 	});
         saveAsEPortfolioButton.setOnAction( e -> {
-            
+            fileController.handleSaveAsEPortfolioRequest();
         });
 	viewEPortfolioButton.setOnAction( e-> {
             fileController.handleViewSlideShowRequest();

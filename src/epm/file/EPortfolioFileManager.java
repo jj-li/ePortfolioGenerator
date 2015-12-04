@@ -3,6 +3,8 @@
  **/
 package epm.file;
 
+import epm.EPortfolioMaker;
+import static epm.StartupConstants.PATH_SLIDE_SHOWS;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,14 +19,17 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
 import javax.json.JsonWriter;
-import static epm.StartupConstants.PATH_SLIDE_SHOWS;
 import epm.model.Page;
 import epm.model.EPortfolioModel;
+import epm.model.HyperlinkComponent;
 import epm.model.ImageComponent;
 import epm.model.SlideShowComponent;
 import epm.model.TextComponent;
 import epm.model.VideoComponent;
+import epm.view.EPortfolioMakerView;
+import java.io.File;
 import java.math.BigDecimal;
+import javafx.stage.FileChooser;
 
 /**
  * This class uses the JSON standard to read and write slideshow data files.
@@ -40,7 +45,8 @@ public class EPortfolioFileManager {
     public static String JSON_CAPTION = "image_caption";
     public static String JSON_EXT = ".json";
     public static String SLASH = "/";
-
+    private String dataPath = PATH_SLIDE_SHOWS;
+    
     /**
      * This method saves all the data associated with a slide show to
      * a JSON file.
@@ -58,7 +64,47 @@ public class EPortfolioFileManager {
             
         // BUILD THE FILE PATH
         String slideShowTitle = "" + title;
-        String jsonFilePath = PATH_SLIDE_SHOWS + SLASH + slideShowTitle + JSON_EXT;
+        String jsonFilePath = dataPath + SLASH + slideShowTitle + JSON_EXT;
+        
+        // INIT THE WRITER
+        OutputStream os = new FileOutputStream(jsonFilePath);
+        JsonWriter jsonWriter = Json.createWriter(os);  
+       
+        // BUILD THE SLIDES ARRAY
+        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages());
+        
+        // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
+        JsonObject courseJsonObject = Json.createObjectBuilder()
+                                    .add(JSON_TITLE, title)
+                                    .add("pages", pagesJsonArray)
+                .build();
+        
+        // AND SAVE EVERYTHING AT ONCE
+        jsonWriter.writeObject(courseJsonObject);
+    }
+    
+    public void saveAsEPortfolio(EPortfolioModel ePortfolioToSave, EPortfolioMakerView ui) throws IOException {
+        FileChooser fileSaver = new FileChooser();
+        fileSaver.setInitialDirectory(new File(dataPath));
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+        fileSaver.getExtensionFilters().add(extFilter);
+        File file = fileSaver.showSaveDialog(ui.getWindow());
+        
+        String title = "" + ePortfolioToSave.getTitle();
+        if (ePortfolioToSave.getTitle() == null || title.equals(""))
+            title = "Untitled";
+        
+        fileSaver.setInitialFileName(title);
+        if (file == null)
+            return;
+        dataPath = file.getAbsolutePath();
+        title = file.getName();
+        int pos = dataPath.indexOf("\\" + title);
+        dataPath = dataPath.substring(0, pos);
+
+        
+        // BUILD THE FILE PATH
+        String jsonFilePath = dataPath + SLASH + title;
         
         // INIT THE WRITER
         OutputStream os = new FileOutputStream(jsonFilePath);
@@ -136,6 +182,8 @@ public class EPortfolioFileManager {
 		.add("title", page.getTitle())
 		.add("name", page.getStudentName())
                 .add("layout", page.getLayout())
+                .add("banner_image_path", page.getBannerImgPath())
+                .add("banner_image_name", page.getBannerImg())
                 .add("color", page.getColor())
                 .add("font", page.getFont())
                 .add("footer", page.getFooter())
@@ -165,6 +213,7 @@ public class EPortfolioFileManager {
                     .add("font", component.getFont())
                     .add("style", component.getStyle())
                     .add("size", component.getSize())
+                    .add("hyperlink", makeParagraphHyperlinkJsonArray(component))
                     .build();
             return jso;
         }
@@ -175,6 +224,7 @@ public class EPortfolioFileManager {
                     .add("font", component.getFont())
                     .add("style", component.getStyle())
                     .add("size", component.getSize())
+                    .add("hyperlink", makeListHyperlinkJsonArray(component))
                     .build();
             return jso;
         }
@@ -210,6 +260,7 @@ public class EPortfolioFileManager {
     private JsonObject makeImageComponentJsonObject(ImageComponent component) {
         JsonObject jso = Json.createObjectBuilder()
 		.add("path", component.getUrl())
+                .add("name", component.getImageName())
                 .add("caption", component.getCaption())
                 .add("position", component.getPosition())
                 .add("width", "" + component.getWidth())
@@ -231,6 +282,7 @@ public class EPortfolioFileManager {
     private JsonObject makeVideoComponentJsonObject(VideoComponent component) {
         JsonObject jso = Json.createObjectBuilder()
 		.add("path", component.getUrl())
+                .add("name", component.getVideoName())
                 .add("caption", component.getCaption())
                 .add("width", "" + component.getWidth())
                 .add("height", "" + component.getHeight())
@@ -251,6 +303,7 @@ public class EPortfolioFileManager {
     private JsonObject makeSlideShowComponentJsonObject(SlideShowComponent component) {
         JsonObject jso = Json.createObjectBuilder()
 		.add("paths", makeImagePathJsonArray(component))
+                .add("names", makeImageNameJsonArray(component))
                 .add("captions", makeCaptionJsonArray(component))
 		.build();
 	return jso;
@@ -286,6 +339,59 @@ public class EPortfolioFileManager {
     private JsonObject makeCaptionJsonObject(String str) {
         JsonObject jso = Json.createObjectBuilder()
 		.add("image_caption", str)
+		.build();
+	return jso;
+    }
+    
+    private JsonArray makeImageNameJsonArray(SlideShowComponent component) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (String s : component.getImageNames()) {
+	    JsonObject jso = makeImageNameJsonObject(s);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeImageNameJsonObject(String str) {
+        JsonObject jso = Json.createObjectBuilder()
+		.add("image_caption", str)
+		.build();
+	return jso;
+    }
+    
+    private JsonArray makeParagraphHyperlinkJsonArray(TextComponent component) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (HyperlinkComponent link : component.getHyperlinks()) {
+	    JsonObject jso = makeParagraphHyperlinkJsonObject(link);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeParagraphHyperlinkJsonObject(HyperlinkComponent link) {
+        JsonObject jso = Json.createObjectBuilder()
+		.add("url", link.getUrl())
+                .add("selected_text", link.getSelectedText())
+		.build();
+	return jso;
+    }
+    
+    private JsonArray makeListHyperlinkJsonArray(TextComponent component) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (HyperlinkComponent link : component.getHyperlinks()) {
+	    JsonObject jso = makeListHyperlinkJsonObject(link);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeListHyperlinkJsonObject(HyperlinkComponent link) {
+        JsonObject jso = Json.createObjectBuilder()
+		.add("url", link.getUrl())
+                .add("selected_text", link.getIndexItem())
 		.build();
 	return jso;
     }

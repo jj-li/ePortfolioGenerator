@@ -23,6 +23,8 @@ public class Page {
     String color = "Blue/Yellow";
     String font = "PT Sans";
     String footer = "";
+    String bannerImgName = "";
+    String bannerImgPath = "";
      
     /**
      * Constructor, it initializes all slide data.
@@ -173,5 +175,21 @@ public class Page {
     
     public void setFooter(String text) {
         footer = text;
+    }
+    
+    public void setBannerImgName(String img) {
+        bannerImgName = img;
+    }
+    
+    public String getBannerImg() {
+        return bannerImgName;
+    }
+    
+    public void setBannerImgPath(String path) {
+        bannerImgPath = path;
+    }
+    
+    public String getBannerImgPath() {
+        return bannerImgPath;
     }
 }

@@ -21,6 +21,7 @@ public class ImageComponent {
     private double height;
     private ImageView imageView;
     private String caption;
+    private String imageName;
     
     public ImageComponent(String url, String position, double width, double height, String caption) {
         imageUrl = url;
@@ -30,6 +31,8 @@ public class ImageComponent {
         imageView = new ImageView();
         setImageView();
         this.caption = caption;
+        File file = new File(url);
+        imageName = file.getName();
     }
     
     public String getUrl(){
@@ -50,6 +53,8 @@ public class ImageComponent {
     
     public void setUrl(String url) {
         imageUrl = url;
+        File file = new File(url);
+        imageName = file.getName();
     }
     
     public void setPosition(String position) {
@@ -91,5 +96,9 @@ public class ImageComponent {
             catch (Exception e1) {
                 
             }
+    }
+    
+    public String getImageName() {
+        return imageName;
     }
 }

@@ -179,7 +179,7 @@ public class PageEditView extends VBox {
     
     private void initFooter() {
         footerLabel = new Label("Page Footer: ");
-        footerField = new TextArea();
+        footerField = new TextArea(page.getFooter());
         footerField.setOnKeyReleased( e-> {
             page.setFooter(footerField.getText());
         });
@@ -202,11 +202,30 @@ public class PageEditView extends VBox {
                 double scaledHeight = image.getHeight() * perc;
                 imageSelectionView.setFitWidth(scaledWidth);
                 imageSelectionView.setFitHeight(scaledHeight);
+                page.setBannerImgPath(path);
+                page.setBannerImgName(file.getName());
             }
             catch (Exception e1) {
                 
             }
         });
+        if (!page.getBannerImgPath().equals("")) {
+            File file = new File(page.getBannerImgPath());
+            try {
+                // GET AND SET THE IMAGE
+                URL fileURL = file.toURI().toURL();
+                Image image = new Image(fileURL.toExternalForm());
+                imageSelectionView.setImage(image);
+                double scaledWidth = 100;
+                double perc = scaledWidth / image.getWidth();
+                double scaledHeight = image.getHeight() * perc;
+                imageSelectionView.setFitWidth(scaledWidth);
+                imageSelectionView.setFitHeight(scaledHeight);
+            }
+            catch (Exception e1) {
+                
+            }
+        }
         bannerImg.getChildren().addAll(selectImg, imageSelectionView);
         bannerImg.setStyle("-fx-spacing: 10px;");
         return bannerImg;

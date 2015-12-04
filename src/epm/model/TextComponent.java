@@ -93,4 +93,5 @@ public class TextComponent {
     public int getSize() {
         return fontSize;
     }
+    
 }

@@ -180,6 +180,9 @@ public class PageEditView extends VBox {
     private void initFooter() {
         footerLabel = new Label("Page Footer: ");
         footerField = new TextArea();
+        footerField.setOnKeyReleased( e-> {
+            page.setFooter(footerField.getText());
+        });
 
     }
     

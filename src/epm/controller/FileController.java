@@ -150,12 +150,12 @@ public class FileController {
      * This method will save the current slideshow to a file. Note that we already
      * know the name of the file, so we won't need to prompt the user.
      */
-    public boolean handleSaveSlideShowRequest() {
+    public boolean handleSaveEPortfolioRequest() {
         try {
 	    // GET THE SLIDE SHOW TO SAVE
-	    EPortfolioModel slideShowToSave = ui.getEPortfolio();
+	    EPortfolioModel ePortfolioToSave = ui.getEPortfolio();
             // SAVE IT TO A FILE
-            slideShowIO.saveSlideShow(slideShowToSave);
+            slideShowIO.saveEPortfolio(ePortfolioToSave);
 
             // MARK IT AS SAVED
             saved = true;
@@ -386,7 +386,7 @@ public class FileController {
         // IF THE USER SAID YES, THEN SAVE BEFORE MOVING ON
         if (saved) {
             EPortfolioModel slideShow = ui.getEPortfolio();
-            slideShowIO.saveSlideShow(slideShow);
+            slideShowIO.saveEPortfolio(slideShow);
             saved = true;
         } // IF THE USER SAID CANCEL, THEN WE'LL TELL WHOEVER
         // CALLED THIS THAT THE USER IS NOT INTERESTED ANYMORE

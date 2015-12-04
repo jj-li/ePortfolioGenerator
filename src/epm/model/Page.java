@@ -22,6 +22,7 @@ public class Page {
     String layout = "Top-Left Navation";
     String color = "Blue/Yellow";
     String font = "PT Sans";
+    String footer = "";
      
     /**
      * Constructor, it initializes all slide data.
@@ -164,5 +165,13 @@ public class Page {
             return true;
         else
             return false;
+    }
+    
+    public String getFooter() {
+        return footer;
+    }
+    
+    public void setFooter(String text) {
+        footer = text;
     }
 }

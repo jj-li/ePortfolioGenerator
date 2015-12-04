@@ -324,7 +324,7 @@ public class EPortfolioMakerView {
 	    
 	});
 	saveEPortfolioButton.setOnAction(e -> {
-	    
+	    fileController.handleSaveEPortfolioRequest();
 	});
 	exitButton.setOnAction(e -> {
 	    

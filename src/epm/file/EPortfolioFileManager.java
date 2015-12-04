@@ -20,6 +20,11 @@ import javax.json.JsonWriter;
 import static epm.StartupConstants.PATH_SLIDE_SHOWS;
 import epm.model.Page;
 import epm.model.EPortfolioModel;
+import epm.model.ImageComponent;
+import epm.model.SlideShowComponent;
+import epm.model.TextComponent;
+import epm.model.VideoComponent;
+import java.math.BigDecimal;
 
 /**
  * This class uses the JSON standard to read and write slideshow data files.
@@ -45,11 +50,11 @@ public class EPortfolioFileManager {
      * @throws IOException Thrown when there are issues writing
      * to the JSON file.
      */
-    public void saveSlideShow(EPortfolioModel ePortfolioToSave) throws IOException {
+    public void saveEPortfolio(EPortfolioModel ePortfolioToSave) throws IOException {
        
         String title = "" + ePortfolioToSave.getTitle();
         if (ePortfolioToSave.getTitle() == null || title.equals(""))
-            throw new IOException();
+            title = "Untitled";
             
         // BUILD THE FILE PATH
         String slideShowTitle = "" + title;
@@ -60,12 +65,12 @@ public class EPortfolioFileManager {
         JsonWriter jsonWriter = Json.createWriter(os);  
        
         // BUILD THE SLIDES ARRAY
-        JsonArray slidesJsonArray = makeSlidesJsonArray(ePortfolioToSave.getPages());
+        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages());
         
         // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
         JsonObject courseJsonObject = Json.createObjectBuilder()
                                     .add(JSON_TITLE, title)
-                                    .add(JSON_SLIDES, slidesJsonArray)
+                                    .add("pages", pagesJsonArray)
                 .build();
         
         // AND SAVE EVERYTHING AT ONCE
@@ -116,20 +121,171 @@ public class EPortfolioFileManager {
         return items;
     }
     
-    private JsonArray makeSlidesJsonArray(List<Page> pages) {
+    private JsonArray makePagesJsonArray(List<Page> pages) {
         JsonArrayBuilder jsb = Json.createArrayBuilder();
         for (Page page : pages) {
-	    JsonObject jso = makeSlideJsonObject(page);
+	    JsonObject jso = makePageJsonObject(page);
 	    jsb.add(jso);
         }
         JsonArray jA = jsb.build();
         return jA;        
     }
     
-    private JsonObject makeSlideJsonObject(Page page) {
+    private JsonObject makePageJsonObject(Page page) {
         JsonObject jso = Json.createObjectBuilder()
-		.add(JSON_IMAGE_FILE_NAME, page.getTitle())
-		.add(JSON_IMAGE_PATH, page.getStudentName())
+		.add("title", page.getTitle())
+		.add("name", page.getStudentName())
+                .add("layout", page.getLayout())
+                .add("color", page.getColor())
+                .add("font", page.getFont())
+                .add("footer", page.getFooter())
+                .add("text_components", makeTextComponentJsonArray(page))
+                .add("image_paths", makeImageComponentJsonArray(page))
+                .add("video_paths", makeVideoComponentJsonArray(page))
+                .add("slideshow_component", makeSlideShowComponentJsonArray(page))
+		.build();
+	return jso;
+    }
+    
+    private JsonArray makeTextComponentJsonArray(Page page) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (TextComponent component : page.getTextComponents()) {
+	    JsonObject jso = makeTextComponentJsonObject(component);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeTextComponentJsonObject(TextComponent component) {
+        if (component.getTextType().equalsIgnoreCase("paragraph") || component.getTextType().equalsIgnoreCase("header")) {
+            JsonObject jso = Json.createObjectBuilder()
+                    .add("type", component.getTextType())
+                    .add("text", component.getData())
+                    .add("font", component.getFont())
+                    .add("style", component.getStyle())
+                    .add("size", component.getSize())
+                    .build();
+            return jso;
+        }
+        else {
+            JsonObject jso = Json.createObjectBuilder()
+                    .add("type", component.getTextType())
+                    .add("text", makeListComponentJsonArray(component))
+                    .add("font", component.getFont())
+                    .add("style", component.getStyle())
+                    .add("size", component.getSize())
+                    .build();
+            return jso;
+        }
+    }
+    
+    private JsonArray makeListComponentJsonArray(TextComponent component) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (String s : component.getList()) {
+	    JsonObject jso = makeListComponentJsonObject(s);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeListComponentJsonObject(String str) {
+        JsonObject jso = Json.createObjectBuilder()
+		.add("data", str)
+		.build();
+	return jso;
+    }
+    
+    private JsonArray makeImageComponentJsonArray(Page page) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (ImageComponent component : page.getImageComponents()) {
+	    JsonObject jso = makeImageComponentJsonObject(component);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeImageComponentJsonObject(ImageComponent component) {
+        JsonObject jso = Json.createObjectBuilder()
+		.add("path", component.getUrl())
+                .add("caption", component.getCaption())
+                .add("position", component.getPosition())
+                .add("width", "" + component.getWidth())
+                .add("height", "" + component.getHeight())
+		.build();
+	return jso;
+    }
+    
+    private JsonArray makeVideoComponentJsonArray(Page page) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (VideoComponent component : page.getVideoComponents()) {
+	    JsonObject jso = makeVideoComponentJsonObject(component);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeVideoComponentJsonObject(VideoComponent component) {
+        JsonObject jso = Json.createObjectBuilder()
+		.add("path", component.getUrl())
+                .add("caption", component.getCaption())
+                .add("width", "" + component.getWidth())
+                .add("height", "" + component.getHeight())
+		.build();
+	return jso;
+    }
+    
+    private JsonArray makeSlideShowComponentJsonArray(Page page) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (SlideShowComponent component : page.getSlideShowComponents()) {
+	    JsonObject jso = makeSlideShowComponentJsonObject(component);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeSlideShowComponentJsonObject(SlideShowComponent component) {
+        JsonObject jso = Json.createObjectBuilder()
+		.add("paths", makeImagePathJsonArray(component))
+                .add("captions", makeCaptionJsonArray(component))
+		.build();
+	return jso;
+    }
+    
+    private JsonArray makeImagePathJsonArray(SlideShowComponent component) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (String s : component.getImagePaths()) {
+	    JsonObject jso = makeImagePathJsonObject(s);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeImagePathJsonObject(String str) {
+        JsonObject jso = Json.createObjectBuilder()
+		.add("image_path", str)
+		.build();
+	return jso;
+    }
+    
+    private JsonArray makeCaptionJsonArray(SlideShowComponent component) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (String s : component.getCaptions()) {
+	    JsonObject jso = makeCaptionJsonObject(s);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeCaptionJsonObject(String str) {
+        JsonObject jso = Json.createObjectBuilder()
+		.add("image_caption", str)
 		.build();
 	return jso;
     }

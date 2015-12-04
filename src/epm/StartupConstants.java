@@ -20,7 +20,7 @@ public class StartupConstants {
     public static String UI_PROPERTIES_FILE_NAME = "properties_EN.xml";
     public static String PROPERTIES_SCHEMA_FILE_NAME = "properties_schema.xsd";
     public static String PATH_DATA = "data/";
-    public static String PATH_SLIDE_SHOWS = PATH_DATA + "slide_shows/";
+    public static String PATH_SLIDE_SHOWS = PATH_DATA + "ePortfolios/";
     public static String PATH_IMAGES = "images/";
     public static String PATH_ICONS = PATH_IMAGES + "icons/";
     public static String PATH_SLIDE_SHOW_IMAGES = PATH_IMAGES + "slide_show_images/";

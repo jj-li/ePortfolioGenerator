@@ -430,6 +430,11 @@ public class EPortfolioMakerView {
                 }  
             }
         });
+        
+        removeComponentButton.setOnAction (e-> {
+            editController.removeComponent();
+            reloadSlideShowPane(ePortfolio);
+        });
     }
 
     /**

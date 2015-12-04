@@ -34,39 +34,7 @@ public class Page {
         imageComponents = new ArrayList<ImageComponent>();
         videoComponents = new ArrayList<VideoComponent>();
         slideShowComponents = new ArrayList<SlideShowComponent>();
-        
-        /*
-        //Hard coded data.
-        TextComponent paragraph = new TextComponent("paragraph", "The oldest classical Greek and Latin writing had little or no space between words, and could be written in boustrophedon (alternating directions). Over time, text direction (left to right) became standardized, and word dividers and terminal punctuation became common. The first way to divide sentences into groups was the original paragraphos, similar to an underscore at the beginning of the new group.[3] The Greek paragraphos evolved into the pilcrow (¶), which in English manuscripts in the Middle Ages can be seen inserted inline between sentences. The hedera leaf has also been used in the same way.");
-        ArrayList<String> data = new ArrayList<String>();
-        data.add("item 1");
-        data.add("item 2");
-        data.add("item 3");
-        TextComponent list = new TextComponent("list", data);
-        TextComponent header = new TextComponent("header", "This is a dummy header.");
-        textComponents.add(paragraph);
-        textComponents.add(list);
-        textComponents.add(header);
-        
-        String imagePath = "images/slide_show_images/ArchesUtah.jpg";
-        ImageComponent image = new ImageComponent(imagePath, "Neither", 200, 200);
-        imageComponents.add(image);
-        
-        String videoPath = "sites/Videos/oow2010-2.flv";
-        VideoComponent video = new VideoComponent(videoPath, "A dummy video", 350, 400);
-        videoComponents.add(video);
-        
-        ArrayList<String> slideShowImagePaths = new ArrayList<String>();
-        slideShowImagePaths.add("images/slide_show_images/ArchesUtah.jpg");
-        slideShowImagePaths.add("images/slide_show_images/BadlandsSouthDakota.jpg");
-        slideShowImagePaths.add("images/slide_show_images/BryceCanyonUtah.jpg");
-        ArrayList<String> slideShowCaptions = new ArrayList<String>();
-        slideShowCaptions.add("Picture of Arches in Utah");
-        slideShowCaptions.add("Picture of Badlands in SouthDakota");
-        slideShowCaptions.add("Picture of Bryce Canyon in Utah");
-        SlideShowComponent slideShowComponent = new SlideShowComponent(slideShowImagePaths, slideShowCaptions);
-        slideShowComponents.add(slideShowComponent);
-        */
+       
     }
     
     public Page(String title, String studentName) {
@@ -125,5 +93,42 @@ public class Page {
     
     public PageEditView getSelectedPageEditView() {
         return selectedPageEditView;
+    }
+    
+    public void removeTextComponent(TextComponent textComponent) {
+        for (int i = textComponents.size()-1; i >= 0; i--) {
+            if (textComponents.get(i).equals(textComponent)) {
+                textComponents.remove(i);
+                break;
+            }  
+        }
+    }
+    
+    public void removeImageComponent(ImageComponent imageComponent) {
+        for (int i = imageComponents.size()-1; i >= 0; i--) {
+            if (imageComponents.get(i).equals(imageComponent)) {
+                imageComponents.remove(i);
+                break;
+            }  
+        }
+    }
+    
+    public void removeVideoComponent(VideoComponent videoComponent) {
+        for (int i = videoComponents.size()-1; i >= 0; i--) {
+            if (videoComponents.get(i).equals(videoComponent)) {
+                videoComponent.getMediaView().getMediaPlayer().stop();
+                videoComponents.remove(i);
+                break;
+            }  
+        }
+    }
+    
+    public void removeSlideShowComponent(SlideShowComponent slideShowComponent) {
+        for (int i = slideShowComponents.size()-1; i >= 0; i--) {
+            if (slideShowComponents.get(i).equals(slideShowComponent)) {
+                slideShowComponents.remove(i);
+                break;
+            }  
+        }
     }
 }

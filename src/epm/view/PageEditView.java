@@ -259,7 +259,7 @@ public class PageEditView extends VBox {
                     page.setPageEditView(this);
                 });
                 paragraphComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
-                if (!isNoneSelected()) {
+                if (isNoneSelected()) {
                     if (component.equals(selectedTextComponent))
                         paragraphComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 }
@@ -549,6 +549,23 @@ public class PageEditView extends VBox {
             else {
                 SlideShowMaker slideShow = selectedSlideShowComponent.getSlideShow();
                 slideShow.showAndWait();
+            }
+        }
+    }
+    
+    public void removeComponent(Page page) {
+        if (!isNoneSelected()) {
+            if (isTextSelected()) {
+               page.removeTextComponent(selectedTextComponent);
+            }
+            else if (isVideoSelected()) {
+               page.removeVideoComponent(selectedVideoComponent); 
+            }
+            else if (isImageSelected()) {
+               page.removeImageComponent(selectedImageComponent);
+            }
+            else {
+               page.removeSlideShowComponent(selectedSlideShowComponent);
             }
         }
     }

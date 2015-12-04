@@ -47,4 +47,13 @@ public class PageEditController {
                 editView.displayEditBox();
         }
     }
+    
+    public void removeComponent() {
+        Page page = ui.getEPortfolio().getSelectedPage();
+        if (page != null) {
+            PageEditView editView = page.getSelectedPageEditView();
+            if (editView != null)
+                editView.removeComponent(page);
+        }
+    }
 }

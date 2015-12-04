@@ -259,14 +259,14 @@ public class TextComponentDialogue extends Stage{
             page.addTextComponent(component);
         }
         else if (textualType.equalsIgnoreCase("header")) {
-            TextComponent component = new TextComponent(textualType, textField.getText(), "");
+            TextComponent component = new TextComponent(textualType, textField.getText(), "Times New Roman");
             page.addTextComponent(component);
         }
         else {
             ArrayList<String> data = new ArrayList<String>();
             for (String s : list.getItems())
                 data.add(s);
-            TextComponent component = new TextComponent(textualType, data, "");
+            TextComponent component = new TextComponent(textualType, data, "Times New Roman");
             page.addTextComponent(component);
         }
         this.hide();

@@ -6,6 +6,7 @@
 package epm.view;
 
 import static epm.StartupConstants.STYLE_SHEET_UI;
+import epm.model.TextComponent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -32,11 +33,11 @@ public class FontDialogue extends Stage{
     Scene scene;
     Pane pane;
     
-    public FontDialogue() {
+    public FontDialogue(TextComponent component) {
         screen = new VBox();
         fontFamily = new ComboBox();
         fontStyle = new ComboBox();
-        fontSize = new TextField("" + 12);
+        fontSize = new TextField("" + component.getSize());
         top = new HBox();
         mid = new HBox();
         bottom = new HBox();
@@ -44,10 +45,16 @@ public class FontDialogue extends Stage{
         pane = new Pane();
         
         fontFamily.getItems().addAll("Times New Roman", "Comic Sans MS", "Montserrat", "Merriweather", "Josefin Sans");
-        fontFamily.setValue("Times New Roman");
+        if (component.getFont().equals(""))
+            fontFamily.setValue("Times New Roman");
+        else
+            fontFamily.setValue(component.getFont());
         
         fontStyle.getItems().addAll("Normal", "Bold", "Italics");
-        fontStyle.setValue("Normal");
+        if (component.getStyle().equals(""))
+            fontStyle.setValue("Normal");
+        else
+            fontStyle.setValue(component.getStyle());
         
         top.getChildren().addAll(new Label("Font Family: "), fontFamily);
         mid.getChildren().addAll(new Label("Font Style: "), fontStyle);
@@ -63,5 +70,11 @@ public class FontDialogue extends Stage{
         this.setTitle("Select Font");
         
         changeFont.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0);");
+        changeFont.setOnAction(e-> {
+            component.setStyle((String)fontStyle.getValue());
+            component.setFont((String)fontFamily.getValue());
+            component.setSize(Integer.parseInt(fontSize.getText()));
+            this.hide();
+        });
     }
 }

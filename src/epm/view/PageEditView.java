@@ -61,6 +61,8 @@ public class PageEditView extends VBox {
     // SLIDE THIS COMPONENT EDITS
     Page page;
     
+    EPortfolioMakerView ui;
+    
     // DISPLAYS THE IMAGE FOR THIS SLIDE
     ImageView imageSelectionView;
     
@@ -94,7 +96,8 @@ public class PageEditView extends VBox {
      * 
      * @param initSlide The slide to be edited by this component.
      */
-    public PageEditView(Page initPage, Tab tab) {
+    public PageEditView(Page initPage, Tab tab, EPortfolioMakerView ui) {
+        this.ui = ui;
         imageController = new ImageSelectionController();
         imageSelectionView = new ImageView();
 	this.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
@@ -116,7 +119,10 @@ public class PageEditView extends VBox {
         nameSection.getChildren().addAll(name, nameField);
         layoutCSSFont.getChildren().addAll(layoutLabel, layout, cssLabel, css, fontLabel, font);
         footer.getChildren().addAll(footerLabel, footerField);
-        getChildren().addAll(layoutCSSFont, titleSection, nameSection, initBannerImg(), footer);
+        if (initPage.hasBannerImage())
+            getChildren().addAll(layoutCSSFont, titleSection, nameSection, initBannerImg(), footer);
+        else
+            getChildren().addAll(layoutCSSFont, titleSection, nameSection, footer);
 
         setStyle("-fx-background: #ffffe5");
 	
@@ -124,6 +130,10 @@ public class PageEditView extends VBox {
     
     public Page getPage() {
         return page;
+    }
+    
+    public void reloadStudentName() {
+        nameField.setText(ui.getStudentName());
     }
     
     private void initTitleAndName() {
@@ -134,9 +144,9 @@ public class PageEditView extends VBox {
             tab.setText(page.getTitle());
         });
         name = new Label("Student Name: ");
-        nameField = new TextField(page.getStudentName());
+        nameField = new TextField(ui.getStudentName());
         nameField.setOnKeyReleased( e-> {
-            page.setStudentName(nameField.getText());
+            ui.setStudentName(nameField.getText());
         });
     }
     
@@ -144,17 +154,27 @@ public class PageEditView extends VBox {
         layoutLabel = new Label("Page Layout: ");
         layout = new ComboBox();
         layout.getItems().addAll("Top-Left Nagivation", "Left Navgiation", "Middle-Left Navigation", "Middle-Right Navigation", "Middle Navigation");
-        layout.setValue("Top-Left Navation");
+        layout.setValue(page.getLayout());
+        layout.setOnAction( e-> {
+            page.setLayout((String)layout.getValue());
+            ui.reloadSlideShowPane(ui.getEPortfolio());
+        });
         
         cssLabel = new Label("     Page Color Scheme: ");
         css = new ComboBox();
         css.getItems().addAll("Blue/Yellow", "Cyan/Red", "Orange/Yellow", "Red/Green", "Green/Blue");
-        css.setValue("Blue/Yellow");
+        css.setValue(page.getColor());
+        css.setOnAction( e-> {
+            page.setColor((String)css.getValue());
+        });
         
         fontLabel = new Label("     Page Font: ");
         font = new ComboBox();
         font.getItems().addAll("PT Sans", "Dosis", "Yanone Kaffeesatz", "Oxygen", "Nunito");
-        font.setValue("PT Sans");
+        font.setValue(page.getFont());
+        font.setOnAction (e-> {
+           page.setFont((String)font.getValue()); 
+        });
     }
     
     private void initFooter() {
@@ -199,6 +219,12 @@ public class PageEditView extends VBox {
         
         for (TextComponent component : textComponents) {
             String textType = component.getTextType();
+            HBox first = new HBox();
+            Text family = new Text(component.getFont());
+            Text size = new Text("" + component.getSize());
+            Text style = new Text(component.getStyle());
+            first.getChildren().addAll(new Label("Font Family: "), family, new Label("     Font Style: "), style, new Label("     Font Size: "), size);
+            first.setStyle("-fx-spacing: 5px;");
             if (textType.equalsIgnoreCase("paragraph")){
                 Label paragraphLabel = new Label("Paragraph: ");
                 TextFlow paragraphField;
@@ -247,7 +273,11 @@ public class PageEditView extends VBox {
                     
                 Text data = new Text(component.getData());
                 HBox paragraphComponent = new HBox();
-                paragraphComponent.getChildren().addAll(paragraphLabel, paragraphField);
+                VBox onTop = new VBox();
+                HBox onRight = new HBox();
+                onRight.getChildren().addAll(paragraphLabel, paragraphField);
+                onTop.getChildren().addAll(first, onRight);
+                paragraphComponent.getChildren().addAll(onTop);
                 paragraphComponent.setOnMouseClicked(e-> {
                     if (!isNoneSelected()) {
                         selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
@@ -259,7 +289,7 @@ public class PageEditView extends VBox {
                     page.setPageEditView(this);
                 });
                 paragraphComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
-                if (isNoneSelected()) {
+                if (!isNoneSelected()) {
                     if (component.equals(selectedTextComponent))
                         paragraphComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 }
@@ -279,7 +309,11 @@ public class PageEditView extends VBox {
                 }
                 
                 HBox listComponent = new HBox();
-                listComponent.getChildren().addAll(listLabel, list);
+                VBox onTop = new VBox();
+                HBox onRight = new HBox();
+                onRight.getChildren().addAll(listLabel, list);
+                onTop.getChildren().addAll(first, onRight);
+                listComponent.getChildren().addAll(onTop);
                 listComponent.setOnMouseClicked(e-> {
                     if (!isNoneSelected()) {
                         selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
@@ -311,7 +345,11 @@ public class PageEditView extends VBox {
                 Label headerLabel = new Label("Header: ");
                 Text headerField = new Text(component.getData());
                 HBox headerComponent = new HBox();
-                headerComponent.getChildren().addAll(headerLabel, headerField);
+                VBox onTop = new VBox();
+                HBox onRight = new HBox();
+                onRight.getChildren().addAll(headerLabel, headerField);
+                onTop.getChildren().addAll(first, onRight);
+                headerComponent.getChildren().addAll(onTop);
                 headerComponent.setOnMouseClicked(e-> {
                     if (!isNoneSelected()) {
                         selectedHBox.setStyle("-fx-background-color: #ffffb2; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
@@ -489,6 +527,18 @@ public class PageEditView extends VBox {
         return selectedTextComponent;
     }
     
+    public ImageComponent getImageComponent() {
+        return selectedImageComponent;
+    }
+    
+    public VideoComponent getVideoComponent() {
+        return selectedVideoComponent;
+    }
+    
+    public SlideShowComponent getSlideShowComponent() {
+        return selectedSlideShowComponent;
+    }
+    
     public boolean isTextSelected() {
         return (selectedTextComponent != null);
     }
@@ -568,5 +618,12 @@ public class PageEditView extends VBox {
                page.removeSlideShowComponent(selectedSlideShowComponent);
             }
         }
+    }
+    
+    public void setSelectedComponents(PageEditView editView) {
+        selectedTextComponent = editView.getTextComponent();
+        selectedImageComponent = editView.getImageComponent();
+        selectedVideoComponent = editView.getVideoComponent();
+        selectedSlideShowComponent = editView.getSlideShowComponent();
     }
 }

@@ -16,7 +16,9 @@ public class TextComponent {
     private ArrayList<String> list;
     private String data;
     private String font;
+    private String style = "Normal";
     private ArrayList<HyperlinkComponent> links;
+    private int fontSize = 12;
     
     public TextComponent(String type, String text, String font) {
         textType = type;
@@ -74,5 +76,21 @@ public class TextComponent {
     
     public void removeHyperlink(int pos) {
         links.remove(pos);
+    }
+    
+    public String getStyle() {
+        return style;
+    }
+    
+    public void setStyle(String style) {
+        this.style = style;
+    }
+    
+    public void setSize(int num) {
+        fontSize = num;
+    }
+    
+    public int getSize() {
+        return fontSize;
     }
 }

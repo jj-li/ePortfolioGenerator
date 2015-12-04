@@ -19,6 +19,9 @@ public class Page {
     ArrayList<ImageComponent> imageComponents;
     ArrayList<VideoComponent> videoComponents;
     ArrayList<SlideShowComponent> slideShowComponents;
+    String layout = "Top-Left Navation";
+    String color = "Blue/Yellow";
+    String font = "PT Sans";
      
     /**
      * Constructor, it initializes all slide data.
@@ -130,5 +133,36 @@ public class Page {
                 break;
             }  
         }
+    }
+    
+    public String getLayout() {
+        return layout;
+    }
+    
+    public String getFont() {
+        return font;
+    }
+    
+    public String getColor() {
+        return color;
+    }
+    
+    public void setLayout(String layout) {
+        this.layout = layout;
+    }
+    
+    public void setFont(String font) {
+        this.font = font;
+    }
+    
+    public void setColor(String color) {
+        this.color = color;
+    }
+    
+    public boolean hasBannerImage() {
+        if (layout.equalsIgnoreCase("Middle-Left Navigation") || layout.equalsIgnoreCase("Middle Navigation"))
+            return true;
+        else
+            return false;
     }
 }

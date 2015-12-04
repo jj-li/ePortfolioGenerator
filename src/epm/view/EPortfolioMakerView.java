@@ -187,6 +187,7 @@ public class EPortfolioMakerView {
     private Page page;
     private Scene scene = new Scene(viewer, Screen.getPrimary().getVisualBounds().getMinX(), Screen.getPrimary().getVisualBounds().getMinY());
    
+    private String studentName = "";
 
     /**
      * Default constructor, it initializes the GUI for use, but does not yet
@@ -382,8 +383,9 @@ public class EPortfolioMakerView {
                 PageEditView editView = page.getSelectedPageEditView();
                 if (editView != null) {
                     if (editView.isTextSelected()) {
-                        FontDialogue dialogue = new FontDialogue();
+                        FontDialogue dialogue = new FontDialogue(editView.getTextComponent());
                         dialogue.showAndWait();
+                        reloadSlideShowPane(ePortfolio);
                     }
                 }  
             }
@@ -555,7 +557,13 @@ public class EPortfolioMakerView {
         getTabs().clear();
 	for (Page page : ePortfolioToLoad.getPages()) {
             Tab tab = new Tab(page.getTitle());
-            PageEditView pageEdit = new PageEditView(page, tab);
+            PageEditView pageEdit = new PageEditView(page, tab, this);
+            /*if (page != null) {
+                if (page.getSelectedPageEditView() != null) {
+                    if (page.equals(ePortfolioToLoad.getSelectedPage()))
+                        pageEdit.setSelectedComponents(page.getSelectedPageEditView());
+                } 
+            }*/
             pageEdit.reloadComponents();
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setContent(pageEdit);
@@ -570,10 +578,12 @@ public class EPortfolioMakerView {
                     PageEditView selectedPageEditView = (PageEditView)selectedScrollPane.getContent();
                     Page selectedPage = selectedPageEditView.getPage();
                     ePortfolioToLoad.setSelectedPage(selectedPage);
+                    pageEdit.reloadStudentName();
                 }
             });
-            if (ePortfolioToLoad.getSelectedPage().equals(page))
+            if (ePortfolioToLoad.getSelectedPage().equals(page)) {
                 pageEditorPane.getSelectionModel().select(tab);
+            }
 	}
     }
     
@@ -607,6 +617,14 @@ public class EPortfolioMakerView {
         workspace.getChildren().add(slideEditToolbar);
 	workspace.getChildren().add(pageEditorPane);
         reloadSlideShowPane(ePortfolioToShow);
+    }
+    
+    public void setStudentName(String name) {
+        studentName = name;
+    }
+    
+    public String getStudentName() {
+        return studentName;
     }
 }
  

@@ -134,6 +134,7 @@ public class PageEditView extends VBox {
     
     public void reloadStudentName() {
         nameField.setText(ui.getStudentName());
+        page.setStudentName(ui.getStudentName());
     }
     
     private void initTitleAndName() {
@@ -147,6 +148,7 @@ public class PageEditView extends VBox {
         nameField = new TextField(ui.getStudentName());
         nameField.setOnKeyReleased( e-> {
             ui.setStudentName(nameField.getText());
+            page.setStudentName(nameField.getText());
         });
     }
     

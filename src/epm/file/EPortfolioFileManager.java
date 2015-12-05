@@ -28,8 +28,14 @@ import epm.model.TextComponent;
 import epm.model.VideoComponent;
 import epm.view.EPortfolioMakerView;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.stage.FileChooser;
+import javax.json.JsonWriterFactory;
+import javax.json.stream.JsonGenerator;
 
 /**
  * This class uses the JSON standard to read and write slideshow data files.
@@ -65,10 +71,6 @@ public class EPortfolioFileManager {
         // BUILD THE FILE PATH
         String slideShowTitle = "" + title;
         String jsonFilePath = dataPath + SLASH + slideShowTitle + JSON_EXT;
-        
-        // INIT THE WRITER
-        OutputStream os = new FileOutputStream(jsonFilePath);
-        JsonWriter jsonWriter = Json.createWriter(os);  
        
         // BUILD THE SLIDES ARRAY
         JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages());
@@ -80,7 +82,23 @@ public class EPortfolioFileManager {
                 .build();
         
         // AND SAVE EVERYTHING AT ONCE
-        jsonWriter.writeObject(courseJsonObject);
+        StringWriter sw = new StringWriter();
+        Map<String, Object> properties = new HashMap<>(1);
+	properties.put(JsonGenerator.PRETTY_PRINTING, true);
+
+	JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
+	JsonWriter jsonWriter = writerFactory.createWriter(sw);
+	jsonWriter.writeObject(courseJsonObject);
+	jsonWriter.close();
+
+	// INIT THE WRITER
+	OutputStream os = new FileOutputStream(jsonFilePath);
+	JsonWriter jsonFileWriter = Json.createWriter(os);
+	jsonFileWriter.writeObject(courseJsonObject);
+	String prettyPrinted = sw.toString();
+	PrintWriter pw = new PrintWriter(jsonFilePath);
+	pw.write(prettyPrinted);
+	pw.close();
     }
     
     public void saveAsEPortfolio(EPortfolioModel ePortfolioToSave, EPortfolioMakerView ui) throws IOException {
@@ -99,16 +117,15 @@ public class EPortfolioFileManager {
             return;
         dataPath = file.getAbsolutePath();
         title = file.getName();
+        int num = title.indexOf(".json");
+        if (num != -1)
+            title = title.substring(0, num);
         int pos = dataPath.indexOf("\\" + title);
         dataPath = dataPath.substring(0, pos);
 
         
         // BUILD THE FILE PATH
-        String jsonFilePath = dataPath + SLASH + title;
-        
-        // INIT THE WRITER
-        OutputStream os = new FileOutputStream(jsonFilePath);
-        JsonWriter jsonWriter = Json.createWriter(os);  
+        String jsonFilePath = dataPath + SLASH + title + JSON_EXT;
        
         // BUILD THE SLIDES ARRAY
         JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages());
@@ -120,7 +137,23 @@ public class EPortfolioFileManager {
                 .build();
         
         // AND SAVE EVERYTHING AT ONCE
-        jsonWriter.writeObject(courseJsonObject);
+        StringWriter sw = new StringWriter();
+        Map<String, Object> properties = new HashMap<>(1);
+	properties.put(JsonGenerator.PRETTY_PRINTING, true);
+
+	JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
+	JsonWriter jsonWriter = writerFactory.createWriter(sw);
+	jsonWriter.writeObject(courseJsonObject);
+	jsonWriter.close();
+
+	// INIT THE WRITER
+	OutputStream os = new FileOutputStream(jsonFilePath);
+	JsonWriter jsonFileWriter = Json.createWriter(os);
+	jsonFileWriter.writeObject(courseJsonObject);
+	String prettyPrinted = sw.toString();
+	PrintWriter pw = new PrintWriter(jsonFilePath);
+	pw.write(prettyPrinted);
+	pw.close();
     }
     
     /**
@@ -134,16 +167,130 @@ public class EPortfolioFileManager {
     public void loadSlideShow(EPortfolioModel EPortfolioToLoad, String jsonFilePath) throws IOException {
         // LOAD THE JSON FILE WITH ALL THE DATA
         JsonObject json = loadJSONFile(jsonFilePath);
-        
+        dataPath = jsonFilePath;
+        String title = json.getString("title");
+        int pos = dataPath.indexOf("\\" + title);
+        dataPath = dataPath.substring(0, pos);
         // NOW LOAD THE COURSE
 	EPortfolioToLoad.reset();
-        EPortfolioToLoad.setTitle(json.getString(JSON_TITLE));
-        JsonArray jsonSlidesArray = json.getJsonArray(JSON_SLIDES);
-        for (int i = 0; i < jsonSlidesArray.size(); i++) {
-	    JsonObject slideJso = jsonSlidesArray.getJsonObject(i);
-	    EPortfolioToLoad.addPage(	slideJso.getString(JSON_IMAGE_FILE_NAME),
-					slideJso.getString(JSON_IMAGE_PATH));
-	}
+        EPortfolioToLoad.setTitle(json.getString("title"));
+        JsonArray jsonPagesArray = json.getJsonArray("pages");
+        for (int i = 0; i < jsonPagesArray.size(); i++) {
+	    JsonObject pageJso = jsonPagesArray.getJsonObject(i);
+	    Page page = EPortfolioToLoad.addPage(   pageJso.getString("title"),
+                                                    pageJso.getString("name"),
+                                                    pageJso.getString("layout"),
+                                                    pageJso.getString("color"),
+                                                    pageJso.getString("font"),
+                                                    pageJso.getString("footer"),
+                                                    pageJso.getString("banner_image_path"),
+                                                    pageJso.getString("banner_image_name"));
+            
+            JsonArray pageTextComponentsArray = pageJso.getJsonArray("text_components");
+            for (int j = 0; j < pageTextComponentsArray.size(); j++) {
+                JsonObject componentJso = pageTextComponentsArray.getJsonObject(j);
+                String type = componentJso.getString("type");
+                if (type.equalsIgnoreCase("paragraph")) {
+                    TextComponent text = new TextComponent( componentJso.getString("type"),
+                                                            componentJso.getString("text"),
+                                                            componentJso.getString("font"));
+                    text.setStyle(componentJso.getString("style"));
+                    text.setSize(Integer.parseInt(componentJso.getString("size")));
+                    JsonArray hyperlinkArray = componentJso.getJsonArray("hyperlink");
+                    for (int k = 0; k < hyperlinkArray.size(); k++) {
+                        JsonObject linkJso = hyperlinkArray.getJsonObject(k);
+                        HyperlinkComponent link = new HyperlinkComponent(   componentJso.getString("text"),
+                                                                            linkJso.getString("selected_text"),
+                                                                            linkJso.getString("url"));
+                        text.addHyperlink(link);
+                    }
+                    page.addTextComponent(text);
+                }
+                else if (type.equalsIgnoreCase("header")) {
+                    TextComponent text = new TextComponent( componentJso.getString("type"),
+                                                            componentJso.getString("text"),
+                                                            componentJso.getString("font"));
+                    text.setStyle(componentJso.getString("style"));
+                    text.setSize(Integer.parseInt(componentJso.getString("size")));
+                    page.addTextComponent(text);
+                } 
+                else {
+                    JsonArray listArray = componentJso.getJsonArray("text");
+                    ArrayList<String> list = new ArrayList<String>();
+                    for (int k = 0; k < listArray.size(); k++) {
+                        JsonObject listJso = listArray.getJsonObject(k);
+                        list.add(listJso.getString("data"));
+                    }
+                    TextComponent text = new TextComponent( componentJso.getString("type"),
+                                                            list,
+                                                            componentJso.getString("font"));
+                    text.setStyle(componentJso.getString("style"));
+                    text.setSize(Integer.parseInt(componentJso.getString("size")));
+                    JsonArray hyperlinkArray = componentJso.getJsonArray("hyperlink");
+                    for (int k = 0; k < hyperlinkArray.size(); k++) {
+                        JsonObject linkJso = hyperlinkArray.getJsonObject(k);
+                        HyperlinkComponent link = new HyperlinkComponent(   Integer.parseInt(linkJso.getString("selected_text")),
+                                                                            list,
+                                                                            linkJso.getString("url"));
+                        text.addHyperlink(link);
+                    }
+                    page.addTextComponent(text);
+                }   
+            }
+            
+            JsonArray pageImageComponentsArray = pageJso.getJsonArray("image_paths");  
+            for (int k = 0; k < pageImageComponentsArray.size(); k++) {
+                JsonObject componentJso = pageImageComponentsArray.getJsonObject(k);
+                double width = Double.parseDouble(componentJso.getString("width"));
+                double height = Double.parseDouble(componentJso.getString("height"));
+                ImageComponent image = new ImageComponent(  componentJso.getString("path"),
+                                                            componentJso.getString("position"),
+                                                            width,
+                                                            height,
+                                                            componentJso.getString("caption"));
+                page.addImageComponent(image);
+            }
+            
+            JsonArray pageVideoComponentsArray = pageJso.getJsonArray("video_paths");  
+            for (int k = 0; k < pageVideoComponentsArray.size(); k++) {
+                JsonObject componentJso = pageVideoComponentsArray.getJsonObject(k);
+                double width = Double.parseDouble(componentJso.getString("width"));
+                double height = Double.parseDouble(componentJso.getString("height"));
+                VideoComponent video = new VideoComponent(  componentJso.getString("path"),
+                                                            componentJso.getString("caption"),
+                                                            width,
+                                                            height);
+                page.addVideoComponent(video);
+            }
+            
+            JsonArray pageSlideShowComponentsArray = pageJso.getJsonArray("slideshow_component");  
+            for (int k = 0; k < pageSlideShowComponentsArray.size(); k++) {
+                JsonObject componentJso = pageSlideShowComponentsArray.getJsonObject(k);
+                ArrayList<String> imagePaths = new ArrayList<String>();
+                ArrayList<String> imageNames = new ArrayList<String>();
+                ArrayList<String> imageCaptions = new ArrayList<String>();
+                
+                JsonArray pathsArray = componentJso.getJsonArray("paths");  
+                for (int l = 0; l < pathsArray.size(); l++) {
+                    JsonObject pathJso = pathsArray.getJsonObject(l);
+                    imagePaths.add(pathJso.getString("image_path"));
+                }
+                JsonArray namesArray = componentJso.getJsonArray("names");  
+                for (int l = 0; l < namesArray.size(); l++) {
+                    JsonObject nameJso = namesArray.getJsonObject(l);
+                    imageNames.add(nameJso.getString("image_name"));
+                }
+                JsonArray captionsArray = componentJso.getJsonArray("captions");  
+                for (int l = 0; l < captionsArray.size(); l++) {
+                    JsonObject captionJso = captionsArray.getJsonObject(l);
+                    imageCaptions.add(captionJso.getString("image_caption"));
+                }
+                
+                SlideShowComponent slideShow = new SlideShowComponent(imagePaths, imageCaptions, imageNames);
+                page.addSlideShowComponent(slideShow);
+            }
+        }
+	
     }
 
     // AND HERE ARE THE PRIVATE HELPER METHODS TO HELP THE PUBLIC ONES
@@ -212,7 +359,7 @@ public class EPortfolioFileManager {
                     .add("text", component.getData())
                     .add("font", component.getFont())
                     .add("style", component.getStyle())
-                    .add("size", component.getSize())
+                    .add("size", "" + component.getSize())
                     .add("hyperlink", makeParagraphHyperlinkJsonArray(component))
                     .build();
             return jso;
@@ -223,7 +370,7 @@ public class EPortfolioFileManager {
                     .add("text", makeListComponentJsonArray(component))
                     .add("font", component.getFont())
                     .add("style", component.getStyle())
-                    .add("size", component.getSize())
+                    .add("size", "" + component.getSize())
                     .add("hyperlink", makeListHyperlinkJsonArray(component))
                     .build();
             return jso;
@@ -355,7 +502,7 @@ public class EPortfolioFileManager {
     
     private JsonObject makeImageNameJsonObject(String str) {
         JsonObject jso = Json.createObjectBuilder()
-		.add("image_caption", str)
+		.add("image_name", str)
 		.build();
 	return jso;
     }
@@ -391,7 +538,7 @@ public class EPortfolioFileManager {
     private JsonObject makeListHyperlinkJsonObject(HyperlinkComponent link) {
         JsonObject jso = Json.createObjectBuilder()
 		.add("url", link.getUrl())
-                .add("selected_text", link.getIndexItem())
+                .add("selected_text", "" + link.getIndex())
 		.build();
 	return jso;
     }

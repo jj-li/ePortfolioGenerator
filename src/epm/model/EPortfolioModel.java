@@ -86,10 +86,18 @@ public class EPortfolioModel {
 	ui.reloadSlideShowPane(this);
     }
     
-    public void addPage(String title, String name){
+    public Page addPage(String title, String name, String layout, String color, String font, String footer, String bannerPath, String bannerName){
         Page page = new Page(title, name);
+        page.setLayout(layout);
+        page.setColor(color);
+        page.setFont(font);
+        page.setBannerImgPath(bannerPath);
+        page.setBannerImgName(bannerName);
+        page.setFooter(footer);
         pages.add(page);
-	ui.reloadSlideShowPane(this);
+        ui.setStudentName(name);
+        selectedPage = page;
+        return page;
     }
     
     

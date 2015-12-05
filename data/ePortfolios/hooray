@@ -4,7 +4,7 @@
     "pages":[
         {
             "title":"Sheesh",
-            "name":"saf",
+            "name":"",
             "layout":"Left Navgiation",
             "banner_image_path":"",
             "banner_image_name":"",
@@ -15,9 +15,9 @@
                 {
                     "type":"Paragraph",
                     "text":"zac is a bitch googly",
-                    "font":"Montserrat",
-                    "style":"Bold",
-                    "size":"20",
+                    "font":"Times New Roman",
+                    "style":"Normal",
+                    "size":"12",
                     "hyperlink":[
                         {
                             "url":"google.com",
@@ -42,9 +42,9 @@
                             "data":"c"
                         }
                     ],
-                    "font":"Josefin Sans",
-                    "style":"Bold",
-                    "size":"19",
+                    "font":"Times New Roman",
+                    "style":"Normal",
+                    "size":"12",
                     "hyperlink":[
                         {
                             "url":"bths.edu",
@@ -115,8 +115,8 @@
             ]
         },
         {
-            "title":"dffasf",
-            "name":"saf",
+            "title":"New Page",
+            "name":"",
             "layout":"Middle-Left Navigation",
             "banner_image_path":"",
             "banner_image_name":"",

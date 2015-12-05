@@ -321,13 +321,13 @@ public class EPortfolioMakerView {
 	    fileController.handleNewSlideShowRequest();
 	});
 	loadEPortfolioButton.setOnAction(e -> {
-	    
+	    fileController.handleLoadEPortfolioRequest();
 	});
 	saveEPortfolioButton.setOnAction(e -> {
 	    fileController.handleSaveEPortfolioRequest();
 	});
 	exitButton.setOnAction(e -> {
-	    
+	    fileController.handleExitRequest();
 	});
         saveAsEPortfolioButton.setOnAction( e -> {
             fileController.handleSaveAsEPortfolioRequest();
@@ -543,7 +543,7 @@ public class EPortfolioMakerView {
 	epmPane.setCenter(workspace);
 	
 	// NEXT ENABLE/DISABLE BUTTONS AS NEEDED IN THE FILE TOOLBAR
-	saveEPortfolioButton.setDisable(saved);
+	//saveEPortfolioButton.setDisable(saved);
     }
     
     

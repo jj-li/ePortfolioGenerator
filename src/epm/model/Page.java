@@ -46,6 +46,10 @@ public class Page {
     public Page(String title, String studentName) {
         this.title = title;
         this.studentName = studentName;
+        textComponents = new ArrayList<TextComponent>();
+        imageComponents = new ArrayList<ImageComponent>();
+        videoComponents = new ArrayList<VideoComponent>();
+        slideShowComponents = new ArrayList<SlideShowComponent>();
     }
     
     // ACCESSOR METHODS

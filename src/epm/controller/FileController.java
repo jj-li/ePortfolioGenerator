@@ -122,7 +122,7 @@ public class FileController {
      * This method lets the user open a slideshow saved to a file. It will also
      * make sure data for the current slideshow is not lost.
      */
-    public void handleLoadSlideShowRequest() {
+    public void handleLoadEPortfolioRequest() {
         try {
             // WE MAY HAVE TO SAVE CURRENT WORK
             boolean continueToOpen = true;
@@ -183,7 +183,6 @@ public class FileController {
 
             // AND REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
             // THE APPROPRIATE CONTROLS
-            ui.updateToolbarControls(saved);
 	    return true;
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
@@ -438,13 +437,14 @@ public class FileController {
         if (selectedFile != null) {
             try {    
                // textFields = new ArrayList<TextField>();
-		EPortfolioModel slideShowToLoad = ui.getEPortfolio();
-                slideShowIO.loadSlideShow(slideShowToLoad, selectedFile.getAbsolutePath());
+		EPortfolioModel ePortfolioToLoad = ui.getEPortfolio();
+                slideShowIO.loadSlideShow(ePortfolioToLoad, selectedFile.getAbsolutePath());
                 
-                ui.reloadSlideShowPane(slideShowToLoad);
+                ui.reloadSlideShowPane(ePortfolioToLoad);
                 saved = true;
                 ui.updateToolbarControls(true);
             } catch (Exception e) {
+                e.printStackTrace();
                 ErrorHandler eH = ui.getErrorHandler();
                 eH.processError(FAILED_SLIDE_SHOW_LOAD, prop.getProperty(FAILED_SLIDE_SHOW_LOAD_TITLE));
             }

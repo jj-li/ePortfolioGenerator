@@ -5,7 +5,12 @@
  */
 package epm.view;
 
+import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_LOAD;
+import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_LOAD_TITLE;
+import static epm.StartupConstants.PATH_ICONS;
 import static epm.StartupConstants.STYLE_SHEET_UI;
+import static epm.StartupConstants.WINDOWS_ICON;
+import epm.error.ErrorHandler;
 import epm.model.HyperlinkComponent;
 import epm.model.Page;
 import epm.model.TextComponent;
@@ -19,10 +24,14 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import properties_manager.PropertiesManager;
 
 /**
  *
@@ -150,7 +159,7 @@ public class TextComponentDialogue extends Stage{
         textField = new TextField(data);
         paragraphFonts = new ComboBox();
         paragraphFonts.getItems().addAll("Times New Roman", "Comic Sans MS", "Montserrat", "Merriweather", "Josefin Sans");
-        paragraphFonts.setValue("Times New Roman");
+        paragraphFonts.setValue(component.getFont());
         paragraphFontsLabel = new Label("Paragraph Font: ");
         screen = new VBox();
         pane = new Pane();
@@ -189,11 +198,28 @@ public class TextComponentDialogue extends Stage{
             this.hide();
         });
         editParagraph.setOnAction(e-> {
-            component.setData(textArea.getText());
-            component.setFont((String)paragraphFonts.getValue());
+            boolean checked = checkHyperlinks(component, textArea.getText());
+            if (checked) {
+                component.setData(textArea.getText());
+                component.setFont((String)paragraphFonts.getValue());
+            }
             this.hide();
+            if (!checked)
+                displayMessage();
         });
         
+    }
+    
+    public boolean checkHyperlinks(TextComponent component, String data) {
+        ArrayList<HyperlinkComponent> links = component.getHyperlinks();
+        boolean checked = true;
+        for (HyperlinkComponent link : links) {
+            String selected = link.getSelectedText();
+            int num = data.indexOf(selected);
+            if (num == -1)
+               checked = false;
+        }
+        return checked;
     }
     
     public TextComponentDialogue(String type, ArrayList<String> data, TextComponent component) {
@@ -247,9 +273,63 @@ public class TextComponentDialogue extends Stage{
             ArrayList<String> items = new ArrayList<String>();
             for (String s : list.getItems())
                 items.add(s);
-            component.setList(items);
+            boolean checked = checkHyperlinks(component, items);
+            if (checked)
+                component.setList(items);
             this.hide();
+            if (!checked) {
+                displayMessage();
+            }
         });
+    }
+    
+    private void displayMessage() {
+        // POP OPEN A DIALOG TO DISPLAY TO THE USER
+                Button btOK = new Button("OK");
+                Text text = new Text("Please remove the hyper link first before editing the text associated with the hyper link.");
+                Pane pane = new Pane();
+                text.setWrappingWidth(400);
+                pane.getStyleClass().add("error_box");
+                VBox box = new VBox();
+                box.getChildren().addAll(text, btOK);
+                box.setStyle("-fx-padding: 10px 10px 0px 10px;");
+                pane.getChildren().add(box);
+                Scene scene = new Scene(pane, 500, 200);
+                scene.getStylesheets().add(STYLE_SHEET_UI);
+                Stage stage = new Stage();
+                btOK.setOnAction(e1 -> {
+                    stage.hide();
+                });
+                stage.setScene(scene);
+                stage.getIcons().add(new Image("file:" + PATH_ICONS + WINDOWS_ICON));
+                stage.setTitle("Error Editing Component");
+                stage.showAndWait();
+    }
+    
+    public boolean checkHyperlinks(TextComponent component, ArrayList<String> items) {
+        ArrayList<HyperlinkComponent> links = component.getHyperlinks();
+        ArrayList<HyperlinkComponent> temp = new ArrayList<HyperlinkComponent>();
+        int counter = 0;
+        boolean checked = true;
+        for (HyperlinkComponent link : links) {
+            temp.add(link);
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).equals(link.getIndexItem())) {
+                    link.setIndex(i);
+                    link.setItems(items);
+                    counter++;
+                    checked = true;
+                }
+                    
+            }
+        }
+        if (counter != links.size()) {
+            component.setHyperlinks(temp);
+            checked = false;
+        }
+        else
+            checked = true;
+        return checked;
     }
     
     public void addTextComponent(Page page) {

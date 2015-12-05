@@ -65,4 +65,8 @@ public class HyperlinkComponent {
     public void setUrl(String url) {
         this.url = url;
     }
+    
+    public void setItems(ArrayList<String> items) {
+        this.items = items;
+    }
 }

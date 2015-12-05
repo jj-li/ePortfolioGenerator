@@ -74,6 +74,10 @@ public class TextComponent {
         links.add(component);
     }
     
+    public void setHyperlinks(ArrayList<HyperlinkComponent> links) {
+        this.links = links;
+    }
+    
     public void removeHyperlink(int pos) {
         links.remove(pos);
     }

@@ -337,6 +337,14 @@ public class EPortfolioMakerView {
                 if (!ePortfolio.getPages().isEmpty())
                     fileController.handleExportEPortfolioRequest();
         });
+        viewEPortfolioButton.setOnAction( e-> {
+            if (ePortfolio != null) {
+                if (!ePortfolio.getPages().isEmpty()) {
+                    fileController.handleExportEPortfolioRequest();
+                    viewPage(ePortfolio);
+                }
+            }
+        });
         editEPortfolioButton.setOnAction( e-> {
             fileController.handleEditEPortfolioRequest();
         });
@@ -599,8 +607,12 @@ public class EPortfolioMakerView {
         WebEngine webEngine = page.getEngine(); 
         page.prefWidthProperty().bind(workspace.widthProperty());
         page.prefHeightProperty().bind(workspace.heightProperty());
-       
-        File htmlFile = new File("sites/" + "dummyPage.html");
+        
+        String titles = "";
+        String[] pieces = ePortfolioToShow.getSelectedPage().getTitle().split(" ");
+        for (String s : pieces)
+            titles += s;
+        File htmlFile = new File("sites/" + ePortfolioToShow.getTitle() + "/" + titles + ".html");
         try {
            URL fileURL = htmlFile.toURI().toURL();
            webEngine.load(fileURL.toExternalForm());

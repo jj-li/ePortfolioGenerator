@@ -108,11 +108,10 @@ public class EPortfolioFileManager {
         String title = "" + ePortfolioToSave.getTitle();
         if (ePortfolioToSave.getTitle() == null || title.equals(""))
             title = "Untitled";
-            
+
         // BUILD THE FILE PATH
-        
-        String jsonFilePath = PATH_SLIDE_SHOWS + SLASH + ePortfolioToSave.getTitle() + JSON_EXT;
-        File newJSONFile = new File("sites/" + ePortfolioToSave.getTitle() + "/Testing" + JSON_EXT);
+        String jsonFilePath = "sites" + SLASH + title + "/Testing" + JSON_EXT;
+        File newJSONFile = new File("sites/" + title + "/Testing" + JSON_EXT);
         if (newJSONFile.exists())
             newJSONFile.delete();
         

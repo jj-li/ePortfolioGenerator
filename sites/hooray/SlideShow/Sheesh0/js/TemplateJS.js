@@ -33,7 +33,7 @@ function load() {
             image.onload = function() {
                 var imgWidth = image.naturalWidth;
                 var imgHeight = image.naturalHeight;
-                var newImgHeight = 600;
+                var newImgHeight = 251;
                 $("#slideShow").attr("height", newImgHeight);
                 var newImgWidth = (newImgHeight/imgHeight)* imgWidth;
                 $("#slideShow").attr("width", newImgWidth);
@@ -73,7 +73,7 @@ function nextSlide() {
             image.onload = function() {
                 var imgWidth = image.naturalWidth;
                 var imgHeight = image.naturalHeight;
-                var newImgHeight = 600;
+                var newImgHeight = 251;
                 var newImgWidth = (newImgHeight/imgHeight)* imgWidth;
                 $("#slideShow").attr("width", newImgWidth);
             };
@@ -93,7 +93,7 @@ function previousSlide() {
             image.onload = function() {
                 var imgWidth = image.naturalWidth;
                 var imgHeight = image.naturalHeight;
-                var newImgHeight = 600;
+                var newImgHeight = 251;
                 var newImgWidth = (newImgHeight/imgHeight)* imgWidth;
                 $("#slideShow").attr("width", newImgWidth);
             };

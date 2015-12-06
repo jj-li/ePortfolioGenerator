@@ -255,7 +255,6 @@ public class FileController {
     {
         EPortfolioModel ePortfolioToShow = ui.getEPortfolio();
         handleSaveEPortfolioRequest();
-        handleExportSaveEPortfolioRequest();
         Boolean siteDirectory = new File("sites/" + ePortfolioToShow.getTitle()).mkdirs();
         Boolean cssDirectory = new File("sites/" + ePortfolioToShow.getTitle() +"/css").mkdirs();
         Boolean jsDirectory = new File("sites/" + ePortfolioToShow.getTitle() +"/js").mkdirs();
@@ -264,6 +263,7 @@ public class FileController {
         Boolean slideShowDirectory = new File("sites/" + ePortfolioToShow.getTitle() +"/SlideShow").mkdirs();
         File imgs = new File("sites/" + ePortfolioToShow.getTitle() +"/img");
         File videos = new File("sites/" + ePortfolioToShow.getTitle() +"/Videos");
+        handleExportSaveEPortfolioRequest();
         
         if (imgs.exists()) {
             for (File files : imgs.listFiles()) {
@@ -404,20 +404,6 @@ public class FileController {
             }
         }
         
-        File jsonFile = new File(PATH_SLIDE_SHOWS + SLASH + ePortfolioToShow.getTitle() + JSON_EXT);
-        File newJSONFile = new File("sites/" + ePortfolioToShow.getTitle() + "/Testing" + JSON_EXT);
-        if (newJSONFile.exists())
-            newJSONFile.delete();
-        try {
-            Files.copy(jsonFile.toPath(), newJSONFile.toPath());
-        }
-        catch (FileAlreadyExistsException e3)
-        {
-                
-        }
-        catch (IOException e2) {
-            e2.printStackTrace();
-        }
         
         copyMedia(ePortfolioToShow);
         
@@ -636,13 +622,6 @@ public class FileController {
             e.printStackTrace();
         }
         
-        
-        try {
-            saveSlideShow(slideShowToShow, model.getTitle(), i, title);
-        }
-        catch (IOException e10) {
-            e10.printStackTrace();
-        }
         
         File htmlFile = new File("sites/Template/SlideShow/Template/index.html");
         File newHTMLFile = new File(initPath + "/index.html");

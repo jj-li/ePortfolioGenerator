@@ -66,9 +66,9 @@ function load() {
                     $.each(d.image_paths, function(index, e){
                         loadImageContent(e.name, e.caption);
                     });
-                    /*$.each(d.slideshow_paths, function(index, e){
-                        slideShowPaths.push(e.path);
-                    });*/
+                    $.each(d.slideshow_component, function(index, e){
+                        slideShowPaths.push(e.slideshow_paths);
+                    });
                     $.each(d.text_components, function(index, e){
                         if (e.type === "List")
                         {
@@ -98,7 +98,7 @@ function load() {
                             listHyperlinksIndex = [""];
                         }
                         else if (e.type === "Header")
-                            loadHeaderContent(e.text);
+                            loadHeaderContent(e.text, e.font, e.style, e.size);
                         else {
                             $.each(e.hyperlink, function(index, f) {
                                 paragraphHyperlinks.push(f.url);
@@ -115,7 +115,7 @@ function load() {
                     });
                 }
             });
-            //loadSlideShowContent();
+            loadSlideShowContent();
         });
             
             

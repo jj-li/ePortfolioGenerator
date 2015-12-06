@@ -87,10 +87,65 @@
             ],
             "slideshow_component":[
                 {
-                    "slideshow_paths":"SlideShow/Sheesh0/index.html"
+                    "paths":[
+                        {
+                            "image_path":"C:\\Users\\icysniper\\Desktop\\CSE 219 HW\\SlideShow\\ePortfolioMaker\\images\\slide_show_images\\BryceCanyonUtah.jpg"
+                        },
+                        {
+                            "image_path":"C:\\Users\\icysniper\\Desktop\\CSE 219 HW\\SlideShow\\ePortfolioMaker\\images\\slide_show_images\\GrosMorneNewfoundland.jpg"
+                        }
+                    ],
+                    "names":[
+                        {
+                            "image_name":"BryceCanyonUtah.jpg"
+                        },
+                        {
+                            "image_name":"GrosMorneNewfoundland.jpg"
+                        }
+                    ],
+                    "captions":[
+                        {
+                            "image_caption":"aaaaaaa"
+                        },
+                        {
+                            "image_caption":"bbbbbbbbbbbb"
+                        }
+                    ]
                 },
                 {
-                    "slideshow_paths":"SlideShow/Sheesh1/index.html"
+                    "paths":[
+                        {
+                            "image_path":"C:\\Users\\icysniper\\Desktop\\CSE 219 HW\\SlideShow\\ePortfolioMaker\\images\\slide_show_images\\BryceCanyonUtah.jpg"
+                        },
+                        {
+                            "image_path":"C:\\Users\\icysniper\\Desktop\\CSE 219 HW\\SlideShow\\ePortfolioMaker\\images\\slide_show_images\\YosemiteCalifornia.jpg"
+                        },
+                        {
+                            "image_path":"C:\\Users\\icysniper\\Desktop\\CSE 219 HW\\SlideShow\\ePortfolioMaker\\images\\slide_show_images\\ToadstoolNebraska.jpg"
+                        }
+                    ],
+                    "names":[
+                        {
+                            "image_name":"BryceCanyonUtah.jpg"
+                        },
+                        {
+                            "image_name":"YosemiteCalifornia.jpg"
+                        },
+                        {
+                            "image_name":"ToadstoolNebraska.jpg"
+                        }
+                    ],
+                    "captions":[
+                        {
+                            "image_caption":"fabulous"
+                        },
+                        {
+                            "image_caption":"cool"
+                        },
+                        {
+                            "image_caption":"awesome"
+                        }
+                    ]
                 }
             ]
         },

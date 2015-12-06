@@ -182,6 +182,27 @@ public class FileController {
         }
     }
     
+     public boolean handleExportSaveEPortfolioRequest() {
+        try {
+	    // GET THE SLIDE SHOW TO SAVE
+	    EPortfolioModel ePortfolioToSave = ui.getEPortfolio();
+            // SAVE IT TO A FILE
+            slideShowIO.saveExportEPortfolio(ePortfolioToSave);
+
+            // MARK IT AS SAVED
+            saved = true;
+
+            // AND REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
+            // THE APPROPRIATE CONTROLS
+            ui.updateToolbarControls(saved);
+	    return true;
+        } catch (IOException ioe) {
+            ErrorHandler eH = ui.getErrorHandler();
+            eH.processError(FAILED_SLIDE_SHOW_SAVE, prop.getProperty(FAILED_SLIDE_SHOW_SAVE_TITLE));
+	    return false;
+        }
+    }
+    
      public boolean handleSaveAsEPortfolioRequest() {
         try {
 	    // GET THE SLIDE SHOW TO SAVE
@@ -234,7 +255,7 @@ public class FileController {
     {
         EPortfolioModel ePortfolioToShow = ui.getEPortfolio();
         handleSaveEPortfolioRequest();
-        
+        handleExportSaveEPortfolioRequest();
         Boolean siteDirectory = new File("sites/" + ePortfolioToShow.getTitle()).mkdirs();
         Boolean cssDirectory = new File("sites/" + ePortfolioToShow.getTitle() +"/css").mkdirs();
         Boolean jsDirectory = new File("sites/" + ePortfolioToShow.getTitle() +"/js").mkdirs();
@@ -373,9 +394,13 @@ public class FileController {
                 e.printStackTrace();
             }
             
+            String name = "";
+            String[] partial = page.getTitle().split(" ");
+            for (String s : partial)
+                name += s;
             for (int i = 0; i < page.getSlideShowComponents().size(); i++) {
                 SlideShowComponent component = page.getSlideShowComponents().get(i);
-                handleExportSlideShowRequest(component, i, page.getTitle(), ePortfolioToShow);
+                handleExportSlideShowRequest(component, i, name, ePortfolioToShow);
             }
         }
         

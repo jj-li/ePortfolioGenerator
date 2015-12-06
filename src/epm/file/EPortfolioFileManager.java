@@ -31,6 +31,8 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.stage.FileChooser;
@@ -73,7 +75,50 @@ public class EPortfolioFileManager {
         String jsonFilePath = dataPath + SLASH + slideShowTitle + JSON_EXT;
        
         // BUILD THE SLIDES ARRAY
-        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages(), ePortfolioToSave);
+        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages(), ePortfolioToSave, false);
+        
+        // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
+        JsonObject courseJsonObject = Json.createObjectBuilder()
+                                    .add(JSON_TITLE, title)
+                                    .add("pages", pagesJsonArray)
+                .build();
+        
+        // AND SAVE EVERYTHING AT ONCE
+        StringWriter sw = new StringWriter();
+        Map<String, Object> properties = new HashMap<>(1);
+	properties.put(JsonGenerator.PRETTY_PRINTING, true);
+
+	JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
+	JsonWriter jsonWriter = writerFactory.createWriter(sw);
+	jsonWriter.writeObject(courseJsonObject);
+	jsonWriter.close();
+
+	// INIT THE WRITER
+	OutputStream os = new FileOutputStream(jsonFilePath);
+	JsonWriter jsonFileWriter = Json.createWriter(os);
+	jsonFileWriter.writeObject(courseJsonObject);
+	String prettyPrinted = sw.toString();
+	PrintWriter pw = new PrintWriter(jsonFilePath);
+	pw.write(prettyPrinted);
+	pw.close();
+    }
+    
+    public void saveExportEPortfolio(EPortfolioModel ePortfolioToSave) throws IOException {
+       
+        String title = "" + ePortfolioToSave.getTitle();
+        if (ePortfolioToSave.getTitle() == null || title.equals(""))
+            title = "Untitled";
+            
+        // BUILD THE FILE PATH
+        
+        String jsonFilePath = PATH_SLIDE_SHOWS + SLASH + ePortfolioToSave.getTitle() + JSON_EXT;
+        File newJSONFile = new File("sites/" + ePortfolioToSave.getTitle() + "/Testing" + JSON_EXT);
+        if (newJSONFile.exists())
+            newJSONFile.delete();
+        
+       
+        // BUILD THE SLIDES ARRAY
+        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages(), ePortfolioToSave, true);
         
         // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
         JsonObject courseJsonObject = Json.createObjectBuilder()
@@ -128,7 +173,7 @@ public class EPortfolioFileManager {
         String jsonFilePath = dataPath + SLASH + title + JSON_EXT;
        
         // BUILD THE SLIDES ARRAY
-        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages(), ePortfolioToSave);
+        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages(), ePortfolioToSave, false);
         
         // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
         JsonObject courseJsonObject = Json.createObjectBuilder()
@@ -314,17 +359,17 @@ public class EPortfolioFileManager {
         return items;
     }
     
-    private JsonArray makePagesJsonArray(List<Page> pages, EPortfolioModel model) {
+    private JsonArray makePagesJsonArray(List<Page> pages, EPortfolioModel model, boolean export) {
         JsonArrayBuilder jsb = Json.createArrayBuilder();
         for (Page page : pages) {
-	    JsonObject jso = makePageJsonObject(page, model);
+	    JsonObject jso = makePageJsonObject(page, model, export);
 	    jsb.add(jso);
         }
         JsonArray jA = jsb.build();
         return jA;        
     }
     
-    private JsonObject makePageJsonObject(Page page, EPortfolioModel model) {
+    private JsonObject makePageJsonObject(Page page, EPortfolioModel model, boolean export) {
         JsonObject jso = Json.createObjectBuilder()
 		.add("title", page.getTitle())
 		.add("name", model.getStudentName())
@@ -337,7 +382,7 @@ public class EPortfolioFileManager {
                 .add("text_components", makeTextComponentJsonArray(page))
                 .add("image_paths", makeImageComponentJsonArray(page))
                 .add("video_paths", makeVideoComponentJsonArray(page))
-                .add("slideshow_component", makeSlideShowComponentJsonArray(page))
+                .add("slideshow_component", makeSlideShowComponentJsonArray(page, export))
 		.build();
 	return jso;
     }
@@ -437,23 +482,35 @@ public class EPortfolioFileManager {
 	return jso;
     }
     
-    private JsonArray makeSlideShowComponentJsonArray(Page page) {
+    private JsonArray makeSlideShowComponentJsonArray(Page page, boolean export) {
         JsonArrayBuilder jsb = Json.createArrayBuilder();
+        int i = 0;
         for (SlideShowComponent component : page.getSlideShowComponents()) {
-	    JsonObject jso = makeSlideShowComponentJsonObject(component);
+	    JsonObject jso = makeSlideShowComponentJsonObject(component, export, i, page);
 	    jsb.add(jso);
+            i++;
         }
         JsonArray jA = jsb.build();
         return jA;        
     }
     
-    private JsonObject makeSlideShowComponentJsonObject(SlideShowComponent component) {
+    private JsonObject makeSlideShowComponentJsonObject(SlideShowComponent component, boolean export, int counter, Page page) {
+        if (!export) {
+            JsonObject jso = Json.createObjectBuilder()
+                    .add("paths", makeImagePathJsonArray(component))
+                    .add("names", makeImageNameJsonArray(component))
+                    .add("captions", makeCaptionJsonArray(component))
+                    .build();
+            return jso;
+        }
+        String name = "";
+        String[] partials = page.getTitle().split(" ");
+        for (String s : partials)
+            name += s;
         JsonObject jso = Json.createObjectBuilder()
-		.add("paths", makeImagePathJsonArray(component))
-                .add("names", makeImageNameJsonArray(component))
-                .add("captions", makeCaptionJsonArray(component))
-		.build();
-	return jso;
+                    .add("slideshow_paths", "SlideShow/" + name + counter + "/index.html")
+                    .build();
+        return jso;
     }
     
     private JsonArray makeImagePathJsonArray(SlideShowComponent component) {

@@ -150,23 +150,33 @@ public class VideoComponentDialogue extends Stage{
     }
     
     public void addVideoComponent(Page page) {
-        double width = Double.parseDouble(widthField.getText());
-        double height = Double.parseDouble(heightField.getText());
-        String caption = captionField.getText();
-        VideoComponent component = new VideoComponent(videoPath.getText(), caption, width, height);
-        page.addVideoComponent(component);
-        this.hide();
+        try {
+            double width = Double.parseDouble(widthField.getText());
+            double height = Double.parseDouble(heightField.getText());
+            String caption = captionField.getText();
+            VideoComponent component = new VideoComponent(videoPath.getText(), caption, width, height);
+            page.addVideoComponent(component);
+            this.hide();
+        }
+        catch (NumberFormatException e1) {
+            
+        }
     }
     
     public void setVideoComponent(VideoComponent component) {
-        double width = Double.parseDouble(widthField.getText());
-        double height = Double.parseDouble(heightField.getText());
-        String caption = captionField.getText();
-        component.setWidth(width);
-        component.setHeight(height);
-        component.setUrl(videoPath.getText());
-        component.setCaption(caption);
-        component.setMediaView();
-        this.hide();
+        try {
+            double width = Double.parseDouble(widthField.getText());
+            double height = Double.parseDouble(heightField.getText());
+            String caption = captionField.getText();
+            component.setWidth(width);
+            component.setHeight(height);
+            component.setUrl(videoPath.getText());
+            component.setCaption(caption);
+            component.setMediaView();
+            this.hide();
+        }
+        catch (NumberFormatException e1) {
+            
+        }
     }
 }

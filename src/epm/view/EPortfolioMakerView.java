@@ -353,38 +353,48 @@ public class EPortfolioMakerView {
 	editController = new PageEditController(this);
 	addPageButton.setOnAction(e -> {
             editController.addPage();
+            addComponents(false);
+            selectComponents(true);
         });
         removePageButton.setOnAction( e-> {
             editController.removePage();
+            if (ePortfolio.getPages().isEmpty()) 
+                addComponents(true);
+            selectComponents(true);
         });
         
         addTextButton.setOnAction( e-> {
             TextComponentDialogue addComponent = new TextComponentDialogue(ePortfolio.getSelectedPage());
             addComponent.showAndWait();
             reloadSlideShowPane(ePortfolio);
+            selectComponents(true);
         });
         
         addImageButton.setOnAction ( e-> {
            ImageComponentDialogue imageComponent = new ImageComponentDialogue(ePortfolio.getSelectedPage()); 
            imageComponent.showAndWait();
            reloadSlideShowPane(ePortfolio);
+           selectComponents(true);
         });
         
         addVideoButton.setOnAction ( e->{
             VideoComponentDialogue videoComponent = new VideoComponentDialogue(ePortfolio.getSelectedPage()); 
             videoComponent.showAndWait();
             reloadSlideShowPane(ePortfolio);
+            selectComponents(true);
         });
         
         addSlideshowButton.setOnAction ( e-> {
             SlideShowMaker slideShow = new SlideShowMaker(ePortfolio.getSelectedPage());
             slideShow.showAndWait();
             reloadSlideShowPane(ePortfolio);
+            selectComponents(true);
         });
         
         editComponentButton.setOnAction (e -> {
             editController.editComponent();
             reloadSlideShowPane(ePortfolio);
+            selectComponents(true);
         });
         
         editFontButton.setOnAction (e-> {
@@ -396,6 +406,7 @@ public class EPortfolioMakerView {
                         FontDialogue dialogue = new FontDialogue(editView.getTextComponent());
                         dialogue.showAndWait();
                         reloadSlideShowPane(ePortfolio);
+                        selectComponents(true);
                     }
                 }  
             }
@@ -411,12 +422,14 @@ public class EPortfolioMakerView {
                         HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getData(), component);
                         dialogue.showAndWait();
                         reloadSlideShowPane(ePortfolio);
+                        selectComponents(true);
                     }
                     if (editView.isListSelected()) {
                         TextComponent component = editView.getTextComponent();
                         HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getList(), component);
                         dialogue.showAndWait();
                         reloadSlideShowPane(ePortfolio);
+                        selectComponents(true);
                     }
                 }  
             }
@@ -432,12 +445,14 @@ public class EPortfolioMakerView {
                         HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getData(), component.getHyperlinks(), component);
                         dialogue.showAndWait();
                         reloadSlideShowPane(ePortfolio);
+                        selectComponents(true);
                     }
                     if (editView.isListSelected()) {
                         TextComponent component = editView.getTextComponent();
                         HyperlinkDialogue dialogue = new HyperlinkDialogue(component.getList(), component.getHyperlinks(), component);
                         dialogue.showAndWait();
                         reloadSlideShowPane(ePortfolio);
+                        selectComponents(true);
                     }
                 }  
             }
@@ -446,6 +461,7 @@ public class EPortfolioMakerView {
         removeComponentButton.setOnAction (e-> {
             editController.removeComponent();
             reloadSlideShowPane(ePortfolio);
+            selectComponents(true);
         });
     }
 
@@ -516,6 +532,8 @@ public class EPortfolioMakerView {
 	primaryScene.getStylesheets().add(STYLE_SHEET_UI);
 	primaryStage.setScene(primaryScene);
 	primaryStage.show();
+        addComponents(true);
+        selectComponents(true);
     }
     
     /**
@@ -556,6 +574,21 @@ public class EPortfolioMakerView {
 	//saveEPortfolioButton.setDisable(saved);
     }
     
+    public void addComponents(boolean saved) {
+        addTextButton.setDisable(saved);
+        addVideoButton.setDisable(saved);
+        addImageButton.setDisable(saved);
+        addSlideshowButton.setDisable(saved);
+    }
+    
+    public void selectComponents(boolean saved) {
+        editComponentButton.setDisable(saved);
+        removeComponentButton.setDisable(saved);
+        addHyperlinkButton.setDisable(saved);
+        editHyperlinkButton.setDisable(saved);
+        editFontButton.setDisable(saved);
+        removeComponentButton.setDisable(saved);
+    }
     
     /**
      * Uses the slide show data to reload all the components for

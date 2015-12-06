@@ -50,7 +50,7 @@
         <property name="SLIDE_SHOW_TITLE_LABEL"    value="Slide Show Title: "></property>
 
         <!-- ERROR DIALOGUES -->
-        <property name="REMOVE_SLIDE"                   value="Please select a slide to remove."></property>
+        <property name="REMOVE_SLIDE"                   value="Please select a component to remove."></property>
         <property name="REMOVE_SLIDE_ERROR_TITLE"       value="Remove Error"></property>
         <property name="MOVE_UP_SLIDE1"                 value="Please select a slide to move up."></property>
         <property name="MOVE_UP_SLIDE2"                 value="Unable to move slide up."></property>
@@ -58,21 +58,21 @@
         <property name="MOVE_DOWN_SLIDE1"               value="Please select a slide to move down."></property>
         <property name="MOVE_DOWN_SLIDE2"               value="Unable to move slide down."></property>
         <property name="MOVE_DOWN_SLIDE3"               value="Move down error"></property>
-        <property name="NO_SLIDESHOW"                   value="No slides to display."></property>
-        <property name="NO_SLIDESHOW_TITLE"             value="Invalid slideshow."></property>
+        <property name="NO_SLIDESHOW"                   value="No pages to display."></property>
+        <property name="NO_SLIDESHOW_TITLE"             value="Invalid ePortfolio."></property>
         <property name="MISSING_IMAGE"                  value=" not found. The slide containing that image is removed."></property>
         <property name="MISSING_IMAGE_TITLE"            value="No image"></property>
-        <property name="FAILED_SLIDE_SHOW_CREATED"      value="Error creating slide show."></property>
+        <property name="FAILED_SLIDE_SHOW_CREATED"      value="Error creating ePortfolio."></property>
         <property name="FAILED_SLIDE_SHOW_CREATED_TITLE"      value="Failed"></property>
-        <property name="FAILED_SLIDE_SHOW_LOAD"               value="Error loading slide show."></property>
+        <property name="FAILED_SLIDE_SHOW_LOAD"               value="Error loading ePortfolio."></property>
         <property name="FAILED_SLIDE_SHOW_LOAD_TITLE"         value="Failed"></property>
-        <property name="FAILED_SLIDE_SHOW_SAVE"               value="Please enter a title for your slide show."></property>
+        <property name="FAILED_SLIDE_SHOW_SAVE"               value="Error saving ePortfolio."></property>
         <property name="FAILED_SLIDE_SHOW_SAVE_TITLE"         value="Failed"></property>
-        <property name="FAILED_SLIDE_SHOW_EXIT"               value="Error exiting slide show."></property>
+        <property name="FAILED_SLIDE_SHOW_EXIT"               value="Error exiting ePortfolio."></property>
         <property name="FAILED_SLIDE_SHOW_EXIT_TITLE"         value="Failed"></property>
         
         <!-- SUCESS DIALOGUES -->
-        <property name="SLIDE_SHOW_CREATED"             value="Slide Show has been created successfully."></property>
+        <property name="SLIDE_SHOW_CREATED"             value="ePortfolio has been created successfully."></property>
         <property name="SLIDE_SHOW_CREATED_TITLE"       value="Success"></property>
     </property_list>
     <property_options_list>

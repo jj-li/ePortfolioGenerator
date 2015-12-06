@@ -294,6 +294,7 @@ public class FileController {
             }
         }
         
+        
         String jsPath = "sites/Template/js/generateHTML.js";
         File jsFile = new File(jsPath);
         File newJSFile = new File("sites/" + ePortfolioToShow.getTitle() + "/js/generateHTML.js");
@@ -366,6 +367,10 @@ public class FileController {
             pageTitle = "";
             for (String s : noSpaces)
                 pageTitle += s;
+            
+            File tempFile = new File("sites/" + ePortfolioToShow.getTitle() + "/" + pageTitle + ".html");
+            if(tempFile.exists())
+                tempFile.delete();
             
             String htmlString = "";
             String htmlPath = "sites/Template/layout" + layoutNumber + ".html";

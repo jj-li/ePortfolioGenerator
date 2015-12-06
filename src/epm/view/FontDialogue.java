@@ -71,10 +71,15 @@ public class FontDialogue extends Stage{
         
         changeFont.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0);");
         changeFont.setOnAction(e-> {
-            component.setStyle((String)fontStyle.getValue());
-            component.setFont((String)fontFamily.getValue());
-            component.setSize(Integer.parseInt(fontSize.getText()));
-            this.hide();
+            try {
+                component.setStyle((String)fontStyle.getValue());
+                component.setFont((String)fontFamily.getValue());
+                component.setSize(Integer.parseInt(fontSize.getText()));
+                this.hide();
+            }
+            catch (NumberFormatException e1) {
+            
+            }
         });
     }
 }

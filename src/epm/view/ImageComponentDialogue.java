@@ -165,23 +165,33 @@ public class ImageComponentDialogue extends Stage{
     }
     
     public void addImageComponent(Page page) {
-        double width = Double.parseDouble(widthField.getText());
-        double height = Double.parseDouble(heightField.getText());
-        String position = (String)imagePosition.getValue();
-        ImageComponent component = new ImageComponent(imagePath.getText(), position, width, height, captionField.getText());
-        page.addImageComponent(component);
-        this.hide();
+        try {
+            double width = Double.parseDouble(widthField.getText());
+            double height = Double.parseDouble(heightField.getText());
+            String position = (String)imagePosition.getValue();
+            ImageComponent component = new ImageComponent(imagePath.getText(), position, width, height, captionField.getText());
+            page.addImageComponent(component);
+            this.hide();
+        }
+        catch (NumberFormatException e1) {
+            
+        }
     }
     
     public void setImageComponent(ImageComponent component) {
-        double width = Double.parseDouble(widthField.getText());
-        double height = Double.parseDouble(heightField.getText());
-        String caption = captionField.getText();
-        component.setWidth(width);
-        component.setHeight(height);
-        component.setUrl(imagePath.getText());
-        component.setCaption(caption);
-        component.setImageView();
-        this.hide();
+        try {
+            double width = Double.parseDouble(widthField.getText());
+            double height = Double.parseDouble(heightField.getText());
+            String caption = captionField.getText();
+            component.setWidth(width);
+            component.setHeight(height);
+            component.setUrl(imagePath.getText());
+            component.setCaption(caption);
+            component.setImageView();
+            this.hide();
+        }
+        catch (NumberFormatException e1) {
+            
+        }
     }
 }

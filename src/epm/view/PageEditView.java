@@ -315,6 +315,7 @@ public class PageEditView extends VBox {
                     selectedTextComponent = component;
                     paragraphComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                     page.setPageEditView(this);
+                    ui.selectComponents(false);
                 });
                 paragraphComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 if (!isNoneSelected()) {
@@ -351,6 +352,7 @@ public class PageEditView extends VBox {
                     selectedTextComponent = component;
                     listComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                     page.setPageEditView(this);
+                    ui.selectComponents(false);
                 });
                 list.setOnMouseClicked(e-> {
                     if (!isNoneSelected()) {
@@ -361,6 +363,7 @@ public class PageEditView extends VBox {
                     selectedTextComponent = component;
                     listComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                     page.setPageEditView(this);
+                    ui.selectComponents(false);
                 });
                 listComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 if (!isNoneSelected()) {
@@ -387,6 +390,7 @@ public class PageEditView extends VBox {
                     selectedTextComponent = component;
                     headerComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                     page.setPageEditView(this);
+                    ui.selectComponents(false);
                 });
                 headerComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 if (!isNoneSelected()) {
@@ -422,6 +426,7 @@ public class PageEditView extends VBox {
                     selectedImageComponent = component;
                     imageComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                     page.setPageEditView(this);
+                    ui.selectComponents(false);
             });
             imageComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
             if (!isNoneSelected()) {
@@ -461,6 +466,7 @@ public class PageEditView extends VBox {
                     selectedVideoComponent = component;
                     videoComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                     page.setPageEditView(this);
+                    ui.selectComponents(false);
             });
             videoComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
             if (!isNoneSelected()) {
@@ -527,6 +533,7 @@ public class PageEditView extends VBox {
                 selectedSlideShowComponent = component;
                 slideShowComponent.setStyle("-fx-background-color: #ffa500; -fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");
                 page.setPageEditView(this);
+                ui.selectComponents(false);
             });
             getChildren().add(slideShowComponent);
             slideShowComponent.setStyle("-fx-border-color: rgb(0,0,0); -fx-padding: 5px 5px 5px 5px;");

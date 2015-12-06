@@ -37,6 +37,10 @@ public class EPortfolioModel {
     }
 
     // ACCESSOR METHODS
+    public String getStudentName() {
+        return ui.getStudentName();
+    }
+    
     public boolean isPageSelected() {
 	return selectedPage != null;
     }

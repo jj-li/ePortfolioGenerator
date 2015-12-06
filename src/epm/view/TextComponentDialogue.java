@@ -97,8 +97,8 @@ public class TextComponentDialogue extends Stage{
         screen.getChildren().add(top);
         
         paragraphFonts = new ComboBox();
-        paragraphFonts.getItems().addAll("Times New Roman", "Comic Sans MS", "Montserrat", "Merriweather", "Josefin Sans");
-        paragraphFonts.setValue("Times New Roman");
+        paragraphFonts.getItems().addAll("Tinos", "Comic Sans MS", "Montserrat", "Merriweather", "Josefin Sans");
+        paragraphFonts.setValue("Tinos");
         paragraphFontsLabel = new Label("Paragraph Font: ");
         
         rb1.setOnMouseClicked( e-> {
@@ -158,7 +158,7 @@ public class TextComponentDialogue extends Stage{
         textArea.setWrapText(true);
         textField = new TextField(data);
         paragraphFonts = new ComboBox();
-        paragraphFonts.getItems().addAll("Times New Roman", "Comic Sans MS", "Montserrat", "Merriweather", "Josefin Sans");
+        paragraphFonts.getItems().addAll("Tinos", "Comic Sans MS", "Montserrat", "Merriweather", "Josefin Sans");
         paragraphFonts.setValue(component.getFont());
         paragraphFontsLabel = new Label("Paragraph Font: ");
         screen = new VBox();

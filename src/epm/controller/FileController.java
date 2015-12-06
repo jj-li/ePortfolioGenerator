@@ -43,7 +43,18 @@ import static epm.StartupConstants.STYLE_SHEET_UI;
 import static epm.StartupConstants.WINDOWS_ICON;
 import static epm.file.EPortfolioFileManager.JSON_EXT;
 import static epm.file.EPortfolioFileManager.SLASH;
+import epm.model.ImageComponent;
 import epm.model.Page;
+import epm.model.VideoComponent;
+import epm.model.SlideShowComponent;
+import epm.ssm.model.Slide;
+import epm.ssm.model.SlideShowModel;
+import java.util.List;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonWriter;
 /**
  * This class serves as the controller for all file toolbar operations,
  * driving the loading and saving of slide shows, among other things.
@@ -219,85 +230,157 @@ public class FileController {
         }
     }
     
-    public void handleViewSlideShowRequest()
+    public void handleExportEPortfolioRequest()
     {
-        EPortfolioModel slideShowToShow = ui.getEPortfolio();
-        /*handleSaveSlideShowRequest();
+        EPortfolioModel ePortfolioToShow = ui.getEPortfolio();
+        handleSaveEPortfolioRequest();
         
-        Boolean siteDirectory = new File("sites/" + slideShowToShow.getTitle()).mkdirs();
-        Boolean cssDirectory = new File("sites/" + slideShowToShow.getTitle() +"/css").mkdirs();
-        Boolean jsDirectory = new File("sites/" + slideShowToShow.getTitle() +"/js").mkdirs();
-        Boolean imgDirectory = new File("sites/" + slideShowToShow.getTitle() +"/img").mkdirs();
-        File imgs = new File("sites/" + slideShowToShow.getTitle() +"/img");
-        //TO FIX
+        Boolean siteDirectory = new File("sites/" + ePortfolioToShow.getTitle()).mkdirs();
+        Boolean cssDirectory = new File("sites/" + ePortfolioToShow.getTitle() +"/css").mkdirs();
+        Boolean jsDirectory = new File("sites/" + ePortfolioToShow.getTitle() +"/js").mkdirs();
+        Boolean imgDirectory = new File("sites/" + ePortfolioToShow.getTitle() +"/img").mkdirs();
+        Boolean videoDirectory = new File("sites/" + ePortfolioToShow.getTitle() +"/Videos").mkdirs();
+        Boolean slideShowDirectory = new File("sites/" + ePortfolioToShow.getTitle() +"/SlideShow").mkdirs();
+        File imgs = new File("sites/" + ePortfolioToShow.getTitle() +"/img");
+        File videos = new File("sites/" + ePortfolioToShow.getTitle() +"/Videos");
         
         if (imgs.exists()) {
             for (File files : imgs.listFiles()) {
                 boolean fileExists = false;
-                for (Page s : slideShowToShow.getPages()) {
-                    if(files.toString().contains(s.getImageFileName()) == true)
+                for (Page p : ePortfolioToShow.getPages()) {
+                    for (ImageComponent image : p.getImageComponents()) {
+                        if(files.toString().contains(image.getImageName()) == true)
                         fileExists = true;
+                    }
                 }
                 if (!fileExists)
                     files.delete();
             }
         }  
         
-        String jsString = "";
-        String jsPath = "sites/Template/js/TemplateJS.js";
+        
+        if (videos.exists()) {
+            for (File files : imgs.listFiles()) {
+                boolean fileExists = false;
+                for (Page p : ePortfolioToShow.getPages()) {
+                    for (VideoComponent video : p.getVideoComponents()) {
+                        if(files.toString().contains(video.getVideoName()) == true)
+                        fileExists = true;
+                    }
+                }
+                if (!fileExists)
+                    files.delete();
+            }
+        }
+        
+        String jsPath = "sites/Template/js/generateHTML.js";
         File jsFile = new File(jsPath);
+        File newJSFile = new File("sites/" + ePortfolioToShow.getTitle() + "/js/generateHTML.js");
+        
         try {
-            Scanner myScan = new Scanner(jsFile);
-            while (myScan.hasNextLine())
-                jsString += myScan.nextLine() + "\n";
-            myScan.close();
+            Files.copy(jsFile.toPath(), newJSFile.toPath());
         }
-        catch(Exception e)
+        catch (FileAlreadyExistsException e6)
         {
-            
+                
         }
-        int pos = jsString.indexOf("Missing Image");
-        String partOne = jsString.substring(0, pos);
-        String partTwo = jsString.substring(pos+13);
-        String partThree = slideShowToShow.getTitle();
-        String completeJS = partOne + partThree + partTwo;
-        byte[] bytes = completeJS.getBytes();
-        try {
-            OutputStream out = new BufferedOutputStream(new FileOutputStream("sites/" + slideShowToShow.getTitle() +"/js/TemplateJS.js"),1024);
-            out.write(bytes);
-            out.close();
-        } catch (IOException e) {
+        catch (IOException e) {
             e.printStackTrace();
         }
         
-        File htmlFile = new File("sites/Template/index.html");
-        File newHTMLFile = new File("sites/" + slideShowToShow.getTitle() + "/index.html");
-        try {
-            Files.copy(htmlFile.toPath(), newHTMLFile.toPath());
-        }
-        catch (FileAlreadyExistsException e4)
-        {
-                
-        }
-        catch (IOException e1) {
-            e1.printStackTrace();
+        for (Page page : ePortfolioToShow.getPages()) {
+            int layoutNumber = 1;
+            if (page.getLayout().equalsIgnoreCase("Top-Left Nagivation"))
+                layoutNumber = 1;
+            else if (page.getLayout().equalsIgnoreCase("Left Navgiation"))
+                layoutNumber = 2;
+            else if (page.getLayout().equalsIgnoreCase("Middle-Left Navigation"))
+                layoutNumber = 3;
+            else if (page.getLayout().equalsIgnoreCase("Middle-Right Navigation"))
+                layoutNumber = 4;
+            else
+                layoutNumber = 5;
+            
+
+            File cssFile = new File("sites/Template/css/layout" + layoutNumber + "CSS.css");
+            File newCSSFile = new File("sites/" + ePortfolioToShow.getTitle() + "/css/layout" + layoutNumber + "CSS.css");
+            try {
+                Files.copy(cssFile.toPath(), newCSSFile.toPath());
+            }
+            catch (FileAlreadyExistsException e3)
+            {
+
+            }
+            catch (IOException e2) {
+                e2.printStackTrace();
+            }
+            
+            int colorNumber = 1;
+            if (page.getColor().equalsIgnoreCase("Blue/Yellow"))
+                colorNumber = 1;
+            else if (page.getColor().equalsIgnoreCase("Cyan/Red"))
+                colorNumber = 2;
+            else if (page.getColor().equalsIgnoreCase("Orange/Yellow"))
+                colorNumber = 3;
+            else if (page.getColor().equalsIgnoreCase("Red/Green"))
+                colorNumber = 4;
+            else
+                colorNumber = 5;
+            
+            File colorFile = new File("sites/Template/css/colorFont" + colorNumber + ".css");
+            File newColorFile = new File("sites/" + ePortfolioToShow.getTitle() + "/css/colorFont" + colorNumber + ".css");
+            try {
+                Files.copy(colorFile.toPath(), newColorFile.toPath());
+            }
+            catch (FileAlreadyExistsException e3)
+            {
+
+            }
+            catch (IOException e2) {
+                e2.printStackTrace();
+            }
+            
+            String pageTitle = page.getTitle();
+            String[] noSpaces = pageTitle.split(" ");
+            pageTitle = "";
+            for (String s : noSpaces)
+                pageTitle += s;
+            
+            String htmlString = "";
+            String htmlPath = "sites/Template/layout" + layoutNumber + ".html";
+            File temp = new File(htmlPath);
+            try {
+                Scanner myScan = new Scanner(temp);
+                while (myScan.hasNextLine())
+                    htmlString += myScan.nextLine() + "\n";
+                myScan.close();
+            }
+            catch(Exception e)
+            {
+
+            }
+            int pos = htmlString.indexOf("colorFont");
+            String partOne = htmlString.substring(0, pos+9);
+            String partTwo = htmlString.substring(pos+10);
+            String partThree = "" + colorNumber;
+            String completeJS = partOne + partThree + partTwo;
+            byte[] bytes = completeJS.getBytes();
+            try {
+                OutputStream out = new BufferedOutputStream(new FileOutputStream("sites/" + ePortfolioToShow.getTitle() + "/" + pageTitle + ".html"),1024);
+                out.write(bytes);
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            for (int i = 0; i < page.getSlideShowComponents().size(); i++) {
+                SlideShowComponent component = page.getSlideShowComponents().get(i);
+                handleExportSlideShowRequest(component, i, page.getTitle(), ePortfolioToShow);
+            }
         }
         
-        File cssFile = new File("sites/Template/css/TemplateCSS.css");
-        File newCSSFile = new File("sites/" + slideShowToShow.getTitle() + "/css/TemplateCSS.css");
-        try {
-            Files.copy(cssFile.toPath(), newCSSFile.toPath());
-        }
-        catch (FileAlreadyExistsException e3)
-        {
-                
-        }
-        catch (IOException e2) {
-            e2.printStackTrace();
-        }
-        
-        File jsonFile = new File(PATH_SLIDE_SHOWS + SLASH + slideShowToShow.getTitle() + JSON_EXT);
-        File newJSONFile = new File("sites/" + slideShowToShow.getTitle() + "/" + slideShowToShow.getTitle() + JSON_EXT);
+        File jsonFile = new File(PATH_SLIDE_SHOWS + SLASH + ePortfolioToShow.getTitle() + JSON_EXT);
+        File newJSONFile = new File("sites/" + ePortfolioToShow.getTitle() + "/Testing" + JSON_EXT);
         if (newJSONFile.exists())
             newJSONFile.delete();
         try {
@@ -311,53 +394,50 @@ public class FileController {
             e2.printStackTrace();
         }
         
-        copyImages(slideShowToShow);*/
-        ui.viewPage(slideShowToShow);
+        copyMedia(ePortfolioToShow);
+        
+        
+        
     }
     
-    private static void copyImages(EPortfolioModel slideShowToShow)
+    private static void copyMedia(EPortfolioModel ePortfolioToShow)
     {
-        for (Page s : slideShowToShow.getPages())
+        for (Page p : ePortfolioToShow.getPages())
         {
-            //TO FIX
-            /*
-            String imagePath = s.getImagePath() + SLASH + s.getImageFileName();
-            File image = new File(imagePath);
-            File newImage = new File("sites/" + slideShowToShow.getTitle() + "/img/" + s.getImageFileName());
-            try {
-                Files.copy(image.toPath(), newImage.toPath());
+            for (ImageComponent component : p.getImageComponents()) {
+                String imagePath = component.getUrl();
+                File image = new File(imagePath);
+                File newImage = new File("sites/" + ePortfolioToShow.getTitle() + "/img/" + component.getImageName());
+                try {
+                    Files.copy(image.toPath(), newImage.toPath());
+                }
+                catch (FileAlreadyExistsException e1)
+                {
+
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                } 
             }
-            catch (FileAlreadyExistsException e1)
-            {
-                
+            
+            for (VideoComponent component : p.getVideoComponents()) {
+                String imagePath = component.getUrl();
+                File image = new File(imagePath);
+                File newImage = new File("sites/" + ePortfolioToShow.getTitle() + "/Videos/" + component.getVideoName());
+                try {
+                    Files.copy(image.toPath(), newImage.toPath());
+                }
+                catch (FileAlreadyExistsException e1)
+                {
+
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                } 
             }
-            catch (IOException e) {
-                e.printStackTrace();
-            } 
-            */
         }
         
-        File next = new File("sites/Template/img/next.png");
-        File previous = new File("sites/Template/img/previous.png");
-        File play = new File("sites/Template/img/play.png");
-        File pause = new File("sites/Template/img/pause.png");
-        File newNext = new File("sites/" + slideShowToShow.getTitle() + "/img/next.png");
-        File newPrevious = new File("sites/" + slideShowToShow.getTitle() + "/img/previous.png");
-        File newPlay = new File("sites/" + slideShowToShow.getTitle() + "/img/play.png");
-        File newPause = new File("sites/" + slideShowToShow.getTitle() + "/img/pause.png");
-        try {
-            Files.copy(next.toPath(), newNext.toPath());
-            Files.copy(previous.toPath(), newPrevious.toPath());
-            Files.copy(play.toPath(), newPlay.toPath());
-            Files.copy(pause.toPath(), newPause.toPath());
-        }
-        catch (FileAlreadyExistsException e1)
-        {
-                
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        } 
+        
     }
     
    
@@ -480,6 +560,190 @@ public class FileController {
     public void handleEditEPortfolioRequest() {
         EPortfolioModel slideShowToShow = ui.getEPortfolio();
         ui.editWorkspace(slideShowToShow);
+    }
+    
+    
+    public void handleExportSlideShowRequest(SlideShowComponent component, int i, String title, EPortfolioModel model)
+    {
+        SlideShowModel slideShowToShow = component.getSlideShow().getUI().getSlideShow();
+        String initPath = "sites/" + model.getTitle() + "/SlideShow/" +  title + i;
+        
+        Boolean siteDirectory = new File(initPath).mkdirs();
+        Boolean cssDirectory = new File(initPath +"/css").mkdirs();
+        Boolean jsDirectory = new File(initPath +"/js").mkdirs();
+        Boolean imgDirectory = new File(initPath +"/img").mkdirs();
+        File imgs = new File(initPath +"/img");
+        if (imgs.exists()) {
+            for (File files : imgs.listFiles()) {
+                boolean fileExists = false;
+                for (Slide s : slideShowToShow.getSlides()) {
+                    if(files.toString().contains(s.getImageFileName()) == true)
+                        fileExists = true;
+                }
+                if (!fileExists)
+                    files.delete();
+            }
+        }    
+        String jsString = "";
+        String jsPath = "sites/Template/SlideShow/Template/js/TemplateJS.js";
+        File jsFile = new File(jsPath);
+        try {
+            Scanner myScan = new Scanner(jsFile);
+            while (myScan.hasNextLine())
+                jsString += myScan.nextLine() + "\n";
+            myScan.close();
+        }
+        catch(Exception e)
+        {
+            
+        }
+        int pos = jsString.indexOf("Missing Image");
+        String partOne = jsString.substring(0, pos);
+        String partTwo = jsString.substring(pos+13);
+        String partThree = title+i;
+        String completeJS = partOne + partThree + partTwo;
+        byte[] bytes = completeJS.getBytes();
+        try {
+            OutputStream out = new BufferedOutputStream(new FileOutputStream(initPath + "/js/TemplateJS.js"),1024);
+            out.write(bytes);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
+        try {
+            saveSlideShow(slideShowToShow, model.getTitle(), i, title);
+        }
+        catch (IOException e10) {
+            e10.printStackTrace();
+        }
+        
+        File htmlFile = new File("sites/Template/SlideShow/Template/index.html");
+        File newHTMLFile = new File(initPath + "/index.html");
+        try {
+            Files.copy(htmlFile.toPath(), newHTMLFile.toPath());
+        }
+        catch (FileAlreadyExistsException e4)
+        {
+                
+        }
+        catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        
+        
+        File cssFile = new File("sites/Template/SlideShow/Template/css/TemplateCSS.css");
+        File newCSSFile = new File(initPath + "/css/TemplateCSS.css");
+        try {
+            Files.copy(cssFile.toPath(), newCSSFile.toPath());
+        }
+        catch (FileAlreadyExistsException e3)
+        {
+                
+        }
+        catch (IOException e2) {
+            e2.printStackTrace();
+        }
+        
+        File newJSONFile = new File(initPath + "/" + title + i  + JSON_EXT);
+        if (newJSONFile.exists())
+            newJSONFile.delete();
+        try {
+            saveSlideShow(slideShowToShow, model.getTitle(), i, title);
+        }
+        catch (FileAlreadyExistsException e3)
+        {
+                
+        }
+        catch (IOException e2) {
+            e2.printStackTrace();
+        }
+        
+        copyImages(slideShowToShow, initPath);
+    }
+    
+    public void saveSlideShow(SlideShowModel slideShowToSave, String path, int i, String title) throws IOException {
+            
+        // BUILD THE FILE PATH
+        String jsonFilePath = "sites/" + path + "/SlideShow/" +  title + i + "/" + title + i + JSON_EXT;
+        
+        // INIT THE WRITER
+        OutputStream os = new FileOutputStream(jsonFilePath);
+        JsonWriter jsonWriter = Json.createWriter(os);  
+       
+        // BUILD THE SLIDES ARRAY
+        JsonArray slidesJsonArray = makeSlidesJsonArray(slideShowToSave.getSlides());
+        
+        // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
+        JsonObject courseJsonObject = Json.createObjectBuilder()
+                                    .add("titles", title)
+                                    .add("slides", slidesJsonArray)
+                .build();
+        
+        // AND SAVE EVERYTHING AT ONCE
+        jsonWriter.writeObject(courseJsonObject);
+    }
+    
+    private JsonArray makeSlidesJsonArray(List<Slide> slides) {
+        JsonArrayBuilder jsb = Json.createArrayBuilder();
+        for (Slide slide : slides) {
+	    JsonObject jso = makeSlideJsonObject(slide);
+	    jsb.add(jso);
+        }
+        JsonArray jA = jsb.build();
+        return jA;        
+    }
+    
+    private JsonObject makeSlideJsonObject(Slide slide) {
+        JsonObject jso = Json.createObjectBuilder()
+		.add("image_file_name", slide.getImageFileName())
+		.add("image_path", slide.getImagePath())
+                .add("image_caption", slide.getCaption())
+		.build();
+	return jso;
+    }
+    
+    private static void copyImages(SlideShowModel slideShowToShow, String path)
+    {
+        for (Slide s : slideShowToShow.getSlides())
+        {
+            String imagePath = s.getImagePath() + SLASH + s.getImageFileName();
+            File image = new File(imagePath);
+            File newImage = new File(path + "/img/" + s.getImageFileName());
+            try {
+                Files.copy(image.toPath(), newImage.toPath());
+            }
+            catch (FileAlreadyExistsException e1)
+            {
+                
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            } 
+        }
+        
+        File next = new File("sites/Template/SlideShow/Template/img/next.png");
+        File previous = new File("sites/Template/SlideShow/Template/img/previous.png");
+        File play = new File("sites/Template/SlideShow/Template/img/play.png");
+        File pause = new File("sites/Template/SlideShow/Template/img/pause.png");
+        File newNext = new File(path + "/img/next.png");
+        File newPrevious = new File(path+ "/img/previous.png");
+        File newPlay = new File(path + "/img/play.png");
+        File newPause = new File(path + "/img/pause.png");
+        try {
+            Files.copy(next.toPath(), newNext.toPath());
+            Files.copy(previous.toPath(), newPrevious.toPath());
+            Files.copy(play.toPath(), newPlay.toPath());
+            Files.copy(pause.toPath(), newPause.toPath());
+        }
+        catch (FileAlreadyExistsException e1)
+        {
+                
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        } 
     }
 }
 

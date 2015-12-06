@@ -44,9 +44,9 @@ public class FontDialogue extends Stage{
         changeFont = new Button("Change Font");
         pane = new Pane();
         
-        fontFamily.getItems().addAll("Times New Roman", "Comic Sans MS", "Montserrat", "Merriweather", "Josefin Sans");
+        fontFamily.getItems().addAll("Tinos", "Comic Sans MS", "Montserrat", "Merriweather", "Josefin Sans");
         if (component.getFont().equals(""))
-            fontFamily.setValue("Times New Roman");
+            fontFamily.setValue("Tinos");
         else
             fontFamily.setValue(component.getFont());
         

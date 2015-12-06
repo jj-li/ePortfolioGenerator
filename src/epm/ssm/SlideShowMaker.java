@@ -75,6 +75,9 @@ public class SlideShowMaker extends Stage{
             return false;
         }        
     }
-
+    
+    public SlideShowMakerView getUI() {
+        return ui;
+    }
 
 }

@@ -1,0 +1,105 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 5, 2015, 11:13:38 PM
+    Author     : Jia Li
+*/
+
+body {
+   background-color: #d11919;
+   font-family: 'Dosis', sans-serif;
+}
+
+.rightMediaLabels {
+    color: #22229a; 
+    text-shadow: 2px 2px 2px #2727af;
+    background-color: #00e5e5;
+}
+
+#rightSidePage {
+    background-color: #00e5e5;
+}
+
+.inlineHyperlinks {
+    text-decoration: none;
+    color: #8f8f00;
+}
+
+.inlineHyperlinks:hover {
+    color: #0000ff;
+}
+
+.mediaLabels {
+    color: #006666; 
+    text-shadow: 2px 2px 2px #009999;
+    background-color: #00e5e5;
+}
+
+.header {
+    color: #006666; 
+    text-shadow: 2px 2px 2px #009999;
+    background-color: #00e5e5;
+}
+
+#topLeftNavigationBar {
+   background-color: #009995;
+}
+
+.navigation {
+    color: white;
+}
+
+#rightSide {
+    background-color: #d11919;
+}
+
+.navigation:hover {
+  color: #ff1919;
+}
+
+#banner {
+    background-color: #00b2b2;
+}
+
+#title {
+    font-size: 2.45em;
+    color: #00ffff;
+    text-shadow: 2px 2px 2px #66ffff;
+}
+
+#studentName {
+    font-size: 1.45em;
+    color: #00ffff;
+    text-shadow: 2px 2px 2px #66ffff;
+}
+
+#textComponentContainers {
+    background-color: #00e5e5;
+}
+
+#mediaContainer {
+    background-color: #00e5e5;
+}
+
+#slideShowContainers {
+    background-color: #00e5e5;
+}
+
+#imageContainers {
+    background-color: #00e5e5;
+}
+
+#videoHeader {
+    background-color: #00e5e5;
+}
+
+#videoContainers {
+    background-color: #00e5e5;
+}
+
+#footer {
+    background-color: #00e5e5;
+}

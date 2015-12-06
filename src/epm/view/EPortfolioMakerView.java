@@ -332,8 +332,10 @@ public class EPortfolioMakerView {
         saveAsEPortfolioButton.setOnAction( e -> {
             fileController.handleSaveAsEPortfolioRequest();
         });
-	viewEPortfolioButton.setOnAction( e-> {
-            fileController.handleViewSlideShowRequest();
+        exportEPortfolioButton.setOnAction( e-> {
+            if (ePortfolio != null)
+                if (!ePortfolio.getPages().isEmpty())
+                    fileController.handleExportEPortfolioRequest();
         });
         editEPortfolioButton.setOnAction( e-> {
             fileController.handleEditEPortfolioRequest();
@@ -578,7 +580,7 @@ public class EPortfolioMakerView {
                     PageEditView selectedPageEditView = (PageEditView)selectedScrollPane.getContent();
                     Page selectedPage = selectedPageEditView.getPage();
                     ePortfolioToLoad.setSelectedPage(selectedPage);
-                    pageEdit.reloadStudentName();
+                    pageEdit.reloadStudentName(pageEdit);
                 }
             });
             if (ePortfolioToLoad.getSelectedPage().equals(page)) {

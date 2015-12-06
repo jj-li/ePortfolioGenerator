@@ -4,7 +4,7 @@
     "pages":[
         {
             "title":"Sheesh",
-            "name":"saf",
+            "name":"random person1",
             "layout":"Left Navgiation",
             "banner_image_path":"",
             "banner_image_name":"",
@@ -15,9 +15,9 @@
                 {
                     "type":"Paragraph",
                     "text":"zac is a bitch googly",
-                    "font":"Montserrat",
-                    "style":"Bold",
-                    "size":"20",
+                    "font":"Times New Roman",
+                    "style":"Normal",
+                    "size":"12",
                     "hyperlink":[
                         {
                             "url":"google.com",
@@ -42,9 +42,9 @@
                             "data":"c"
                         }
                     ],
-                    "font":"Josefin Sans",
-                    "style":"Bold",
-                    "size":"19",
+                    "font":"Times New Roman",
+                    "style":"Normal",
+                    "size":"12",
                     "hyperlink":[
                         {
                             "url":"bths.edu",
@@ -111,12 +111,47 @@
                             "image_caption":"bbbbbbbbbbbb"
                         }
                     ]
+                },
+                {
+                    "paths":[
+                        {
+                            "image_path":"C:\\Users\\icysniper\\Desktop\\CSE 219 HW\\SlideShow\\ePortfolioMaker\\images\\slide_show_images\\BryceCanyonUtah.jpg"
+                        },
+                        {
+                            "image_path":"C:\\Users\\icysniper\\Desktop\\CSE 219 HW\\SlideShow\\ePortfolioMaker\\images\\slide_show_images\\YosemiteCalifornia.jpg"
+                        },
+                        {
+                            "image_path":"C:\\Users\\icysniper\\Desktop\\CSE 219 HW\\SlideShow\\ePortfolioMaker\\images\\slide_show_images\\ToadstoolNebraska.jpg"
+                        }
+                    ],
+                    "names":[
+                        {
+                            "image_name":"BryceCanyonUtah.jpg"
+                        },
+                        {
+                            "image_name":"YosemiteCalifornia.jpg"
+                        },
+                        {
+                            "image_name":"ToadstoolNebraska.jpg"
+                        }
+                    ],
+                    "captions":[
+                        {
+                            "image_caption":"fabulous"
+                        },
+                        {
+                            "image_caption":"cool"
+                        },
+                        {
+                            "image_caption":"awesome"
+                        }
+                    ]
                 }
             ]
         },
         {
-            "title":"dffasf",
-            "name":"saf",
+            "title":"New Page",
+            "name":"random person1",
             "layout":"Middle-Left Navigation",
             "banner_image_path":"",
             "banner_image_name":"",

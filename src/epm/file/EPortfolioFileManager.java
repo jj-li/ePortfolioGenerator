@@ -73,7 +73,7 @@ public class EPortfolioFileManager {
         String jsonFilePath = dataPath + SLASH + slideShowTitle + JSON_EXT;
        
         // BUILD THE SLIDES ARRAY
-        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages());
+        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages(), ePortfolioToSave);
         
         // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
         JsonObject courseJsonObject = Json.createObjectBuilder()
@@ -128,7 +128,7 @@ public class EPortfolioFileManager {
         String jsonFilePath = dataPath + SLASH + title + JSON_EXT;
        
         // BUILD THE SLIDES ARRAY
-        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages());
+        JsonArray pagesJsonArray = makePagesJsonArray(ePortfolioToSave.getPages(), ePortfolioToSave);
         
         // NOW BUILD THE COURSE USING EVERYTHING WE'VE ALREADY MADE
         JsonObject courseJsonObject = Json.createObjectBuilder()
@@ -314,20 +314,20 @@ public class EPortfolioFileManager {
         return items;
     }
     
-    private JsonArray makePagesJsonArray(List<Page> pages) {
+    private JsonArray makePagesJsonArray(List<Page> pages, EPortfolioModel model) {
         JsonArrayBuilder jsb = Json.createArrayBuilder();
         for (Page page : pages) {
-	    JsonObject jso = makePageJsonObject(page);
+	    JsonObject jso = makePageJsonObject(page, model);
 	    jsb.add(jso);
         }
         JsonArray jA = jsb.build();
         return jA;        
     }
     
-    private JsonObject makePageJsonObject(Page page) {
+    private JsonObject makePageJsonObject(Page page, EPortfolioModel model) {
         JsonObject jso = Json.createObjectBuilder()
 		.add("title", page.getTitle())
-		.add("name", page.getStudentName())
+		.add("name", model.getStudentName())
                 .add("layout", page.getLayout())
                 .add("banner_image_path", page.getBannerImgPath())
                 .add("banner_image_name", page.getBannerImg())

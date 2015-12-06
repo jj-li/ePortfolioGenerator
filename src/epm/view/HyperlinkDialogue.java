@@ -79,7 +79,16 @@ public class HyperlinkDialogue extends Stage{
         addHyperlink.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
         
         addHyperlink.setOnAction(e-> {
-            HyperlinkComponent component = new HyperlinkComponent(textArea.getText(), selectedText.getText(), url.getText());
+            String check1 = "http://www.";
+            String check2 = "www.";
+            String link = "";
+            if (url.getText().indexOf(check1) == -1) {
+                if (url.getText().indexOf(check2) == -1)
+                    link = check1 + url.getText();
+                else
+                    link = "http://" + url.getText();
+            }
+            HyperlinkComponent component = new HyperlinkComponent(textArea.getText(), selectedText.getText(), link);
             textComponent.addHyperlink(component);
             this.hide();
         });
@@ -123,7 +132,16 @@ public class HyperlinkDialogue extends Stage{
         addHyperlink.setStyle("-fx-font-weight: bolder; -fx-border-color: rgb(0,0,0)");
         
         addHyperlink.setOnAction(e-> {
-            HyperlinkComponent component = new HyperlinkComponent(list.getSelectionModel().getSelectedIndex(), items, url.getText());
+            String check1 = "http://www.";
+            String check2 = "www.";
+            String link = "";
+            if (url.getText().indexOf(check1) == -1) {
+                if (url.getText().indexOf(check2) == -1)
+                    link = check1 + url.getText();
+                else
+                    link = "http://" + url.getText();
+            }
+            HyperlinkComponent component = new HyperlinkComponent(list.getSelectionModel().getSelectedIndex(), items, link);
             textComponent.addHyperlink(component);
             this.hide();
         });
@@ -178,6 +196,16 @@ public class HyperlinkDialogue extends Stage{
 
         editHyperlink.setOnAction( e-> {
             for (int i = urls.size()-1; i >= 0; i--) {
+                String check1 = "http://www.";
+                String check2 = "www.";
+                String link = "";
+                if (urls.get(i).getText().indexOf(check1) == -1) {
+                    if (urls.get(i).getText().indexOf(check2) == -1)
+                        link = check1 + urls.get(i).getText();
+                    else
+                        link = "http://" + urls.get(i).getText();
+                    urls.get(i).setText(link);
+                }
                 if (checks.get(i).selectedProperty().get() == false) {
                     HyperlinkComponent temp = links.get(i);
                     temp.setUrl(urls.get(i).getText());
@@ -246,6 +274,16 @@ public class HyperlinkDialogue extends Stage{
 
         editHyperlink.setOnAction( e-> {
             for (int i = urls.size()-1; i >= 0; i--) {
+                String check1 = "http://www.";
+                String check2 = "www.";
+                String link = "";
+                if (urls.get(i).getText().indexOf(check1) == -1) {
+                    if (urls.get(i).getText().indexOf(check2) == -1)
+                        link = check1 + urls.get(i).getText();
+                    else
+                        link = "http://" + urls.get(i).getText();
+                    urls.get(i).setText(link);
+                }
                 if (checks.get(i).selectedProperty().get() == false) {
                     HyperlinkComponent temp = links.get(i);
                     temp.setUrl(urls.get(i).getText());

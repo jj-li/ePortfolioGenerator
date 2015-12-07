@@ -24,7 +24,6 @@ function load() {
                     caption = "<br>";
                 captions.push(caption);
             });
-            $("#slideShowTitle").html(json.title);
             $("#slideShowCaption").html(captions[captionPosition]);
             $("#slideShow").attr("src", slideShow[slidePosition]);
             

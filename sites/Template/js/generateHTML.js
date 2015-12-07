@@ -127,7 +127,15 @@ function loadLink(name) {
     for (i = 0; i < noSpace.length; i++) {
         newName += noSpace[i];
     }
-    var temp = linkStart + newName + ".html" + linkMiddle + name + linkEnd;
+    var pagePathName= window.location.pathname;
+    pageName = pagePathName.substring(pagePathName.lastIndexOf("/") + 1);
+    pageName = pageName.substring(0, pageName.indexOf(".html"));
+    var temp = "";
+    if (pageName === newName) {
+        temp = '<a href = "' + newName + ".html" + '" style = "color:black" class = "navigation">' + name + linkEnd;
+    }
+    else
+        temp = linkStart + newName + ".html" + linkMiddle + name + linkEnd;
     $("#topLeftNavigationBar").append(temp);
 } 
 
@@ -163,8 +171,8 @@ function loadSlideShowContent() {
     }
 }
 
-function loadHeaderContent(data) {
-    var temp = headerTagStart + data + headerTagEnd;
+function loadHeaderContent(data, font, style, size) {
+    var temp = '<div class = "header" style = "font: ' + style + " " + size + "px " + font + '">' + data + '</div>';
     $("div#textComponentContainers").append(temp);
 }
 
@@ -193,17 +201,38 @@ function loadParagraphContent(data, font, style, size) {
         paragraphHyperlinksContent[i] = temp2;
     }
     var datas = [""];
-    for (i = 1; i < paragraphHyperlinksIndex.length; i++) {
-        if (i === 1)
-            datas.push(data.substring(0, paragraphHyperlinksIndex[i]));
-        else
-            datas.push(data.substring(paragraphHyperlinksIndex[i-1]+paragraphHyperlinksContentLength[i-1], paragraphHyperlinksIndex[i]));
+    if (paragraphHyperlinksIndex.length === 2) {
+        datas.push(data.substring(0, paragraphHyperlinksIndex[1]));
+        datas.push(data.substring(paragraphHyperlinksIndex[1]+paragraphHyperlinksContentLength[1]));
     }
-    data = "";
+    else {
+        for (i = 1; i <= paragraphHyperlinksIndex.length; i++) {
+            if (i === 1)
+                datas.push(data.substring(0, paragraphHyperlinksIndex[i]));
+            else if (i === paragraphHyperlinksIndex.length)
+                datas.push(data.substring(paragraphHyperlinksIndex[i-1]+paragraphHyperlinksContentLength[i-1]));
+            else
+                datas.push(data.substring(paragraphHyperlinksIndex[i-1]+paragraphHyperlinksContentLength[i-1], paragraphHyperlinksIndex[i]));
+        }
+    }
+    dataz = "";
     for (i = 1; i < datas.length; i++) {
-        data += datas[i] + hyperlinkStart + paragraphHyperlinks[i] + hyperlinkEnd + paragraphHyperlinksContent[i] + "</a>";
+        if (paragraphHyperlinksIndex.length === 2) {
+            dataz += datas[i] + hyperlinkStart + paragraphHyperlinks[i] + hyperlinkEnd + paragraphHyperlinksContent[i] + "</a>" + datas[i+1];
+            break;
+        }
+        else {
+            if (typeof(paragraphHyperlinks[i]) === "undefined")
+                dataz += datas[i];
+            else
+                dataz += datas[i] + hyperlinkStart + paragraphHyperlinks[i] + hyperlinkEnd + paragraphHyperlinksContent[i] + "</a>";
+        }
     }
-    var temp = '<p style = "font: ' + style + " " + size + "px " + font + '">' + data + paragraphTagEnd;
+    var temp = "";
+    if (datas.length <= 1)
+        temp = '<p style = "font: ' + style + " " + size + "px " + font + '">' + data + paragraphTagEnd;
+    else
+        temp = '<p style = "font: ' + style + " " + size + "px " + font + '">' + dataz + paragraphTagEnd;
     
     $("div#textComponentContainers").append(temp);
 }

@@ -19,7 +19,7 @@ public class Page {
     ArrayList<ImageComponent> imageComponents;
     ArrayList<VideoComponent> videoComponents;
     ArrayList<SlideShowComponent> slideShowComponents;
-    String layout = "Top-Left Navation";
+    String layout = "Top-Left Nagivation";
     String color = "Blue/Yellow";
     String font = "PT Sans";
     String footer = "";

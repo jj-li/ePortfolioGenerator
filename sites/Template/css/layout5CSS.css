@@ -10,8 +10,12 @@ and open the template in the editor.
 
 #bannerImgContainer {
     margin: auto;
-    width: 80%;
+    width: 77%;
     text-align: center;
+}
+
+#bannerImg {
+    width: 50%;
 }
 
 #topLeftNavigationBar {

@@ -451,6 +451,22 @@ public class FileController {
                     e.printStackTrace();
                 } 
             }
+            
+            if (p.hasBannerImage()) {
+                String bannerImg = p.getBannerImgPath();
+                File image = new File(bannerImg);
+                File newImage = new File("sites/" + ePortfolioToShow.getTitle() + "/img/" + p.getBannerImg());
+                try {
+                    Files.copy(image.toPath(), newImage.toPath());
+                }
+                catch (FileAlreadyExistsException e1)
+                {
+
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         
         

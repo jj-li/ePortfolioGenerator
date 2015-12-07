@@ -67,6 +67,7 @@ public class TextComponentDialogue extends Stage{
         removeItemButton = new Button("Remove Item");
         textField = new TextField();
         textArea = new TextArea();
+        textArea.setWrapText(true);
         textTypes = new Label("Text Component Type: ");
         pane = new Pane();
         top = new HBox();
@@ -340,14 +341,14 @@ public class TextComponentDialogue extends Stage{
             page.addTextComponent(component);
         }
         else if (textualType.equalsIgnoreCase("header")) {
-            TextComponent component = new TextComponent(textualType, textField.getText(), "Times New Roman");
+            TextComponent component = new TextComponent(textualType, textField.getText(), "Tinos");
             page.addTextComponent(component);
         }
         else {
             ArrayList<String> data = new ArrayList<String>();
             for (String s : list.getItems())
                 data.add(s);
-            TextComponent component = new TextComponent(textualType, data, "Times New Roman");
+            TextComponent component = new TextComponent(textualType, data, "Tinos");
             page.addTextComponent(component);
         }
         this.hide();

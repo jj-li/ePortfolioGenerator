@@ -319,9 +319,12 @@ public class EPortfolioMakerView {
 	fileController = new FileController(this, fileManager);
 	newEPortfolioButton.setOnAction(e -> {
 	    fileController.handleNewSlideShowRequest();
+            topControls(false);
 	});
 	loadEPortfolioButton.setOnAction(e -> {
 	    fileController.handleLoadEPortfolioRequest();
+            topControls(false);
+            addComponents(false);
 	});
 	saveEPortfolioButton.setOnAction(e -> {
 	    fileController.handleSaveEPortfolioRequest();
@@ -534,6 +537,7 @@ public class EPortfolioMakerView {
 	primaryStage.show();
         addComponents(true);
         selectComponents(true);
+        topControls(true);
     }
     
     /**
@@ -572,6 +576,14 @@ public class EPortfolioMakerView {
 	
 	// NEXT ENABLE/DISABLE BUTTONS AS NEEDED IN THE FILE TOOLBAR
 	//saveEPortfolioButton.setDisable(saved);
+    }
+    
+    public void topControls(boolean saved) {
+        saveEPortfolioButton.setDisable(saved);
+        saveAsEPortfolioButton.setDisable(saved);
+        exportEPortfolioButton.setDisable(saved);
+        editEPortfolioButton.setDisable(saved);
+        viewEPortfolioButton.setDisable(saved);
     }
     
     public void addComponents(boolean saved) {
@@ -649,6 +661,7 @@ public class EPortfolioMakerView {
         try {
            URL fileURL = htmlFile.toURI().toURL();
            webEngine.load(fileURL.toExternalForm());
+           webEngine.reload();
         }
         catch (Exception e) {
             ErrorHandler handle = new ErrorHandler(this);

@@ -1,6 +1,3 @@
-/**
- * @coauthor Jia Li
- **/
 package epm.controller;
 
 import java.io.BufferedOutputStream;
@@ -8,7 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URL;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.util.Scanner;
@@ -21,20 +17,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 import static epm.LanguagePropertyType.BUTTON_OKAY;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_CREATED;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_CREATED_TITLE;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_EXIT;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_EXIT_TITLE;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_LOAD;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_LOAD_TITLE;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_SAVE;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_SAVE_TITLE;
+import static epm.LanguagePropertyType.FAILED_EPORTFOLIO_TITLE;
+import static epm.LanguagePropertyType.FAILED_EPORTFOLIO_CREATED;
+import static epm.LanguagePropertyType.FAILED_EPORTFOLIO_EXIT;
+import static epm.LanguagePropertyType.FAILED_EPORTFOLIO_LOAD;
+import static epm.LanguagePropertyType.FAILED_EPORTFOLIO_SAVE;
 import static epm.LanguagePropertyType.SAVE_TEXT;
-import static epm.LanguagePropertyType.SLIDE_SHOW_CREATED;
-import static epm.LanguagePropertyType.SLIDE_SHOW_CREATED_TITLE;
 import static epm.LanguagePropertyType.TITLE_WINDOW;
 import static epm.StartupConstants.PATH_ICONS;
-import static epm.StartupConstants.PATH_SLIDE_SHOWS;
+import static epm.StartupConstants.PATH_EPORTFOLIOS;
 import epm.model.EPortfolioModel;
 import epm.error.ErrorHandler;
 import epm.file.EPortfolioFileManager;
@@ -59,7 +50,7 @@ import javax.json.JsonWriter;
  * This class serves as the controller for all file toolbar operations,
  * driving the loading and saving of slide shows, among other things.
  * 
- * @author McKilla Gorilla & _____________
+ * @author Jia Li
  */
 public class FileController {
 
@@ -72,7 +63,7 @@ public class FileController {
     private EPortfolioMakerView ui;
     
     // THIS GUY KNOWS HOW TO READ AND WRITE SLIDE SHOW DATA
-    private EPortfolioFileManager slideShowIO;
+    private EPortfolioFileManager ePortfolioIO;
     
     
     private PropertiesManager prop;
@@ -81,14 +72,14 @@ public class FileController {
      * This default constructor starts the program without a slide show file being
      * edited.
      *
-     * @param initSlideShowIO The object that will be reading and writing slide show
+     * @param initEPortfolioIO The object that will be reading and writing ePortfolio
      * data.
      */
     public FileController(EPortfolioMakerView initUI, EPortfolioFileManager initEPortfolioIO) {
         // NOTHING YET
         saved = true;
 	ui = initUI;
-        slideShowIO = initEPortfolioIO;
+        ePortfolioIO = initEPortfolioIO;
         prop = PropertiesManager.getPropertiesManager();
     }
     
@@ -98,10 +89,10 @@ public class FileController {
     }
 
     /**
-     * This method starts the process of editing a new slide show. If a pose is
+     * This method starts the process of editing a new ePortfolio. If a pose is
      * already being edited, it will prompt the user to save it first.
      */
-    public void handleNewSlideShowRequest() {
+    public void handleNewEPortfolioRequest() {
         try {
             // WE MAY HAVE TO SAVE CURRENT WORK
             boolean continueToMakeNew = true;
@@ -125,13 +116,13 @@ public class FileController {
             }
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
-            eH.processError(FAILED_SLIDE_SHOW_CREATED, prop.getProperty(FAILED_SLIDE_SHOW_CREATED_TITLE));
+            eH.processError(FAILED_EPORTFOLIO_CREATED, prop.getProperty(FAILED_EPORTFOLIO_TITLE));
         }
     }
 
     /**
-     * This method lets the user open a slideshow saved to a file. It will also
-     * make sure data for the current slideshow is not lost.
+     * This method lets the user open a ePortfolio saved to a file. It will also
+     * make sure data for the current ePortfolio is not lost.
      */
     public void handleLoadEPortfolioRequest() {
         try {
@@ -153,72 +144,61 @@ public class FileController {
             }
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
-            eH.processError(FAILED_SLIDE_SHOW_LOAD, prop.getProperty(FAILED_SLIDE_SHOW_LOAD_TITLE));
+            eH.processError(FAILED_EPORTFOLIO_LOAD, prop.getProperty(FAILED_EPORTFOLIO_TITLE));
         }
     }
 
     /**
-     * This method will save the current slideshow to a file. Note that we already
+     * This method will save the current ePortfolio to a file. Note that we already
      * know the name of the file, so we won't need to prompt the user.
      */
     public boolean handleSaveEPortfolioRequest() {
         try {
-	    // GET THE SLIDE SHOW TO SAVE
 	    EPortfolioModel ePortfolioToSave = ui.getEPortfolio();
-            // SAVE IT TO A FILE
-            slideShowIO.saveEPortfolio(ePortfolioToSave);
-
-            // MARK IT AS SAVED
+            ePortfolioIO.saveEPortfolio(ePortfolioToSave);
             saved = true;
 
-            // AND REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
-            // THE APPROPRIATE CONTROLS
+            // REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE THE APPROPRIATE CONTROLS
             ui.updateToolbarControls(saved);
 	    return true;
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
-            eH.processError(FAILED_SLIDE_SHOW_SAVE, prop.getProperty(FAILED_SLIDE_SHOW_SAVE_TITLE));
+            eH.processError(FAILED_EPORTFOLIO_SAVE, prop.getProperty(FAILED_EPORTFOLIO_TITLE));
 	    return false;
         }
     }
     
      public boolean handleExportSaveEPortfolioRequest() {
         try {
-	    // GET THE SLIDE SHOW TO SAVE
 	    EPortfolioModel ePortfolioToSave = ui.getEPortfolio();
-            // SAVE IT TO A FILE
-            slideShowIO.saveExportEPortfolio(ePortfolioToSave);
+            ePortfolioIO.saveExportEPortfolio(ePortfolioToSave);
 
-            // MARK IT AS SAVED
             saved = true;
 
-            // AND REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
-            // THE APPROPRIATE CONTROLS
+            // REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE THE APPROPRIATE CONTROLS
             ui.updateToolbarControls(saved);
 	    return true;
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
-            eH.processError(FAILED_SLIDE_SHOW_SAVE, prop.getProperty(FAILED_SLIDE_SHOW_SAVE_TITLE));
+            eH.processError(FAILED_EPORTFOLIO_SAVE, prop.getProperty(FAILED_EPORTFOLIO_TITLE));
 	    return false;
         }
     }
     
      public boolean handleSaveAsEPortfolioRequest() {
         try {
-	    // GET THE SLIDE SHOW TO SAVE
 	    EPortfolioModel ePortfolioToSave = ui.getEPortfolio();
-            // SAVE IT TO A FILE
-            slideShowIO.saveAsEPortfolio(ePortfolioToSave, ui);
+            ePortfolioIO.saveAsEPortfolio(ePortfolioToSave, ui);
 
             // MARK IT AS SAVED
             saved = true;
 
-            // AND REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE
-            // THE APPROPRIATE CONTROLS
+	    // REFRESH THE GUI, WHICH WILL ENABLE AND DISABLE THE APPROPRIATE CONTROLS
+            ui.updateToolbarControls(saved);
 	    return true;
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
-            eH.processError(FAILED_SLIDE_SHOW_SAVE, prop.getProperty(FAILED_SLIDE_SHOW_SAVE_TITLE));
+            eH.processError(FAILED_EPORTFOLIO_SAVE, prop.getProperty(FAILED_EPORTFOLIO_TITLE));
             ioe.printStackTrace();
 	    return false;
         }
@@ -247,7 +227,7 @@ public class FileController {
             }
         } catch (IOException ioe) {
             ErrorHandler eH = ui.getErrorHandler();
-            eH.processError(FAILED_SLIDE_SHOW_EXIT, prop.getProperty(FAILED_SLIDE_SHOW_EXIT_TITLE));
+            eH.processError(FAILED_EPORTFOLIO_EXIT, prop.getProperty(FAILED_EPORTFOLIO_TITLE));
         }
     }
     
@@ -408,12 +388,7 @@ public class FileController {
                 handleExportSlideShowRequest(component, i, name, ePortfolioToShow);
             }
         }
-        
-        
         copyMedia(ePortfolioToShow);
-        
-        
-        
     }
     
     private static void copyMedia(EPortfolioModel ePortfolioToShow)
@@ -467,9 +442,7 @@ public class FileController {
                     e.printStackTrace();
                 }
             }
-        }
-        
-        
+        }           
     }
     
    
@@ -519,7 +492,7 @@ public class FileController {
         // IF THE USER SAID YES, THEN SAVE BEFORE MOVING ON
         if (saved) {
             EPortfolioModel slideShow = ui.getEPortfolio();
-            slideShowIO.saveEPortfolio(slideShow);
+            ePortfolioIO.saveEPortfolio(slideShow);
             saved = true;
         } // IF THE USER SAID CANCEL, THEN WE'LL TELL WHOEVER
         // CALLED THIS THAT THE USER IS NOT INTERESTED ANYMORE
@@ -542,7 +515,7 @@ public class FileController {
     private void promptToOpen() {
         // AND NOW ASK THE USER FOR THE COURSE TO OPEN
         FileChooser slideShowFileChooser = new FileChooser();
-        slideShowFileChooser.setInitialDirectory(new File(PATH_SLIDE_SHOWS));
+        slideShowFileChooser.setInitialDirectory(new File(PATH_EPORTFOLIOS));
         File selectedFile = slideShowFileChooser.showOpenDialog(ui.getWindow());
 
         // ONLY OPEN A NEW FILE IF THE USER SAYS OK
@@ -550,7 +523,7 @@ public class FileController {
             try {    
                // textFields = new ArrayList<TextField>();
 		EPortfolioModel ePortfolioToLoad = ui.getEPortfolio();
-                slideShowIO.loadSlideShow(ePortfolioToLoad, selectedFile.getAbsolutePath());
+                ePortfolioIO.loadSlideShow(ePortfolioToLoad, selectedFile.getAbsolutePath());
                 
                 ui.reloadSlideShowPane(ePortfolioToLoad);
                 saved = true;
@@ -558,7 +531,7 @@ public class FileController {
             } catch (Exception e) {
                 e.printStackTrace();
                 ErrorHandler eH = ui.getErrorHandler();
-                eH.processError(FAILED_SLIDE_SHOW_LOAD, prop.getProperty(FAILED_SLIDE_SHOW_LOAD_TITLE));
+                eH.processError(FAILED_EPORTFOLIO_LOAD, prop.getProperty(FAILED_EPORTFOLIO_TITLE));
             }
         }
     }

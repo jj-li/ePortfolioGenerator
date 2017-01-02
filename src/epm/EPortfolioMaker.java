@@ -1,37 +1,23 @@
-/**
- * @author Jia Li
- **/
 package epm;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import xml_utilities.InvalidXMLFileFormatException;
 import properties_manager.PropertiesManager;
 import static epm.LanguagePropertyType.TITLE_WINDOW;
-import static epm.StartupConstants.CSS_CLASS_LANGUAGE_BOX;
 import static epm.StartupConstants.PATH_DATA;
-import static epm.StartupConstants.PATH_ICONS;
 import static epm.StartupConstants.PROPERTIES_SCHEMA_FILE_NAME;
-import static epm.StartupConstants.STYLE_SHEET_UI;
 import static epm.StartupConstants.UI_PROPERTIES_FILE_NAME;
-import static epm.StartupConstants.WINDOWS_ICON;
 import epm.error.ErrorHandler;
 import epm.file.EPortfolioFileManager;
-import epm.model.Page;
 import epm.view.EPortfolioMakerView;
 
 /**
- * SlideShowMaker is a program for making custom image slideshows. It will allow
- * the user to name their slideshow, select images to use, select captions for
- * the images, and the order of appearance for slides.
+ * ePortfolioGenerator is a program for making custom portfolio websites. It will allow
+ * the user to name their portfolios, add videos, text, headers, images
+ * and image slide shows.
  *
- * @author McKilla Gorilla & _____________
+ * @author Jia Li
  */
 public class EPortfolioMaker extends Application {
     // THIS WILL PERFORM SLIDESHOW READING AND WRITING
@@ -41,8 +27,7 @@ public class EPortfolioMaker extends Application {
     // HANDLING MODE, BASICALLY IT BECOMES THE FOCAL
     // POINT, RUNNING THE UI AND EVERYTHING ELSE
     EPortfolioMakerView ui = new EPortfolioMakerView(fileManager);
-    
-    public static Page CORRUPTED_SLIDE;
+ 
 
     @Override
     public void start(Stage primaryStage) throws Exception {

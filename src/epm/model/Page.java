@@ -1,15 +1,12 @@
-/**
- * @coauthor Jia Li
- **/
 package epm.model;
 
 import epm.view.PageEditView;
 import java.util.ArrayList;
 
 /**
- * This class represents a single slide in a slide show.
+ * This class represents a single page in the ePortfolio.
  * 
- * @author McKilla Gorilla & _____________
+ * @author Jia Li
  */
 public class Page {
     PageEditView selectedPageEditView;

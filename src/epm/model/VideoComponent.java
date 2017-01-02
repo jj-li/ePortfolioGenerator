@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package epm.model;
 
 import java.io.File;
@@ -13,7 +8,7 @@ import javafx.scene.media.MediaView;
 
 /**
  *
- * @author icysniper
+ * @author Jia Li
  */
 public class VideoComponent {
     private String videoUrl;
@@ -85,7 +80,7 @@ public class VideoComponent {
                 }
             }
             catch (Exception e1) {
-                
+                //Error with retrieving video.
             }
     }
     

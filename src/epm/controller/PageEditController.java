@@ -1,8 +1,5 @@
 package epm.controller;
 
-import properties_manager.PropertiesManager;
-import static epm.StartupConstants.DEFAULT_SLIDE_IMAGE;
-import static epm.StartupConstants.PATH_SLIDE_SHOW_IMAGES;
 import epm.model.EPortfolioModel;
 import epm.model.Page;
 import epm.view.EPortfolioMakerView;

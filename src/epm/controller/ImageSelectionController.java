@@ -2,37 +2,27 @@ package epm.controller;
 
 import java.io.File;
 import javafx.stage.FileChooser;
-import static epm.StartupConstants.PATH_SLIDE_SHOW_IMAGES;
-import epm.model.Page;
-import epm.view.PageEditView;
 
 /**
  * This controller provides a controller for when the user chooses to
  * select an image for the slide show.
  * 
- * @author McKilla Gorilla & _____________
+ * @author Jia Li
  */
 public class ImageSelectionController {
     
     /**
-     * Default contstructor doesn't need to initialize anything
+     * Default constructor doesn't need to initialize anything
      */
     public ImageSelectionController() {    }
     
     /**
      * This function provides the response to the user's request to
      * select an image.
-     * 
-     * @param slideToEdit - Slide for which the user is selecting an image.
-     * 
-     * @param view The user interface control group where the image
-     * will appear after selection.
      */
     public String processSelectImage() {
 	FileChooser imageFileChooser = new FileChooser();
-	
-	
-	
+
 	// LET'S ONLY SEE IMAGE FILES
 	FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
 	FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
@@ -42,15 +32,5 @@ public class ImageSelectionController {
 	// LET'S OPEN THE FILE CHOOSER
 	File file = imageFileChooser.showOpenDialog(null);
         return file.getPath();
-        //TO FIX
-	/*if (file != null) {
-	    String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
-	    String fileName = file.getName();
-	    slideToEdit.setImage(path, fileName);
-	    view.updateSlideImage();
-	}	    
-	else {
-	    // @todo provide error message for no files selected
-	}*/
     }
 }

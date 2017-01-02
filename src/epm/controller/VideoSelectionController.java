@@ -10,7 +10,7 @@ import javafx.stage.FileChooser;
 
 /**
  *
- * @author icysniper
+ * @author Jia Li
  */
 public class VideoSelectionController {
     
@@ -26,15 +26,5 @@ public class VideoSelectionController {
 	// LET'S OPEN THE FILE CHOOSER
 	File file = imageFileChooser.showOpenDialog(null);
         return file.getPath();
-        //TO FIX
-	/*if (file != null) {
-	    String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
-	    String fileName = file.getName();
-	    slideToEdit.setImage(path, fileName);
-	    view.updateSlideImage();
-	}	    
-	else {
-	    // @todo provide error message for no files selected
-	}*/
     }
 }

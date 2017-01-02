@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package epm.view;
 
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_LOAD;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_LOAD_TITLE;
 import static epm.StartupConstants.PATH_ICONS;
 import static epm.StartupConstants.STYLE_SHEET_UI;
 import static epm.StartupConstants.WINDOWS_ICON;
-import epm.error.ErrorHandler;
 import epm.model.HyperlinkComponent;
 import epm.model.Page;
 import epm.model.TextComponent;
@@ -25,17 +17,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import properties_manager.PropertiesManager;
 
 /**
  *
- * @author icysniper
+ * @author Jia Li
  */
 public class TextComponentDialogue extends Stage{
     

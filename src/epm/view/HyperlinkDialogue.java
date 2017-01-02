@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package epm.view;
 
 import static epm.StartupConstants.STYLE_SHEET_UI;
 import epm.model.HyperlinkComponent;
-import epm.model.Page;
 import epm.model.TextComponent;
 import java.util.ArrayList;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -28,7 +20,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author icysniper
+ * @author Jia Li
  */
 public class HyperlinkDialogue extends Stage{
     TextArea textArea;

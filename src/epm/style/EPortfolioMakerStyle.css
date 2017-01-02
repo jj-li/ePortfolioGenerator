@@ -5,8 +5,10 @@
  *  @author McKilla Gorilla & _____________
  */
 
-.slide_language {
-    -fx-padding: 15px 10px 10px 15px;
+.root{
+    -fx-background-color: #add8e6;
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 14px;
 }
 
 .error_box {
@@ -17,20 +19,29 @@
     -fx-padding: 15px 0px 0px 0px;
 }
 
-.slide_show_edit_vbox {
+/* WORKSPACE CSS */
+
+.eportfolio_edit_vbox {
     -fx-background-radius: 5.0;
     -fx-background-color: #add8e6;
     -fx-padding: 0px 20px 0px 20px;
     -fx-spacing: 20px;
 }
 
-.slide_edit_view {
+.eportfolio_edit_view {
     -fx-padding: 7px 0px 10px 15px;
     -fx-background-radius: 10.0;
     -fx-background-color: #ffffe5;
     -fx-border-thickness: 10px;
     -fx-spacing: 10px;
 }
+
+.page_edit_view {
+    -fx-border-color: rgb(0, 0, 0); 
+    -fx-background: #ffffe5;
+}
+
+/* TOOLBAR CSS */
 
 .vertical_toolbar_button {
     -fx-background-color: #ffc966;
@@ -49,27 +60,10 @@
     -fx-padding: 5px 5px 5px 5px;
 }
 
-.view_slide_show_buttons {
-    -fx-padding-top: 250px;
-    -fx-padding-bottom: 250px;
-}
-
-.slide_panes {
-    -fx-background: #ffffe5;
-    -fx-border-color: rgb(0, 0, 0);
-}
-
-.slide_spacing {
-    -fx-spacing: 5px;
-    -fx-background-color: #66ff66;
-    -fx-border-color: rgb(0, 0, 0);
+.left_toolbar_buttons {
+    -fx-spacing: 7px;
 }
 
 
-.root{
-    -fx-background-color: #add8e6;
-    -fx-font-family: "Comic Sans MS";
-    -fx-font-size: 14px;
-}
 
 

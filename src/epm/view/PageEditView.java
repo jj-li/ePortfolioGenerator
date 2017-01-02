@@ -1,35 +1,19 @@
-/**
- * @author Jia Li
- **/
 package epm.view;
 
 import java.io.File;
 import java.net.URL;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
-import properties_manager.PropertiesManager;
-import epm.LanguagePropertyType;
-import static epm.LanguagePropertyType.MISSING_IMAGE;
-import static epm.LanguagePropertyType.MISSING_IMAGE_TITLE;
-import static epm.StartupConstants.CSS_CLASS_SLIDE_EDIT_VIEW;
-import static epm.EPortfolioMaker.CORRUPTED_SLIDE;
-import static epm.StartupConstants.DEFAULT_THUMBNAIL_WIDTH;
-import static epm.StartupConstants.PATH_ICONS;
-import static epm.StartupConstants.STYLE_SHEET_UI;
-import static epm.StartupConstants.WINDOWS_ICON;
+import static epm.StartupConstants.CSS_CLASS_EPORTFOLIO_EDIT_VIEW;
 import epm.controller.ImageSelectionController;
 import epm.model.Page;
-import static epm.file.EPortfolioFileManager.SLASH;
 import epm.model.HyperlinkComponent;
 import epm.model.ImageComponent;
 import epm.model.SlideShowComponent;
@@ -41,13 +25,11 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.MediaView;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 
 /**
@@ -55,7 +37,7 @@ import javafx.stage.Screen;
  * in a slide show, including controls for selected the slide image
  * and changing its caption.
  * 
- * 
+ * @author Jia Li
  */
 public class PageEditView extends VBox {
     // SLIDE THIS COMPONENT EDITS
@@ -100,7 +82,7 @@ public class PageEditView extends VBox {
         this.ui = ui;
         imageController = new ImageSelectionController();
         imageSelectionView = new ImageView();
-	this.getStyleClass().add(CSS_CLASS_SLIDE_EDIT_VIEW);
+	this.getStyleClass().add(CSS_CLASS_EPORTFOLIO_EDIT_VIEW);
 	page = initPage;
 	this.tab = tab;
         

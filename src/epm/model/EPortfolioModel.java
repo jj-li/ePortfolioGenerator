@@ -1,27 +1,15 @@
-/**
- * @coauthor Jia Li
- **/
 package epm.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import properties_manager.PropertiesManager;
 import epm.LanguagePropertyType;
-import static epm.LanguagePropertyType.MOVE_DOWN_SLIDE1;
-import static epm.LanguagePropertyType.MOVE_DOWN_SLIDE2;
-import static epm.LanguagePropertyType.MOVE_DOWN_SLIDE3;
-import static epm.LanguagePropertyType.MOVE_UP_SLIDE1;
-import static epm.LanguagePropertyType.MOVE_UP_SLIDE2;
-import static epm.LanguagePropertyType.MOVE_UP_SLIDE3;
-import static epm.LanguagePropertyType.REMOVE_SLIDE;
-import static epm.LanguagePropertyType.REMOVE_SLIDE_ERROR_TITLE;
-import epm.error.ErrorHandler;
 import epm.view.EPortfolioMakerView;
 
 /**
- * This class manages all the data associated with a slideshow.
+ * This class manages all the data associated with an ePortfolio.
  * 
- * @author McKilla Gorilla & _____________
+ * @author Jia Li
  */
 public class EPortfolioModel {
     EPortfolioMakerView ui;

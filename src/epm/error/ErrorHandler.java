@@ -19,7 +19,7 @@ import epm.view.EPortfolioMakerView;
  * and should have custom messages that are different depending on
  * the type of error so as to be informative concerning what went wrong.
  * 
- * @author McKilla Gorilla & Jia Li
+ * @author Jia Li
  */
 public class ErrorHandler {
     // APP UI
@@ -34,9 +34,6 @@ public class ErrorHandler {
      * This method provides all error and success feedback. It gets the feedback text,
      * which changes depending on the type of error, and presents it to
      * the user in a dialog box.
-     * 
-     * @param errorType Identifies the type of error/success that happened, which
-     * allows us to get and display different text for different errors/success.
      */
     public void processError(LanguagePropertyType error, String errorDialogTitle)
     {

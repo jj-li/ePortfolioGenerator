@@ -1,8 +1,4 @@
-/**
- * @coauthor Jia Li
- **/
 package epm.view;
-
 
 import java.io.File;
 import java.net.URL;
@@ -21,32 +17,21 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 import epm.LanguagePropertyType;
-import static epm.LanguagePropertyType.DEFAULT_SLIDE_SHOW_TITLE;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_LOAD;
-import static epm.LanguagePropertyType.FAILED_SLIDE_SHOW_LOAD_TITLE;
-import static epm.LanguagePropertyType.NO_SLIDESHOW;
-import static epm.LanguagePropertyType.NO_SLIDESHOW_TITLE;
-import static epm.LanguagePropertyType.SLIDE_SHOW_TITLE_LABEL;
-import static epm.LanguagePropertyType.TITLE_WINDOW;
-import static epm.LanguagePropertyType.TOOLTIP_ADD_SLIDE;
+import static epm.LanguagePropertyType.FAILED_EPORTFOLIO_LOAD;
+import static epm.LanguagePropertyType.FAILED_EPORTFOLIO_TITLE;
+import static epm.LanguagePropertyType.TOOLTIP_ADD_PAGE;
 import static epm.LanguagePropertyType.TOOLTIP_EXIT;
-import static epm.LanguagePropertyType.TOOLTIP_LOAD_SLIDE_SHOW;
-import static epm.LanguagePropertyType.TOOLTIP_NEW_SLIDE_SHOW;
-import static epm.LanguagePropertyType.TOOLTIP_NEXT_SLIDE;
-import static epm.LanguagePropertyType.TOOLTIP_PREVIOUS_SLIDE;
-import static epm.LanguagePropertyType.TOOLTIP_REMOVE_SLIDE;
-import static epm.LanguagePropertyType.TOOLTIP_SAVE_SLIDE_SHOW;
-import static epm.LanguagePropertyType.TOOLTIP_SAVE_AS_SLIDE_SHOW;
-import static epm.EPortfolioMaker.CORRUPTED_SLIDE;
+import static epm.LanguagePropertyType.TOOLTIP_LOAD_EPORTFOLIO;
+import static epm.LanguagePropertyType.TOOLTIP_NEW_EPORTFOLIO;
+import static epm.LanguagePropertyType.TOOLTIP_REMOVE_PAGE;
+import static epm.LanguagePropertyType.TOOLTIP_SAVE_EPORTFOLIO;
+import static epm.LanguagePropertyType.TOOLTIP_SAVE_AS_EPORTFOLIO;
 import static epm.LanguagePropertyType.TOOLTIP_ADD_HYPERLINK;
 import static epm.LanguagePropertyType.TOOLTIP_ADD_IMAGE;
 import static epm.LanguagePropertyType.TOOLTIP_ADD_SLIDESHOW;
@@ -60,36 +45,32 @@ import static epm.LanguagePropertyType.TOOLTIP_EXPORT_EPORTFOLIO;
 import static epm.LanguagePropertyType.TOOLTIP_REMOVE_COMPONENT;
 import static epm.LanguagePropertyType.TOOLTIP_VIEW_EPORTFOLIO;
 import static epm.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
-import static epm.StartupConstants.CSS_CLASS_SLIDE_SHOW_EDIT_VBOX;
+import static epm.StartupConstants.CSS_CLASS_EPORTFOLIO_EDIT_VBOX;
+import static epm.StartupConstants.CSS_CLASS_EPORTFOLIO_LEFT_TOOLBAR_VIEW;
+import static epm.StartupConstants.CSS_CLASS_PAGE_EDIT_VIEW;
 import static epm.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static epm.StartupConstants.ICON_ADD_HYPERLINK;
 import static epm.StartupConstants.ICON_ADD_IMAGE;
-import static epm.StartupConstants.ICON_ADD_SLIDE;
+import static epm.StartupConstants.ICON_ADD_PAGE;
 import static epm.StartupConstants.ICON_ADD_SLIDESHOW;
 import static epm.StartupConstants.ICON_ADD_TEXT;
 import static epm.StartupConstants.ICON_ADD_VIDEO;
 import static epm.StartupConstants.ICON_EDIT_COMPONENT;
 import static epm.StartupConstants.ICON_EDIT_FONT;
 import static epm.StartupConstants.ICON_EDIT_HYPERLINK;
-import static epm.StartupConstants.ICON_EDIT_SLIDE_SHOW;
+import static epm.StartupConstants.ICON_EDIT_PORTFOLIO;
 import static epm.StartupConstants.ICON_EXIT;
-import static epm.StartupConstants.ICON_EXPORT_SLIDE_SHOW;
-import static epm.StartupConstants.ICON_LOAD_SLIDE_SHOW;
-import static epm.StartupConstants.ICON_MOVE_DOWN;
-import static epm.StartupConstants.ICON_MOVE_UP;
-import static epm.StartupConstants.ICON_NEW_SLIDE_SHOW;
-import static epm.StartupConstants.ICON_NEXT;
-import static epm.StartupConstants.ICON_PREVIOUS;
+import static epm.StartupConstants.ICON_EXPORT_PORTFOLIO;
+import static epm.StartupConstants.ICON_LOAD_PORTFOLIO;
+import static epm.StartupConstants.ICON_NEW_PORTFOLIO;
 import static epm.StartupConstants.ICON_REMOVE_COMPONENT;
-import static epm.StartupConstants.ICON_REMOVE_SLIDE;
-import static epm.StartupConstants.ICON_SAVE_SLIDE_SHOW;
-import static epm.StartupConstants.ICON_SAVE_AS_SLIDE_SHOW;
-import static epm.StartupConstants.ICON_VIEW_SLIDE_SHOW;
+import static epm.StartupConstants.ICON_REMOVE_PAGE;
+import static epm.StartupConstants.ICON_SAVE_PORTFOLIO;
+import static epm.StartupConstants.ICON_VIEW_PORTFOLIO;
 import static epm.StartupConstants.PATH_ICONS;
 import static epm.StartupConstants.STYLE_SHEET_UI;
 import static epm.StartupConstants.WINDOWS_ICON;
 import epm.controller.FileController;
-import epm.controller.ImageSelectionController;
 import epm.controller.PageEditController;
 import epm.model.Page;
 import epm.model.EPortfolioModel;
@@ -101,14 +82,13 @@ import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
-import javafx.scene.layout.Priority;
 
 /**
  * This class provides the User Interface for this application,
- * providing controls and the entry points for creating, loading, 
- * saving, editing, and viewing slide shows.
+ * providing controls and the entry points for customizing and creating
+ * the user's portfolio website.
  * 
- * @author McKilla Gorilla & _____________
+ * @author Jia Li
  */
 public class EPortfolioMakerView {
 
@@ -138,7 +118,7 @@ public class EPortfolioMakerView {
     HBox workspace;
 
     // THIS WILL GO IN THE LEFT SIDE OF THE SCREEN
-    VBox slideEditToolbar;
+    VBox pageEditToolbar;
     Button addPageButton;
     Button removePageButton;
     Button addTextButton;
@@ -153,7 +133,6 @@ public class EPortfolioMakerView {
 
     
     // AND THIS WILL GO IN THE CENTER
-    ScrollPane slidesEditorScrollPane;
     TabPane pageEditorPane;
 
     // THIS IS THE SLIDE SHOW WE'RE WORKING WITH
@@ -163,7 +142,7 @@ public class EPortfolioMakerView {
     EPortfolioFileManager fileManager;
 
     // THIS CLASS WILL HANDLE ALL ERRORS FOR THIS PROGRAM
-    private ErrorHandler errorHandler;
+    private final ErrorHandler errorHandler;
 
     // THIS CONTROLLER WILL ROUTE THE PROPER RESPONSES
     // ASSOCIATED WITH THE FILE TOOLBAR
@@ -171,20 +150,10 @@ public class EPortfolioMakerView {
     
     // THIS CONTROLLER RESPONDS TO SLIDE SHOW EDIT BUTTONS
     private PageEditController editController;
-    
-    private int selectedSlides = 0;
-    private PageEditView chosenSlideEditView = null;
-    
-    private BorderPane viewer = new BorderPane();
-    private int slidePos = 0;
-    private Button nextSlideShowButton;
-    private Button prevSlideShowButton;
+        
+    private final BorderPane viewer = new BorderPane();
     private Pane leftPane = new Pane();
-    private Pane rightPane = new Pane();
-    private Text imageCaption = new Text();
-    private Text title;
-    private ImageView imageSelectionView;
-    private Page page;
+
     private Scene scene = new Scene(viewer, Screen.getPrimary().getVisualBounds().getMinX(), Screen.getPrimary().getVisualBounds().getMinY());
    
     private String studentName = "";
@@ -249,12 +218,12 @@ public class EPortfolioMakerView {
 	workspace = new HBox();
         workspace.getStyleClass().add("workspace_spacing");
         // THIS WILL GO IN THE LEFT SIDE OF THE SCREEN
-	slideEditToolbar = new VBox();
-	slideEditToolbar.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_EDIT_VBOX);
+	pageEditToolbar = new VBox();
+	pageEditToolbar.getStyleClass().add(CSS_CLASS_EPORTFOLIO_EDIT_VBOX);
         HBox top = new HBox();
-	addPageButton = this.initChildButton(top, ICON_ADD_SLIDE, TOOLTIP_ADD_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
-        removePageButton = this.initChildButton(top, ICON_REMOVE_SLIDE, TOOLTIP_REMOVE_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
-        top.setStyle("-fx-spacing: 7px");
+	addPageButton = this.initChildButton(top, ICON_ADD_PAGE, TOOLTIP_ADD_PAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        removePageButton = this.initChildButton(top, ICON_REMOVE_PAGE, TOOLTIP_REMOVE_PAGE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
+        top.getStyleClass().add(CSS_CLASS_EPORTFOLIO_LEFT_TOOLBAR_VIEW);
         
         VBox bottom = new VBox();
         HBox one = new HBox();
@@ -271,12 +240,12 @@ public class EPortfolioMakerView {
         editComponentButton = this.initChildButton(four, ICON_EDIT_COMPONENT, TOOLTIP_EDIT_COMPONENT, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
         removeComponentButton = this.initChildButton(four, ICON_REMOVE_COMPONENT, TOOLTIP_REMOVE_COMPONENT, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
         editFontButton = this.initChildButton(five, ICON_EDIT_FONT, TOOLTIP_EDIT_FONT, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON,  false);
-        one.setStyle("-fx-spacing: 7px");
-        two.setStyle("-fx-spacing: 7px");
-        three.setStyle("-fx-spacing: 7px");
-        four.setStyle("-fx-spacing: 7px");
-        five.setStyle("-fx-spacing: 7px");
-        bottom.setStyle("-fx-spacing: 7px;");
+        one.getStyleClass().add(CSS_CLASS_EPORTFOLIO_LEFT_TOOLBAR_VIEW);
+        two.getStyleClass().add(CSS_CLASS_EPORTFOLIO_LEFT_TOOLBAR_VIEW);
+        three.getStyleClass().add(CSS_CLASS_EPORTFOLIO_LEFT_TOOLBAR_VIEW);
+        four.getStyleClass().add(CSS_CLASS_EPORTFOLIO_LEFT_TOOLBAR_VIEW);
+        five.getStyleClass().add(CSS_CLASS_EPORTFOLIO_LEFT_TOOLBAR_VIEW);
+        bottom.getStyleClass().add(CSS_CLASS_EPORTFOLIO_LEFT_TOOLBAR_VIEW);
         
         Screen screen = Screen.getPrimary();
 	Rectangle2D bounds = screen.getVisualBounds();
@@ -286,9 +255,9 @@ public class EPortfolioMakerView {
         double finalHeight = secondHeight - firstHeight;
         
         bottom.getChildren().addAll(one, two, three, four, five);
-        slideEditToolbar.getChildren().add(top);
-        slideEditToolbar.getChildren().add(bottom);
-        slideEditToolbar.setStyle("-fx-spacing:" + finalHeight + "px;");
+        pageEditToolbar.getChildren().add(top);
+        pageEditToolbar.getChildren().add(bottom);
+        pageEditToolbar.setStyle("-fx-spacing:" + finalHeight + "px;");
         
         pageEditorPane = new TabPane();
         Tab tab = new Tab();
@@ -299,11 +268,11 @@ public class EPortfolioMakerView {
         pageEditorPane.getTabs().add(tab);
         pageEditorPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         pageEditorPane.prefWidthProperty().bind(workspace.widthProperty());
-        pageEditorPane.setStyle("-fx-border-color: rgb(0, 0, 0); -fx-background: #ffffe5;");//
+        pageEditorPane.getStyleClass().add(CSS_CLASS_PAGE_EDIT_VIEW);
         
         
 	// NOW PUT THESE TWO IN THE WORKSPACE
-	workspace.getChildren().add(slideEditToolbar);
+	workspace.getChildren().add(pageEditToolbar);
 	workspace.getChildren().add(pageEditorPane);
         VBox temp = new VBox();
         temp.setMinWidth(109);
@@ -318,7 +287,7 @@ public class EPortfolioMakerView {
 	// FIRST THE FILE CONTROLS
 	fileController = new FileController(this, fileManager);
 	newEPortfolioButton.setOnAction(e -> {
-	    fileController.handleNewSlideShowRequest();
+	    fileController.handleNewEPortfolioRequest();
             topControls(false);
 	});
 	loadEPortfolioButton.setOnAction(e -> {
@@ -492,18 +461,14 @@ public class EPortfolioMakerView {
         
         // HERE ARE OUR FILE TOOLBAR BUTTONS, NOTE THAT SOME WILL
 	// START AS ENABLED (false), WHILE OTHERS DISABLED (true)
-	PropertiesManager props = PropertiesManager.getPropertiesManager();
-	newEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_NEW_SLIDE_SHOW,	TOOLTIP_NEW_SLIDE_SHOW,	    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-	loadEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_LOAD_SLIDE_SHOW,	TOOLTIP_LOAD_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-	saveEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_SAVE_SLIDE_SHOW,	TOOLTIP_SAVE_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        saveAsEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_SAVE_AS_SLIDE_SHOW,	TOOLTIP_SAVE_AS_SLIDE_SHOW,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-	exportEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_EXPORT_SLIDE_SHOW,	TOOLTIP_EXPORT_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+	newEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_NEW_PORTFOLIO,	TOOLTIP_NEW_EPORTFOLIO,	    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+	loadEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_LOAD_PORTFOLIO,	TOOLTIP_LOAD_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+	saveEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_SAVE_PORTFOLIO,	TOOLTIP_SAVE_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        saveAsEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_SAVE_PORTFOLIO,	TOOLTIP_SAVE_AS_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+	exportEPortfolioButton = initChildButton(fileToolbarPaneLeft, ICON_EXPORT_PORTFOLIO,	TOOLTIP_EXPORT_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         exitButton = initChildButton(fileToolbarPaneLeft, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        
-
-        
-        editEPortfolioButton = initChildButton(fileToolbarPaneRight, ICON_EDIT_SLIDE_SHOW,	TOOLTIP_EDIT_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        viewEPortfolioButton = initChildButton(fileToolbarPaneRight, ICON_VIEW_SLIDE_SHOW,	TOOLTIP_VIEW_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        editEPortfolioButton = initChildButton(fileToolbarPaneRight, ICON_EDIT_PORTFOLIO,	TOOLTIP_EDIT_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        viewEPortfolioButton = initChildButton(fileToolbarPaneRight, ICON_VIEW_PORTFOLIO,	TOOLTIP_VIEW_EPORTFOLIO,    CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         editEPortfolioButton.getStyleClass().add("rightToolbar");
         viewEPortfolioButton.getStyleClass().add("rightToolbar");
         
@@ -574,8 +539,6 @@ public class EPortfolioMakerView {
 	// FIRST MAKE SURE THE WORKSPACE IS THERE
 	epmPane.setCenter(workspace);
 	
-	// NEXT ENABLE/DISABLE BUTTONS AS NEEDED IN THE FILE TOOLBAR
-	//saveEPortfolioButton.setDisable(saved);
     }
     
     public void topControls(boolean saved) {
@@ -603,10 +566,9 @@ public class EPortfolioMakerView {
     }
     
     /**
-     * Uses the slide show data to reload all the components for
-     * slide editing.
+     * Uses the ePortfolio data to reload all the components for
+     * page editing.
      * 
-     * @param slideShowToLoad SLide show being reloaded.
      */
     public void reloadSlideShowPane(EPortfolioModel ePortfolioToLoad) {
         getTabs().clear();
@@ -665,7 +627,7 @@ public class EPortfolioMakerView {
         }
         catch (Exception e) {
             ErrorHandler handle = new ErrorHandler(this);
-            handle.processError(FAILED_SLIDE_SHOW_LOAD, prop.getProperty(FAILED_SLIDE_SHOW_LOAD_TITLE));
+            handle.processError(FAILED_EPORTFOLIO_LOAD, prop.getProperty(FAILED_EPORTFOLIO_TITLE));
         }
         workspace.getChildren().add(page);
     
@@ -674,7 +636,7 @@ public class EPortfolioMakerView {
     public void editWorkspace(EPortfolioModel ePortfolioToShow)
     {
         workspace.getChildren().clear();
-        workspace.getChildren().add(slideEditToolbar);
+        workspace.getChildren().add(pageEditToolbar);
 	workspace.getChildren().add(pageEditorPane);
         reloadSlideShowPane(ePortfolioToShow);
     }

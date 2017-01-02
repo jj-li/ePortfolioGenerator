@@ -4,76 +4,53 @@
     in our program's user interface. Note that this is for customizing settings
     for the Course Schedule Builder interface, NOT the Web page that we're building. 
     
-    @coAuthor Jia Li
+    @Author Jia Li
 -->
 <properties>
     <property_list>    
-        <property name="TITLE_WINDOW"		value="ePortfolio Maker"></property>  
-        
-        <!-- PROGRAM ICON FILES -->
-	
-        <!-- TOOLTIPS FOR BUTTONS -->
-        <property name="TOOLTIP_NEW_SLIDE_SHOW"	    value="Create a New ePortfolio"></property>
-        <property name="TOOLTIP_LOAD_SLIDE_SHOW"    value="Load an Existing ePortfolio"></property>
-        <property name="TOOLTIP_SAVE_SLIDE_SHOW"    value="Save this ePortfolio"></property>
-        <property name="TOOLTIP_SAVE_AS_SLIDE_SHOW"    value="Save this ePortfolio as"></property>
-        <property name="TOOLTIP_EXPORT_EPORTFOLIO"    value="Export this ePortfolio"></property>
-        <property name="TOOLTIP_EDIT_EPORTFOLIO"    value="Edit this ePortfolio"></property>
-        <property name="TOOLTIP_VIEW_EPORTFOLIO"    value="View this ePortfolio"></property>
-        <property name="TOOLTIP_EXIT"		    value="Exit the Application"></property>
-	<property name="TOOLTIP_ADD_SLIDE"	    value="Add Page"></property>
-	<property name="TOOLTIP_REMOVE_SLIDE"	    value="Remove Page"></property>
-	<property name="TOOLTIP_MOVE_UP"	    value="Move Slide Up"></property>
-	<property name="TOOLTIP_MOVE_DOWN"	    value="Move Slide Down"></property>
-	<property name="TOOLTIP_PREVIOUS_SLIDE"	    value="Previous Slide"></property>
-	<property name="TOOLTIP_NEXT_SLIDE"	    value="Next Slide"></property>
-        <property name="TOOLTIP_EDIT_COMPONENT"	    value="Edit Selected Component"></property>
-	<property name="TOOLTIP_ADD_TEXT"	    value="Add Text Component"></property>
-	<property name="TOOLTIP_ADD_VIDEO"	    value="Add Video Component"></property>
-	<property name="TOOLTIP_ADD_IMAGE"	    value="Add Image Component"></property>
-	<property name="TOOLTIP_ADD_SLIDESHOW"	    value="Add Slideshow Component"></property>
-        <property name="TOOLTIP_ADD_HYPERLINK"	    value="Add Hyperlink"></property>
-	<property name="TOOLTIP_EDIT_HYPERLINK"	    value="Edit Hyperlink"></property>
-	<property name="TOOLTIP_EDIT_FONT"	    value="Edit Front for Selected Text Component"></property>
-        <property name="TOOLTIP_REMOVE_COMPONENT"	    value="Remove Selected Component"></property>
-	
-	<!-- DEFAULT VALUES -->
-	<property name="DEFAULT_IMAGE_CAPTION"	    value="ENTER CAPTION: "></property>
-	<property name="DEFAULT_SLIDE_SHOW_TITLE"   value="ENTER TITLE"></property>
-        <property name="BUTTON_OKAY"                value="Yes"></property>
-        <property name="SAVE_TEXT"                  value="Would you like to save your file?"></property>
-	
-	<!-- UI LABELS -->
-	<property name="LABEL_CAPTION"		    value="Caption:"></property>
-        
-        <!-- GUI LABELS -->
-        <property name="SLIDE_SHOW_TITLE_LABEL"    value="Slide Show Title: "></property>
+		<property name="TITLE_WINDOW"						value="ePortfolio Maker"></property>  
+		
+		<!-- TOOLTIPS FOR BUTTONS -->
+		<property name="TOOLTIP_NEW_EPORTFOLIO"	    		value="Create a New ePortfolio"></property>
+		<property name="TOOLTIP_LOAD_EPORTFOLIO"    		value="Load an Existing ePortfolio"></property>
+		<property name="TOOLTIP_SAVE_EPORTFOLIO"    		value="Save this ePortfolio"></property>
+		<property name="TOOLTIP_SAVE_AS_EPORTFOLIO"    		value="Save this ePortfolio as"></property>
+		<property name="TOOLTIP_EXPORT_EPORTFOLIO"    		value="Export this ePortfolio"></property>
+		<property name="TOOLTIP_EDIT_EPORTFOLIO"    		value="Edit this ePortfolio"></property>
+		<property name="TOOLTIP_VIEW_EPORTFOLIO"    		value="View this ePortfolio"></property>
+		<property name="TOOLTIP_EXIT"		    			value="Exit the Application"></property>
+		<property name="TOOLTIP_ADD_PAGE"	    			value="Add Page"></property>
+		<property name="TOOLTIP_REMOVE_PAGE"	    		value="Remove Page"></property>
+		<property name="TOOLTIP_EDIT_COMPONENT"	    		value="Edit Selected Component"></property>
+		<property name="TOOLTIP_ADD_TEXT"	    			value="Add Text Component"></property>
+		<property name="TOOLTIP_ADD_VIDEO"	    			value="Add Video Component"></property>
+		<property name="TOOLTIP_ADD_IMAGE"	    			value="Add Image Component"></property>
+		<property name="TOOLTIP_ADD_SLIDESHOW"	    		value="Add Slideshow Component"></property>
+		<property name="TOOLTIP_ADD_HYPERLINK"	    		value="Add Hyperlink"></property>
+		<property name="TOOLTIP_EDIT_HYPERLINK"	    		value="Edit Hyperlink"></property>
+		<property name="TOOLTIP_EDIT_FONT"	    			value="Edit Front for Selected Text Component"></property>
+		<property name="TOOLTIP_REMOVE_COMPONENT"	    	value="Remove Selected Component"></property>
+		
+		<!-- DEFAULT VALUES -->
+		<property name="BUTTON_OKAY"                		value="Yes"></property>
+		<property name="SAVE_TEXT"                  		value="Would you like to save your file?"></property>
 
-        <!-- ERROR DIALOGUES -->
-        <property name="REMOVE_SLIDE"                   value="Please select a component to remove."></property>
-        <property name="REMOVE_SLIDE_ERROR_TITLE"       value="Remove Error"></property>
-        <property name="MOVE_UP_SLIDE1"                 value="Please select a slide to move up."></property>
-        <property name="MOVE_UP_SLIDE2"                 value="Unable to move slide up."></property>
-        <property name="MOVE_UP_SLIDE3"                 value="Move up error"></property>
-        <property name="MOVE_DOWN_SLIDE1"               value="Please select a slide to move down."></property>
-        <property name="MOVE_DOWN_SLIDE2"               value="Unable to move slide down."></property>
-        <property name="MOVE_DOWN_SLIDE3"               value="Move down error"></property>
-        <property name="NO_SLIDESHOW"                   value="No pages to display."></property>
-        <property name="NO_SLIDESHOW_TITLE"             value="Invalid ePortfolio."></property>
-        <property name="MISSING_IMAGE"                  value=" not found. The slide containing that image is removed."></property>
-        <property name="MISSING_IMAGE_TITLE"            value="No image"></property>
-        <property name="FAILED_SLIDE_SHOW_CREATED"      value="Error creating ePortfolio."></property>
-        <property name="FAILED_SLIDE_SHOW_CREATED_TITLE"      value="Failed"></property>
-        <property name="FAILED_SLIDE_SHOW_LOAD"               value="Error loading ePortfolio."></property>
-        <property name="FAILED_SLIDE_SHOW_LOAD_TITLE"         value="Failed"></property>
-        <property name="FAILED_SLIDE_SHOW_SAVE"               value="Error saving ePortfolio."></property>
-        <property name="FAILED_SLIDE_SHOW_SAVE_TITLE"         value="Failed"></property>
-        <property name="FAILED_SLIDE_SHOW_EXIT"               value="Error exiting ePortfolio."></property>
-        <property name="FAILED_SLIDE_SHOW_EXIT_TITLE"         value="Failed"></property>
-        
-        <!-- SUCESS DIALOGUES -->
-        <property name="SLIDE_SHOW_CREATED"             value="ePortfolio has been created successfully."></property>
-        <property name="SLIDE_SHOW_CREATED_TITLE"       value="Success"></property>
+		<!-- ERROR DIALOGUES -->
+		<property name="NO_PAGES"                   		value="No pages to display."></property>
+		<property name="NO_EPORTFOLIO"             			value="Invalid ePortfolio."></property>
+		<property name="MISSING_IMAGE"                  	value=" not found. The slide containing that image is removed."></property>
+		<property name="MISSING_IMAGE_TITLE"            	value="No image"></property>
+		<property name="FAILED_EPORTFOLIO_CREATED"      	value="Error creating ePortfolio."></property>
+		<property name="FAILED_EPORTFOLIO_LOAD"             value="Error loading ePortfolio."></property>
+		<property name="FAILED_EPORTFOLIO_SAVE"             value="Error saving ePortfolio."></property>
+		<property name="FAILED_EPORTFOLIO_EXIT"             value="Error exiting ePortfolio."></property>
+		<property name="FAILED_EPORTFOLIO_TITLE"            value="Failure."></property>
+		<property name="ERROR_DATA_FILE_LOADING"            value="Cannot load data file."></property>
+		<property name="ERROR_PROPERTIES_FILE_LOADING"      value="Cannot load properties file."></property>
+			
+		<!-- SUCESS DIALOGUES -->
+		<property name="EPORTFOLIO_CREATED"             	value="ePortfolio has been created successfully."></property>
+		<property name="EPORTFOLIO_CREATED_TITLE"       	value="Success"></property>
     </property_list>
     <property_options_list>
     </property_options_list>

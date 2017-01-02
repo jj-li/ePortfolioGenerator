@@ -1,10 +1,6 @@
-/**
- * @coauthor Jia Li
- **/
 package epm.file;
 
-import epm.EPortfolioMaker;
-import static epm.StartupConstants.PATH_SLIDE_SHOWS;
+import static epm.StartupConstants.PATH_EPORTFOLIOS;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,9 +26,6 @@ import epm.view.EPortfolioMakerView;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.math.BigDecimal;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.stage.FileChooser;
@@ -40,29 +33,23 @@ import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
 
 /**
- * This class uses the JSON standard to read and write slideshow data files.
+ * This class uses the JSON standard to read and write ePortfolio data files.
  * 
- * @author McKilla Gorilla & _____________
+ * @author Jia Li
  */
 public class EPortfolioFileManager {
     // JSON FILE READING AND WRITING CONSTANTS
     public static String JSON_TITLE = "title";
-    public static String JSON_SLIDES = "slides";
     public static String JSON_IMAGE_FILE_NAME = "image_file_name";
     public static String JSON_IMAGE_PATH = "image_path";
-    public static String JSON_CAPTION = "image_caption";
     public static String JSON_EXT = ".json";
     public static String SLASH = "/";
-    private String dataPath = PATH_SLIDE_SHOWS;
+    private String dataPath = PATH_EPORTFOLIOS;
     
     /**
-     * This method saves all the data associated with a slide show to
+     * This method saves all the data associated with an ePortfolio to
      * a JSON file.
      * 
-     * @param slideShowToSave The course whose data we are saving.
-     * 
-     * @throws IOException Thrown when there are issues writing
-     * to the JSON file.
      */
     public void saveEPortfolio(EPortfolioModel ePortfolioToSave) throws IOException {
        

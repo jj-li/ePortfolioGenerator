@@ -5,39 +5,13 @@
  *  @author McKilla Gorilla
  */
 
-// FIRST, ALL OUR TEXTUAL COMPONENTS WILL USE THE SAME FONT FAMILY
-.lang_prompt, .lang_combo_box, .lang_ok_button,
+/* FIRST, ALL OUR TEXTUAL COMPONENTS WILL USE THE SAME FONT FAMILY */
 .title_prompt, .title_text_field,
 .caption_prompt, .caption_text_field {
     -fx-font-family:sans-serif;    
 }
 
-// LANGUAGE SELECTION CONTROLS
-.lang_prompt {
-    -fx-font-size: 16pt;
-    -fx-font-weight: bold;
-}
-
-.lang_combo_box {
-    -fx-font-size: 14pt;
-    -fx-background-color: #A69800;
-}
-
-.lang_ok_button {
-    -fx-font-size: 14pt;
-    -fx-background-color: #A69800;
-    -fx-border-radius: 4 4 4 4;
-    -fx-spacing: 10px;
-}
-
-.lang_dialog_pane {
-    -fx-background-color: #FFF373;
-    -fx-hgap:25;
-    -fx-vgap:15;
-    -fx-padding: 30;
-}
-
-// TOOLBAR CONTROLS
+/* TOOLBAR CONTROLS */
 .horizontal_toolbar_pane, .vertical_toolbar_pane {
     -fx-background-color: #add8e6;    
     -fx-padding:5;
@@ -68,7 +42,7 @@
     -fx-padding-right: 20px;
 }
 
-// WORKSPACE AND IT'S CONTAINERS
+/* WORKSPACE AND IT'S CONTAINERS */
 
 .workspace {
     -fx-background-color: #FFF373;
@@ -98,7 +72,7 @@
     -fx-border-color: #BFB330;
 }
 
-// SLIDE EDIT CONTROLS
+/* SLIDE EDIT CONTROLS */
 .title_pane {   
     -fx-hgap:10;
     -fx-vgap:10;
